@@ -315,10 +315,14 @@ We now need procedures to check the ordering criterion and the balancing criteri
         //@requires t != NULL
     {
         int key = t->key;
-        int left = maxkey(t->left);
-        int right = maxkey(t->right);
-        if (left > key) { key = left; }
-        if (right > key) { key = right; }
+        if (t->left != NULL) {
+            int left = maxkey(t->left);
+            if (left > key) { key = left; }
+        }
+        if (t->right != NULL) {
+            int right = maxkey(t->right);
+            if (right > key) { key = right; }
+        }
         return key;
     }
 
@@ -326,10 +330,14 @@ We now need procedures to check the ordering criterion and the balancing criteri
         //@requires t != NULL
     {
         int key = t->key;
-        int left = minkey(t->left);
-        int right = minkey(t->right);
-        if (left < key) { key = left; }
-        if (right < key) { key = right; }
+        if (t->left != NULL) {
+            int left = minkey(t->left);
+            if (left < key) { key = left; }
+        }
+        if (t->right != NULL) {
+            int right = minkey(t->right);
+            if (right < key) { key = right; }
+        }
         return key;
     }
         
@@ -359,7 +367,7 @@ We now need procedures to check the ordering criterion and the balancing criteri
         return is_balanced(t) && is_ordered(t) && is_avltree(t->left) && is_avltree(t->right);
     }
 
-    avltree fixed_height(avltree t) {
+    avltree fix_height(avltree t) {
         if (t == NULL) { return t; }
         int h1 = height(t->left);
         int h2 = height(t->right);
@@ -375,39 +383,40 @@ We now need procedures to check the ordering criterion and the balancing criteri
         //@requires depth >= 1
     {
         if (depth > 1) {
-            if (t->left != NULL) { update_height(t->left, depth-1); }
-            if (t->right != NULL) { update_height(t->right, depth-1); }
+            if (t->left != NULL) { 
+                update_height(t->left, depth-1); 
+            }
+            if (t->right != NULL) { 
+                update_height(t->right, depth-1); 
+            }
         }
-        int h1 = height(t->left);
-        int h2 = height(t->right);
-        t->height = (h2 > h1 ? h2 : h1) + 1;
-        return t;
+        return fix_height(t);
     }
         
     avltree rotate_left(avltree u)
-        //@requires t != NULL
+        //@requires u != NULL
     {
         avltree w = u->right;
         avltree wminus = w->left;
         u->right = wminus;
         w->left = u;
-        fixed_height(u);
-        return fixed_height(w);
+        fix_height(u);
+        return fix_height(w);
     }
 
     avltree rotate_right(avltree u)
-        //@requires t != NULL
+        //@requires u != NULL
     {
         avltree w = u->left;
         avltree wplus = w->right;
         u->left = wplus;
         w->right = u;
-        fixed_height(u);
-        return fixed_height(w);
+        fix_height(u);
+        return fix_height(w);
     }
 
     avltree rotate_right_left(avltree u)
-        //@requires t != NULL
+        //@requires u != NULL
     {
         avltree w = u->right;
         avltree v = w->left;
@@ -417,13 +426,13 @@ We now need procedures to check the ordering criterion and the balancing criteri
         v->right = w;
         u->right = vminus;
         w->left = vplus;
-        fixed_height(u);
-        fixed_height(w);
-        return fixed_height(v);
+        fix_height(u);
+        fix_height(w);
+        return fix_height(v);
     }
 
     avltree rotate_left_right(avltree u)
-        //@requires t != NULL
+        //@requires u != NULL
     {
         avltree w = u->left;
         avltree v = w->right;
@@ -433,9 +442,9 @@ We now need procedures to check the ordering criterion and the balancing criteri
         v->left = w;
         u->left = vplus;
         w->right = vminus;
-        fixed_height(u);
-        fixed_height(w);
-        return fixed_height(v);
+        fix_height(u);
+        fix_height(w);
+        return fix_height(v);
     }
 
     int balance_factor(avltree t) 
