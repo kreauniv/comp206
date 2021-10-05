@@ -97,20 +97,19 @@ correct the latter case can be mirrored for the other case.
    subtree/.style={isosceles triangle,
                    isosceles triangle apex angle=60,
                    draw, dashed,
-                   shape border rotate=90,
-                   minimum size=1cm}
+                   shape border rotate=90
+                   }
    }
 
    \node[circle,draw,label=right:{$_{[+2]}$}] {$\mathcal{U}$}
-    [sibling distance=2cm, child anchor=north]
-    child {node[subtree,
-                label=center:{$u^-$}, 
-                label={right side:{$_{h}$}}
-                ] {}}
-    child {node[subtree,
-                label=center:{$u^+$}, 
-                label={right side:{$_{h+2}$}} 
-                ] {}};
+    [sibling distance=2cm]
+    child [child anchor=north] {
+        node[subtree, label={right side:{$_{h}$}}] {$u^-$}
+        }
+    child [child anchor=north] {
+        node[subtree, label={right side:{$_{h+2}$}}] {$u^+$}
+        }
+    ;
 
 In the above figure, we consider an unbalanced node :math:`\mathcal{U}` that has a
 balance factor of 2, and has its two balanced subtrees :math:`\mathcal{U}^-` and
@@ -126,23 +125,18 @@ as shown in :numref:`rubnode`.
    subtree/.style={isosceles triangle,
                    isosceles triangle apex angle=60,
                    draw, dashed,
-                   shape border rotate=90,
-                   minimum size=1cm}
+                   shape border rotate=90
+                   }
    }
 
    \node[circle,draw,label=right:{$_{[+2]}$}, label=left:{$_{h+3}$}] {$\mathcal{U}$}
-    [sibling distance=2cm, child anchor=north]
-    child {node[subtree,
-                label=center:{$u^-$}, 
-                label={right side:{$_{h}$}}
-                ] {}}
+    [sibling distance=2cm]
+    child [child anchor=north] {
+        node[subtree, label={right side:{$_{h}$}}] {$u^-$}
+        }
     child {node[circle,draw,label=right:{$_{h+2}$}] {$\mathcal{W}$}
-            child {node[subtree,
-                        label=center:{$w^-$}
-                        ] {}}
-            child {node[subtree,
-                        label=center:{$w^+$}
-                        ] {}}}
+            child [child anchor=north] {node[subtree] {$w^-$}}
+            child [child anchor=north] {node[subtree] {$w^+$}}}
     ;
 
 Since our inductive assumption is that the node :math:`\mathcal{W}` is balanced
@@ -168,25 +162,22 @@ in :numref:`lrot`.
    subtree/.style={isosceles triangle,
                    isosceles triangle apex angle=60,
                    draw, dashed,
-                   shape border rotate=90,
-                   minimum size=1cm}
+                   shape border rotate=90
+                   }
    }
 
     \node[circle,draw,label=right:{$_{h+\{2,3\}}$}] {$\mathcal{W}$}
-        [sibling distance=2cm, child anchor=north]
+        [sibling distance=2cm]
         child {node[circle,draw,label=left:{$_{h+\{1,2\}}$}] {$\mathcal{U}$}
-                child {node[subtree,
-                            label=center:{$u^-$}, 
-                            label={right side:{$_h$}}
-                            ] {}}
-                child {node[subtree,
-                            label={right side:{$_{h+\{0,1\}}$}}, 
-                            label=center:{$w^-$}
-                            ] {}}}
-        child {node[subtree,
-                    label=center:{$w^+$}, 
-                    label={right side:{$_{h+1}$}}
-                    ] {}}
+                child [child anchor=north] {
+                    node[subtree, label={right side:{$_h$}}] {$u^-$}
+                    }
+                child [child anchor=north] {
+                    node[subtree, label={right side:{$_{h+\{0,1\}}$}}] {$w^-$}}
+                    }
+        child [child anchor=north] {
+            node[subtree, label={right side:{$_{h+1}$}}] {$w^+$}
+            }
     ;
 
 
@@ -206,28 +197,21 @@ since we know it has a height of :math:`h+1` for this case.
    subtree/.style={isosceles triangle,              
                    isosceles triangle apex angle=60,
                    draw, dashed,          
-                   shape border rotate=90,
-                   minimum size=1cm}
+                   shape border rotate=90
+                   }
    }
 
    \node[circle,draw,label=right:{$_{[+2]}$}] {$\mathcal{U}$}
-    [sibling distance=2cm, child anchor=north]
-    child {node[subtree,
-                label=center:{$u^-$}, 
-                label={right side:{$_{h}$}}
-                ] {}}
+    [sibling distance=2cm]
+    child [child anchor=north] {
+        node[subtree, label={right side:{$_{h}$}}] {$u^-$}
+        }
     child {node[circle,draw,label=right:{$_{h+2}$}] {$\mathcal{W}$}
             child {node[circle,draw,label=left:{$_{h+1}$}] {$\mathcal{V}$}
-                        child {node[subtree,
-                                    label=center:{$v^-$}
-                                    ] {}}
-                        child {node[subtree,
-                                    label=center:{$v^+$}
-                                    ] {}}
+                        child [child anchor=north] {node[subtree] {$v^-$}}
+                        child [child anchor=north] {node[subtree] {$v^+$}}
                     }
-            child {node[subtree,
-                        label=right:{$_h$}
-                        ] {$w^+$}}}
+            child [child anchor=north] {node[subtree, label=right:{$_h$}] {$w^+$}}}
    ; 
 
 
@@ -246,24 +230,25 @@ the top and brings the :math:`\mathcal{U}` node down to the level of
 .. tikz:: Right-left rebalancing using double rotation
    :libs: shapes.geometric
 
-   \tikzset{                                        
-   subtree/.style={regular polygon,
-                   regular polygon sides=3,
-                   draw, dashed, anchor=north,
-                   }
+   \tikzset{                                         
+   subtree/.style={isosceles triangle,              
+                   isosceles triangle apex angle=60,
+                   draw, dashed,          
+                   shape border rotate=90
+                   }                                       
    }
 
    \node[circle,draw,label=right:{$_{h+2}$}] {$\mathcal{V}$}
-   [sibling distance=2cm, child anchor=north]
+   [sibling distance=2cm]
     child {node[circle,draw,label=left:{$_{h+1}$}] {$\mathcal{U}$}
-        child {node[subtree,label=left:{$_h$}] {$u^-$}}
-        child {node[subtree] {$v^-$}}
+        child [child anchor=north] {node[subtree,label=left:{$_h$}] {$u^-$}}
+        child [child anchor=north] {node[subtree] {$v^-$}}
         child {edge from parent[draw=none]}
         }
     child {node[circle,draw,label=right:{$_{h+1}$}] {$\mathcal{W}$}
         child {edge from parent[draw=none]}
-        child {node[subtree] {$v^+$}}
-        child {node[subtree,label=right:{$_h$}] {$w^+$}}
+        child [child anchor=north] {node[subtree] {$v^+$}}
+        child [child anchor=north] {node[subtree,label=right:{$_h$}] {$w^+$}}
         }
    ; 
 
@@ -322,6 +307,7 @@ height of the node once the structure is stable.
 
 
 We now need procedures to check the ordering criterion and the balancing criterion.
+(work-in-progress unchecked stuff below)
 
 .. code-block:: C
 
@@ -385,8 +371,8 @@ We now need procedures to check the ordering criterion and the balancing criteri
     }
         
     avltree update_height(avltree t, int depth)
-        //@requires t != NULL;
-        //@requires depth >= 1;
+        //@requires t != NULL
+        //@requires depth >= 1
     {
         if (depth > 1) {
             if (t->left != NULL) { update_height(t->left, depth-1); }
@@ -399,7 +385,7 @@ We now need procedures to check the ordering criterion and the balancing criteri
     }
         
     avltree rotate_left(avltree u)
-        //@requires t != NULL;
+        //@requires t != NULL
     {
         avltree w = u->right;
         avltree wminus = w->left;
@@ -410,7 +396,7 @@ We now need procedures to check the ordering criterion and the balancing criteri
     }
 
     avltree rotate_right(avltree u)
-        //@requires t != NULL;
+        //@requires t != NULL
     {
         avltree w = u->left;
         avltree wplus = w->right;
@@ -421,7 +407,7 @@ We now need procedures to check the ordering criterion and the balancing criteri
     }
 
     avltree rotate_right_left(avltree u)
-        //@requires t != NULL;
+        //@requires t != NULL
     {
         avltree w = u->right;
         avltree v = w->left;
@@ -437,7 +423,7 @@ We now need procedures to check the ordering criterion and the balancing criteri
     }
 
     avltree rotate_left_right(avltree u)
-        //@requires t != NULL;
+        //@requires t != NULL
     {
         avltree w = u->left;
         avltree v = w->right;
@@ -453,13 +439,13 @@ We now need procedures to check the ordering criterion and the balancing criteri
     }
 
     int balance_factor(avltree t) 
-        //@requires t != NULL;
+        //@requires t != NULL
     {
         return height(t->right) - height(t->left);
     }
 
     avltree balance_node(avltree t)
-        //@requires t != NULL;
+        //@requires t != NULL
     {
         int b = balance_factor(t);
         //@assert b >= -2 && b <= 2;
