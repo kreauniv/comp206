@@ -1,0 +1,79 @@
+#use <conio>
+
+typedef struct Stack *stack_t;
+
+struct Stack {
+    int capacity;
+    int [] storage;
+    int top;
+};
+
+// These are the functions available to you for use.
+stack_t make_stack();
+void stack_push(stack_t s, int val);
+bool stack_is_empty(stack_t s);
+int stack_depth(stack_t s);
+int stack_pop(stack_t s);
+bool stack_is_valid(stack_t s);
+
+stack_t make_stack() {
+    stack_t s = alloc(struct Stack);
+    s->capacity = 1;
+    s->storage = alloc_array(int, s->capacity);
+    s->top = 0;
+    return s;
+}
+
+bool stack_is_valid(stack_t s) 
+    //@requires s != NULL && s->capacity == \length(s->storage);
+{
+    return s != NULL && s->top <= s->capacity && s->top >= 0 && s->capacity > 0;
+}
+
+bool stack_top_is_val(stack_t s, int val)
+    //@requires stack_is_valid(s);
+    //@requires !stack_is_empty(s);
+{
+    return s->storage[s->top-1] == val;
+}
+
+void stack_push(stack_t s, int val)
+    //@requires stack_is_valid(s);
+    //@ensures stack_top_is_val(s, val);
+{
+    if (s->top == s->capacity) {
+        int newcap = s->capacity * 2;
+        int [] newstore = alloc_array(int, newcap);
+        for (int i = 0; i < s->capacity; i++) {
+            newstore[i] = s->storage[i];
+        }
+        s->capacity = newcap;
+        s->storage = newstore;
+    }
+
+    //@assert s->top < s->capacity;
+    s->storage[s->top] = val;
+    s->top = s->top + 1;
+}
+
+bool stack_is_empty(stack_t s) 
+    //@requires stack_is_valid(s);
+{
+    return s->top == 0;
+}
+
+int stack_depth(stack_t s) 
+    //@requires stack_is_valid(s);
+{
+    return s->top;
+}
+
+int stack_pop(stack_t s) 
+    //@requires stack_is_valid(s);
+    //@requires !stack_is_empty(s);
+{
+    int val = s->storage[s->top-1];
+    s->top = s->top - 1;
+    return val;
+}
+

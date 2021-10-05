@@ -1,0 +1,95 @@
+
+#use <conio>
+#use "stack.h0"
+
+/*
+ * LIFO = Last In First Out
+ * FIFO = First In First Out = Queue
+ *
+ * queue_t make_queue(int length)
+ * void queue_push(queue_t q, int value);
+ * int queue_take(queue_t q);
+ *
+ */
+struct Stack {
+    int [] storage;
+    int capacity; // capacity = \length(storage)
+    int top; // there are `top` elements in the stack.
+};
+
+bool stack_is_valid(stack_t s)
+    //@requires s != NULL;
+    //@requires s->capacity == \length(s->storage);
+{
+    return s != NULL && s->top >= 0 && s->top <= s->capacity;
+}
+
+bool stack_is_empty(stack_t s)
+    //@requires stack_is_valid(s);
+{
+    return s->top == 0;
+}
+
+stack_t make_stack(int capacity)
+    //@requires capacity > 0;
+    //@ensures stack_is_valid(\result);
+{
+    stack_t s = alloc(struct Stack);
+    //@assert s != NULL;
+    s->top = 0;
+    s->storage = alloc_array(int, capacity);
+    s->capacity = capacity;
+    return s;
+}
+
+void stack_push(stack_t s, int value)
+    //@requires stack_is_valid(s);
+    //@ensures stack_is_valid(s);
+{
+    if (s->top == s->capacity) {
+        int new_capacity = s->capacity * 2;
+        int [] new_storage = alloc_array(int, new_capacity);
+        for (int i = 0; i < s->capacity; i++)
+            //@loop_invariant i >= 0;
+        {
+            new_storage[i] = s->storage[i];
+        }
+
+        s->storage = new_storage;
+        s->capacity = new_capacity;
+    }
+
+    //@assert s->top < s->capacity;
+    //@assert stack_is_valid(s);
+
+    s->storage[s->top] = value;
+    s->top = s->top + 1;
+}
+
+    
+int stack_pop(stack_t s)
+    //@requires stack_is_valid(s);
+    //@requires !stack_is_empty(s);
+    //@ensures stack_is_valid(s);
+{
+    int value = s->storage[s->top - 1];
+    s->top = s->top - 1;
+    return value;
+}
+
+
+bool test1() {
+    stack_t s = make_stack(10);
+    stack_push(s, 100);
+    stack_push(s, 200);
+    stack_push(s, 300);
+    
+    while (!stack_is_empty(s)) {
+        printint(stack_pop(s));
+        print("\n");
+        flush();
+    }
+
+    return true;
+}
+

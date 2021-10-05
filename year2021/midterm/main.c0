@@ -1,0 +1,36 @@
+/*
+ * This file is not part of the submission.
+ * You may place any tests you want to here.
+ */
+
+#use "./q1.c0"
+#use "./q2.c0"
+#use "./q3.c0"
+#use "./q4.c0"
+#use "./stack.c0"
+#use "./utils.c0"
+#use <conio>
+
+int main() {
+    if (test_lookup()) {
+        print("q1[lookup]: Test passed\n");
+    } else {
+        print("q1[lookup]: Test failed\n");
+    }
+    if (test_copy_stack()) {
+        print("q2[copy_stack]: Test passed\n");
+    } else {
+        print("q2[copy_stack]: Test failed\n");
+    }
+    if (test_reverse_stack()) {
+        print("q3[reverse_stack]: Test passed\n");
+    } else {
+        print("q3[reverse_stack]: Test failed\n");
+    }
+    if (test_q4()) {
+        print("q4[misc]: Test_sort passed\n");
+    } else {
+        print("q4[misc]: Test failed\n");
+    }
+    return 0;
+}

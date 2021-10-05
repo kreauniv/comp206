@@ -1,0 +1,24 @@
+#use <conio>
+
+int log(int n)
+    //@requires n > 0;
+    //@ensures (1 << \result) <= n && n < (1 << \result+1);
+{
+    if (n < 2) { return 0; }
+    return 1 + log(n >> 1);
+}
+
+int sqrt(int n)
+    //@requires n > 0;
+    //@ensures \result * \result <= n && n <= (\result+1)*(\result+1);
+{
+    int guess = n / 2;
+    while (true) {
+        int guess2 = (guess + n / guess) / 2;
+        if (guess <= guess2) { return guess; }
+        guess = guess2;
+    }
+
+    return -1;
+}
+

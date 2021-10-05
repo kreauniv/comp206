@@ -1,0 +1,184 @@
+#use <conio>
+
+// Binary search.
+
+// Operates on a sorted array. Array of integer elements.
+
+bool is_sorted(int [] a, int from_ix, int to_ix)
+    //@requires from_ix >= 0 && from_ix <= \length(a);
+    //@requires to_ix >= from_ix && to_ix <= \length(a);
+{
+    for (int i = from_ix; i + 1 < to_ix; i++)
+        //@loop_invariant i >= from_ix;
+    {
+        if (a[i] > a[i+1]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int bsearch(int x, int [] a, int from_ix, int to_ix, int *steps)
+    //@requires from_ix >= 0 && from_ix <= \length(a);
+    //@requires to_ix >= from_ix && to_ix <= \length(a);
+    //@requires is_sorted(a, from_ix, to_ix);
+    //@ensures \result == -1 || (\result >= 0 && \result < to_ix && a[\result] == x);
+{
+    (*steps)++;
+    if (from_ix == to_ix) {
+        return -1;
+    }
+
+    //@assert from_ix < to_ix;
+    (*steps)++;
+    int mid = (from_ix + to_ix) / 2;
+
+    //@assert mid >= from_ix && mid < to_ix;
+    (*steps)++;
+    if (a[mid] == x) {
+        return mid;
+    }
+
+    (*steps)++;
+    if (a[mid] < x) {
+        (*steps)++;
+        (*steps)++;
+        return bsearch(x, a, mid+1, to_ix, steps);
+    }
+
+    //@assert a[mid] > x;
+    (*steps)++;
+    return bsearch(x, a, from_ix, mid, steps);
+}
+
+bool is_in_range(int x, int [] a, int from_ix, int to_ix)
+    //@requires from_ix >= 0 && from_ix <= to_ix && to_ix <= \length(a);
+{
+    for (int i = from_ix; i < to_ix; i++) {
+        if (a[i] == x) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+int bsearch3(int x, int [] a, int from_ix, int to_ix, int*steps)
+{
+    return bsearch3_helper(x, a, from_ix, to_ix, from_ix, to_ix, steps);
+}
+
+int bsearch3_helper(int x, int [] a, int from_ix, int to_ix, int _from_ix, int _to_ix, int*steps)
+    //@requires !is_in_range(x, a, from_ix, _from_ix);
+    //@requires !is_in_range(x, a, _to_ix, to_ix);
+{
+    (*steps)++;
+    if (_from_ix == _to_ix) {
+        return -1;
+    }
+
+    //@assert from_ix < to_ix;
+    (*steps)++;
+    int mid = (_from_ix + _to_ix) / 2;
+
+    //@assert mid >= from_ix && mid < to_ix;
+    (*steps)++;
+    if (a[mid] == x) {
+        return mid;
+    }
+
+    (*steps)++;
+    if (a[mid] < x) {
+        (*steps)++;
+        (*steps)++;
+        return bsearch3_helper(x, a, from_ix, to_ix, mid+1, _to_ix, steps);
+    }
+
+    //@assert a[mid] > x;
+    (*steps)++;
+    return bsearch3_helper(x, a, from_ix, to_ix, _from_ix, mid, steps);
+}
+
+int bsearch2(int x, int [] a, int from_ix, int to_ix, int *steps) 
+{
+    int _from_ix = from_ix;
+    int _to_ix = to_ix;
+
+    while (true) 
+        //@loop_invariant _from_ix >= from_ix && _to_ix <= to_ix;
+        //@loop_invariant _to_ix >= _from_ix;
+        //@loop_invariant !is_in_range(x, a, from_ix, _from_ix);
+        //@loop_invariant !is_in_range(x, a, _to_ix, to_ix);
+    {
+        (*steps)++;
+        if (_from_ix == _to_ix) {
+            return -1;
+        }
+
+        //@assert _from_ix < _to_ix;
+        (*steps)++;
+        int mid = (_from_ix + _to_ix) / 2;
+
+        //@assert mid >= _from_ix && mid < _to_ix;
+        (*steps)++;
+        if (a[mid] == x) {
+            return mid;
+        }
+
+        (*steps)++;
+        if (a[mid] < x) {
+            (*steps)++;
+            (*steps)++;
+            _from_ix = mid+1;
+        } else {
+            //@assert a[mid] > x;
+            (*steps)++;
+            _to_ix = mid;
+        }
+    }
+}
+
+struct BSearchResult {
+    int index;
+    int steps;
+};
+
+struct BSearchResult *test(int n, int x) 
+{
+    int [] a = alloc_array(int, n);
+    for (int i = 0; i < n; i++) {
+        a[i] = i * i;
+    }
+
+    int *steps = alloc(int);
+    (*steps) = 0;
+    int ix = bsearch(x, a, 0, n, steps);
+    struct BSearchResult *result = alloc(struct BSearchResult);
+    result->index = ix;
+    result->steps = *steps;
+    return result;
+}
+
+int approx_log(int n) {
+    if (n <= 1) { return 0; }
+    return 1 + approx_log(n/2);
+}
+
+void tabulate_perf(int from_n, int to_n, int step_n) {
+    print("n\tresult\tsteps\tlog(n)\tsteps/log(n)\n");
+    for (int n = from_n; n < to_n; n += step_n) {
+        struct BSearchResult *r = test(n, 65);
+        printint(n);
+        print("\t");
+        printint(r->index);
+        print("\t");
+        printint(r->steps);
+        print("\t");
+        printint(approx_log(n));
+        print("\t");
+        printint(r->steps / approx_log(n));
+        print("\n");
+        flush();
+    }
+}
+

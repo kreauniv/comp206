@@ -1,0 +1,43 @@
+/*
+ * Write a function to reverse the top N elements
+ * of a given stack. So if the top of a stack has 
+ * [1,2,3] from bottom to top (i.e. 3 is at top,
+ * 2 immediately below, etc.) and you call
+ *
+ * reverse_stack(s, 3)
+ *
+ * Then the stack should now contain [3,2,1]
+ * at the top - i.e. the top should be 1, with
+ * 2 immediately below and so on.
+ *
+ * Score: 10 points. Based on tests passed.
+ */
+#use <conio>
+#use "./utils.c0"
+#use "./stack.c0"
+
+bool reverse_stack_precond(stack_t s, int n)
+{
+    return false; // TODO: Implement this.
+}
+
+bool reverse_stack_postcond(stack_t s, int n) 
+{
+    // Note: The stack has been modified already and not much can be done at
+    // this point to check correctness of the result. So these will be basic
+    // conditions only. Can you think of a way to handle this nevertheless?
+    return false; // TODO: Implement this.  
+}
+
+void reverse_stack(stack_t s, int n)
+    //@requires reverse_stack_precond(s, n);
+    //@ensures reverse_stack_postcond(s, n);
+{
+    // TODO: Implement this.
+}
+
+bool test_reverse_stack()
+{
+    return false; // TODO: Put in your tests here.
+}
+

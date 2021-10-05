@@ -1,0 +1,99 @@
+/*
+ * For this question, you'll be implementing some simple functions.
+ *
+ * Score: 10 points. Based on tests passed.
+ */
+#use <conio>
+#use "./utils.c0"
+
+typedef struct Node *tree_t;
+
+struct Node {
+    int val;
+    tree_t left;
+    tree_t right;
+};
+
+
+bool reduce_stack_precond(stack_t s, int n, int initial_depth)
+{
+    return false; // TODO: Implement this.
+}
+
+bool reduce_stack_postcond(stack_t s, int n, int initial_depth)
+{
+    return false; // TODO: Implement this.
+}
+
+
+// This is a declaration. An empty implementation is given below
+// for you to fill.
+void reduce_stack_helper(stack_t s, int n, int initial_depth);
+
+/*
+ * This function must add the n integers present on the stack and place the
+ * result on the stack. The added elements need to be removed before placing
+ * the result. Implement the reduce_one function first and implement this
+ * in terms of reduce_one.
+ */
+void reduce_stack(stack_t s, int n)
+{
+    reduce_stack_helper(s, n, stack_depth(s));
+}
+
+void reduce_stack_helper(stack_t s, int n, int initial_depth)
+    //@requires reduce_stack_precond(s, n, initial_depth);
+    //@ensures reduce_stack_postcond(s, n, initial_depth);
+{
+    // TODO: Implement this.
+}
+
+void reduce_one(stack_t s)
+    //@requires reduce_stack_precond(s, 1, stack_depth(s));
+{
+    // TODO: Implement this.
+}
+
+bool sliding_window_sum_precond(int [] array, int len, int N, int W)
+{
+    return false; // TODO: Implement this.
+}
+
+bool sliding_window_sum_postcond(int [] result, int len_result, int [] array, int len_array, int N, int W)
+{
+    return false; // TODO: Implement this.
+}
+
+/*
+ * A "sliding window sum" of an array of length N and a window length of W is
+ * given by adding values at indices [i,i+W) of the given array and placing the
+ * sum at index i of the result array. Note that this means the result array
+ * has to neessarily be shorter than the input if W > 0. The "counter" argument
+ * can be used to keep track of number of steps taken (if you want to).
+ *
+ * Place the result into the a new array. You can allocate any temporary
+ * storage you need.
+ */
+int []sliding_window_sum(int [] array, int N, int W, int *counter)
+    //@requires sliding_window_sum_precond(array, \length(array), N, W);
+    //@ensures sliding_window_sum_postcond(\result, \length(\result), array, \length(array), N, W);
+{ 
+    int [] result = alloc_array(int, N);
+    return result; // TODO: Replace function body with your implementation.
+}
+
+int sliding_window_sum_complexity(int N, int W)
+{
+    return 1; // TODO: Implement a function of N and W that represents the complexity of your
+              // sliding window sum operation.
+}
+
+bool sliding_window_sum_is_fastest()
+{
+    return false; // TODO: Change to "return true" if you believe you have the fastest algorithm. 
+}
+
+bool test_q4()
+{
+    return false; // TODO: Implement your test calculations here if you want to.
+}

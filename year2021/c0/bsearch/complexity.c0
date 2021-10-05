@@ -1,0 +1,61 @@
+#use <conio>
+
+// Linear search
+// Find the index of a given value in an int array,
+// within a certain range. If found, return the index. If not
+// found, return -1.
+int linear_search(int x, int [] a, int from_ix, int to_ix, int *steps)
+    //@requires from_ix >= 0 && from_ix <= \length(a);
+    //@requires to_ix >= from_ix && to_ix <= \length(a);
+    //@ensures (\result == -1 || (\result >= 0 && \result < \length(a) && a[\result] == x));
+{
+    (*steps) = (*steps) + 1;
+    if (from_ix == to_ix) {
+        return -1;
+    }
+
+    //@assert from_ix < to_ix;
+
+    (*steps) = (*steps) + 1;
+    if (a[from_ix] == x) {
+        return from_ix;
+    }
+
+    //@assert a[from_ix] != x;
+    (*steps) = (*steps) + 1 + 1;
+    return linear_search(x, a, from_ix+1, to_ix, steps);
+}
+
+int test(int n, int x) {
+
+    int [] a = alloc_array(int, n);
+    for (int i = 0; i < n; i++) {
+        a[i] = (i * 13739) % 391;
+    }
+
+    int *steps = alloc(int);
+    int result = linear_search(x, a, 0, n, steps);
+    print("result = ");
+    printint(result);
+    print("\n");
+    flush();
+    return *steps;
+}
+
+void perf_table(int n, int x) {
+    print("array_size\tsteps\n");
+    for (int i = 0; i < n; i++) {
+        int steps = test(i+1, x);
+        printint(i+1);
+        print("\t");
+        printint(steps);
+        print("\n");
+        flush();
+    }
+}
+
+
+
+
+
+

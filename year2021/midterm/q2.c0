@@ -1,0 +1,46 @@
+/*
+ * Copying a stack.
+ *
+ * Your task for this problem is to implement a "stack copying function".
+ * Given a stack (of integers), your function is expected to create
+ * a new stack which is an exact copy of the contents of the given
+ * stack. Upon return, the input stack should not have different values
+ * in it and must be in the same state that it was in when passed to the
+ * function (with respect to the contents).
+ *
+ * Note that you may want to write some extra helper functions to 
+ * implement what is required and that is fine. Just make sure you
+ * give them unique names within this collections of files.
+ *
+ * Score: 10 points. Based on tests passed.
+ */
+
+// A basic stack implementation is already provided for you for this
+// exercise. Look at the file to see the functions available to you.
+#use <conio>
+#use "./utils.c0"
+#use "./stack.c0"
+
+
+bool copy_stack_precond(stack_t s)
+{
+    return false; // TODO: Implement this.
+}
+
+bool copy_stack_postcond(stack_t result, stack_t s)
+{
+    return false; // TODO: Implement this.
+}
+
+stack_t copy_stack(stack_t s)
+    //@requires copy_stack_precond(s);
+    //@ensures copy_stack_postcond(\result, s);
+{
+    return NULL; // TODO: Replace this body with your code.
+}
+
+bool test_copy_stack()
+{
+    return false; // Write your tests here if you want to.
+}
+
