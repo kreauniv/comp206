@@ -1,0 +1,158 @@
+#use "./stack.h0"
+#use <conio>
+#use <string>
+
+typedef struct Tree *tree_t;
+
+struct Tree {
+    char op;
+    int value;
+    tree_t left;
+    tree_t right;
+};
+
+tree_t node(char op, int value, tree_t left, tree_t right) {
+    tree_t t = alloc(struct Tree);
+    t->op = op;
+    t->value = value;
+    t->left = left;
+    t->right = right;
+    return t;
+}
+
+tree_t tval(int value) {
+    return node('=', value, NULL, NULL);
+}
+
+tree_t op(char op, tree_t left, tree_t right) {
+    return node(op, 0, left, right);
+}
+
+tree_t sample_expr() {
+    // ((5+7)x3 - (17/3)*5) % 7
+    return op('%', op('-', op('*', 
+                                op('+',tval(5), tval(3)), 
+                                tval(3)), 
+                           op('*', op('/', tval(17), tval(3)), 
+                                   tval(5))), 
+                   tval(7));
+}
+
+void push_char(stack_t s, char c) {
+    char *cptr = alloc(char);
+    (*cptr) = c;
+    stack_push(s, (any_t)cptr);
+}
+
+void push_int(stack_t s, int i) {
+    int *iptr = alloc(int);
+    (*iptr) = i;
+    stack_push(s, (any_t)iptr);
+}
+
+char pop_char(stack_t s) {
+    char *cptr = (char*)stack_pop(s);
+    return *cptr;
+}
+
+int pop_int(stack_t s) {
+    int *iptr = (int*)stack_pop(s);
+    return *iptr;
+}
+
+void push_tree(stack_t s, tree_t t) {
+    stack_push(s, (any_t)t);
+}
+
+tree_t pop_tree(stack_t s) {
+    return (tree_t)stack_pop(s);
+}
+
+stack_t compile(tree_t t) {
+    stack_t op = make_stack(1);
+    stack_t s = make_stack(1);
+
+    push_tree(s, t);
+    while (!stack_is_empty(s)) {
+        tree_t lt = pop_tree(s);
+        if (lt->op == '=') {
+            push_int(op, lt->value);
+            push_char(op, lt->op);
+        } else {
+            push_tree(s, lt->right);
+            push_tree(s, lt->left);
+            push_char(op, lt->op);
+        }
+    }
+
+    return s;
+}
+
+int eval(stack_t op) {
+    stack_t v = make_stack(1);
+    while (!stack_is_empty(op)) {
+        char opc = pop_char(op);
+        if (opc == '=') {
+            push_int(v, pop_int(op));
+        } else {
+            int lval = pop_int(v);
+            int rval = pop_int(v);
+            int z = 0;
+            if (opc == '+') { z = lval + rval; }
+            else if (opc == '-') { z = lval - rval; }
+            else if (opc == '*') { z = lval * rval; }
+            else if (opc == '/') { z = lval / rval; }
+            else if (opc == '%') { z = lval % rval; }
+            push_int(v, z);
+        }
+    }
+
+    return pop_int(v);
+}
+
+int stackeval(tree_t t) {
+
+    stack_t s = compile(t);
+    stack_t v = make_stack(1);
+    stack_t op = make_stack(1);
+
+    push_tree(s, t);
+
+    while (!stack_is_empty(s)) {
+        tree_t lt = pop_tree(s);
+        if (lt->op == '=') {
+            push_int(op, lt->value);
+        } else {
+            push_tree(s, lt->right);
+            push_tree(s, lt->left);
+        }
+        push_char(op, lt->op);
+    }
+
+    while (!stack_is_empty(op)) {
+        char opc = pop_char(op);
+        if (opc == '=') {
+            stack_push(v, stack_pop(op));
+        } else {
+            int lval = pop_int(v);
+            int rval = pop_int(v);
+            int result = 0;
+            if (opc == '+') { result = lval + rval; }
+            else if (opc == '-') { result = lval - rval; }
+            else if (opc == '*') { result = lval * rval; }
+            else if (opc == '/') { result = lval / rval; }
+            else if (opc == '%') { result = lval % rval; }
+            push_int(v, result);
+        }
+    }
+
+    return pop_int(v);
+}
+
+int main() {
+    tree_t e = sample_expr();
+    int result = stackeval(e);
+    printint(result);
+    print("\n");
+    return 0;
+}

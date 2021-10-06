@@ -1,0 +1,152 @@
+
+#use <conio>
+#use "stack.h0"
+
+/*
+ * LIFO = Last In First Out
+ * FIFO = First In First Out = Queue
+ *
+ * queue_t make_queue(int length)
+ * void queue_push(queue_t q, int value);
+ * int queue_take(queue_t q);
+ *
+ */
+struct Stack {
+    any_t [] storage;
+    int capacity; // capacity = \length(storage)
+    int top; // there are `top` elements in the stack.
+};
+
+bool stack_is_valid(stack_t s)
+    //@requires s != NULL;
+    //@requires s->capacity == \length(s->storage);
+{
+    return s != NULL && s->top >= 0 && s->top <= s->capacity;
+}
+
+bool stack_is_empty(stack_t s)
+    //@requires stack_is_valid(s);
+{
+    return s->top == 0;
+}
+
+stack_t make_stack(int capacity)
+    //@requires capacity > 0;
+    //@ensures stack_is_valid(\result);
+{
+    stack_t s = alloc(struct Stack);
+    //@assert s != NULL;
+    s->top = 0;
+    s->storage = alloc_array(any_t, capacity);
+    s->capacity = capacity;
+    return s;
+}
+
+void stack_push(stack_t s, any_t value)
+    //@requires stack_is_valid(s);
+    //@ensures stack_is_valid(s);
+{
+    if (s->top == s->capacity) {
+        int new_capacity = s->capacity * 2;
+        any_t [] new_storage = alloc_array(any_t, new_capacity);
+        for (int i = 0; i < s->capacity; i++)
+            //@loop_invariant i >= 0;
+        {
+            new_storage[i] = s->storage[i];
+        }
+
+        s->storage = new_storage;
+        s->capacity = new_capacity;
+    }
+
+    //@assert s->top < s->capacity;
+    //@assert stack_is_valid(s);
+
+    s->storage[s->top] = value;
+    s->top = s->top + 1;
+}
+
+    
+any_t stack_pop(stack_t s)
+    //@requires stack_is_valid(s);
+    //@requires !stack_is_empty(s);
+    //@ensures stack_is_valid(s);
+{
+    any_t value = s->storage[s->top - 1];
+    s->top = s->top - 1;
+    return value;
+}
+
+
+int *mkint(int val) {
+    int *p = alloc(int);
+    (*p) = val;
+    return p;
+}
+
+bool test1() {
+    stack_t s = make_stack(10);
+    stack_push(s, (any_t)mkint(100));
+    stack_push(s, (any_t)mkint(200));
+    stack_push(s, (any_t)mkint(300));
+    
+    while (!stack_is_empty(s)) {
+        printint(*(int*)stack_pop(s));
+        print("\n");
+        flush();
+    }
+
+    return true;
+}
+
+struct Pair {
+    int v1;
+    int v2;
+};
+
+bool testStruct() {
+    struct Pair *p = alloc(struct Pair);
+    p->v1 = 42;
+    p->v2 = 24;
+
+    stack_t s = make_stack(2);
+    stack_push(s, (any_t)p);
+
+    // (target type)<value-expression>
+
+    struct Pair *p2 = (struct Pair *)stack_pop(s);
+    printint(p2->v1);
+    print("\n");
+    printint(p2->v2);
+    print("\n");
+    return true;
+}
+
+bool testFail() 
+{
+    struct Pair *p = alloc(struct Pair);
+    p->v1 = 42;
+    p->v2 = 24;
+
+    stack_t s = make_stack(2);
+    stack_push(s, (any_t)p);
+
+
+    // What's on the stack is a pointer to a struct Pair.
+
+    // (target type)<value-expression>
+
+    any_t a = stack_pop(s);
+    //@assert \hastag(struct Pair *, a);
+
+    struct Pair *p2 = (struct Pair *)a;
+    printint(p2->v1);
+    print("\n");
+    return true;
+}
+
+int main_stack() {
+    testFail();
+    return 0;
+}
+

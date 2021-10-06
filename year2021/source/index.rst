@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Principles of programming I: Imperative computation's documentation!
-===============================================================================
+Welcome to Principles of programming I: Imperative computation!
+===============================================================
 
 .. toctree::
    :maxdepth: 2

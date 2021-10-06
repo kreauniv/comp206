@@ -1,0 +1,24 @@
+
+// Stack of X
+//
+// X can be int
+// X can be char
+// X can be struct Blah
+// X can be an array
+// X can be a pointer to struct Something
+
+
+// Stack of X
+// sizeof(X) 
+// For every type X, the type of pointer to X is "X*".
+// Don't know sizeof(X), we always know sizeof(X*).
+
+typedef void *any_t;
+
+typedef struct Stack *stack_t;
+
+stack_t make_stack(int capacity);
+void stack_push(stack_t s, any_t value);
+any_t stack_pop(stack_t s);
+bool stack_is_empty(stack_t s);
+bool stack_is_valid(stack_t s);

@@ -1,0 +1,88 @@
+
+#use <conio>
+
+typedef struct Expr *expr_t;
+
+struct Expr {
+	char op; // Can be one of "+-*/~="
+	int val;
+	expr_t left;
+	expr_t right;
+};
+
+
+bool is_valid_expr(expr_t e)
+//@requires e != NULL;
+{
+	bool result = ((
+		(  e->op == '+'
+		|| e->op == '-'
+		|| e->op == '*'
+		|| e->op == '/'
+		|| e->op == '%'
+		) 
+		&& is_valid_expr(e->left) 
+		&& is_valid_expr(e->right)
+	) 
+	|| (e->op == '~' && is_valid_expr(e->left))
+	|| (e->op == '='));
+	return result;
+}
+
+expr_t mkval(int val)
+//@ensures is_valid_expr(\result);
+{
+	expr_t e = alloc(struct Expr);
+	e->op = '=';
+	e->val = val;
+	return e;
+}
+
+expr_t binop(expr_t left, char op, expr_t right)
+//@requires (op == '-' || op == '+' || op == '*' || op == '/' || op == '%');
+//@requires is_valid_expr(left) && is_valid_expr(right);
+//@ensures is_valid_expr(\result);
+{
+	expr_t e = alloc(struct Expr);
+	e->op = op;
+	e->left = left;
+	e->right = right;
+	return e;
+}
+
+expr_t unop(char op, expr_t operand)
+//@requires op == '~';
+//@requires is_valid_expr(operand);
+//@ensures is_valid_expr(\result);
+{
+	expr_t e = alloc(struct Expr);
+	e->op = op;
+	e->left = operand;
+	return e;
+}
+
+int eval(expr_t e)
+//@requires is_valid_expr(e);
+{
+	if (e->op == '=') { return e->val; }
+	if (e->op == '~') { return -eval(e->left); }
+	if (e->op == '+') { return eval(e->left) + eval(e->right); }
+	if (e->op == '-') { return eval(e->left) - eval(e->right); }
+	if (e->op == '*') { return eval(e->left) * eval(e->right); }
+	if (e->op == '/') { return eval(e->left) / eval(e->right); }
+	if (e->op == '%') { return eval(e->left) % eval(e->right); }
+	return 0;
+}
+
+bool test() {
+	// (23 + 45 * 3) % 17 - 5
+	expr_t e = binop(binop(binop(mkval(23), '+', binop(mkval(45), '*', mkval(3))), '%', mkval(17)), '-', mkval(5));
+	int val = eval(e);
+	int actual = ((23 + 45 * 3) % 17 - 5);
+	print("actual = ");
+	printint(actual);
+	print("\ncalculated = ");
+	printint(val);
+	print("\n");
+	return val == actual;
+}

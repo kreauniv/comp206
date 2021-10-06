@@ -1,0 +1,15 @@
+
+# Call with one argument giving the tmux session name.
+# This sets up three panes, the left oen suitable for
+# code editing, the right top one connected via
+# ssh to comp206 and the right bottom small one
+# acting as a padding to show camera video.
+session_name=$1
+tmux new-session -s $session_name \; \
+    split-window -h \; \
+    send-keys 'ssh comp206' C-m 'clear' C-m \; \
+    resize-pane -x '70%' -t 0 \; \
+    split-window -v \; \
+    resize-pane -y '25%' -t 2 \; \
+    send-keys 'PROMPT="# "' C-m 'clear' C-m \; \
+    select-pane -t 0

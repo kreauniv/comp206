@@ -1,0 +1,85 @@
+
+// x + y * z - 43
+// y * z
+// x + ^
+// ^ - 43
+
+// Forward declaration.
+typedef struct Node *tree_t;
+
+struct Node {
+    char op; // _+*/=
+    int value;
+    tree_t left; // Recursive pointer embedding.
+    tree_t right;
+};
+
+
+bool is_valid_node(tree_t t) {
+    return t != NULL;
+}
+
+// Rewrite this using a loop.
+// Hint: Use a stack to evaluate.
+int eval(tree_t t) 
+    //@requires is_valid_node(t);
+{
+    if (t->op == '=') { return t->value; }
+    if (t->op == '+') { return eval(t->left) + eval(t->right); }
+    if (t->op == '*') { return eval(t->left) * eval(t->right); }
+    if (t->op == '-') { return eval(t->left) - eval(t->right); }
+    if (t->op == '/') { return eval(t->left) / eval(t->right); }
+    if (t->op == '%') { return eval(t->left) % eval(t->right); }
+
+    //@assert false;
+    return 0;
+}
+
+tree_t konst(int val) {
+    tree_t n = alloc(struct Node);
+    n->op = '=';
+    n->value = val;
+    return n;
+}
+
+tree_t plus(tree_t t1, tree_t t2) {
+    tree_t n = alloc(struct Node);
+    n->op = '+';
+    n->left = t1;
+    n->right = t2;
+    return n;
+}
+
+tree_t minus(tree_t t1, tree_t t2) {
+    tree_t n = alloc(struct Node);
+    n->op = '-';
+    n->left = t1;
+    n->right = t2;
+    return n;
+}
+
+tree_t mult(tree_t t1, tree_t t2) {
+    tree_t n = alloc(struct Node);
+    n->op = '*';
+    n->left = t1;
+    n->right = t2;
+    return n;
+}
+
+
+tree_t divide(tree_t t1, tree_t t2) {
+    tree_t n = alloc(struct Node);
+    n->op = '/';
+    n->left = t1;
+    n->right = t2;
+    return n;
+}
+
+
+tree_t modulo(tree_t t1, tree_t t2) {
+    tree_t n = alloc(struct Node);
+    n->op = '%';
+    n->left = t1;
+    n->right = t2;
+    return n;
+}

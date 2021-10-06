@@ -1,0 +1,88 @@
+
+// Unbounded arrays
+//
+// 1. Allocate with initial capacity
+// 2. Put a value at a given index
+// 3. Get a value at a given index
+// 4. Append a given value to the end of the array
+//
+
+typedef struct UBArray *ubarray_t;
+
+struct UBArray {
+    int [] storage;
+    int capacity;
+    int length; // length <= capacity
+};
+
+ubarray_t make_ubarray(int capacity)
+    //@requires capacity > 0;
+    //@ensures ubarray_is_valid(\result);
+{
+    ubarray_t a = alloc(struct UBArray);
+    a->storage = alloc_array(int, capacity);
+    a->capacity = capacity;
+    a->length = 0;
+    return a;
+}
+
+int ubarray_get(ubarray_t a, int index)
+    //@requires ubarray_is_valid(a);
+    //@requires index >= 0 && index < ubarray_length(a);
+    //@ensures ubarray_is_valid(a);
+{
+    return a->storage[index];
+}
+
+void ubarray_put(ubarray_t a, int index, int value)
+    //@requires ubarray_is_valid(a);
+    //@requires index >= 0 && index <= ubarray_length(a);
+    //@ensures ubarray_is_valid(a);
+{
+    if (index == a->length) {
+        // worst case O(n)
+        ubarray_append(a, value);
+        return;
+    }
+
+    // O(1)
+    a->storage[index] = value;
+}
+
+void ubarray_append(ubarray_t a, int value)
+    //@requires ubarray_is_valid(a);
+    //@ensures ubarray_is_valid(a);
+{
+    if (a->length == a->capacity) {
+        // This part is O(n) where n is length/capacity.
+        int newcapacity = 2 * a->capacity;
+        int [] newstorage = alloc_array(int, newcapacity);
+        for (int i = 0; i < capacity; i++) {
+            newstorage[i] = a->storage[i];
+        }
+
+        a->capacity = newcapacity;
+        a->storage = newstorage;
+
+        //@assert a->length < a->capacity;
+    }
+
+    //@assert a->length < a->capacity;
+    // This part is O(1)
+    a->storage[a->length] = value;
+    a->length++;
+}
+
+int ubarray_length(ubarray_t a)
+    //@requires ubarray_is_valid(a);
+    //@ensures \result <= a->capacity;
+{
+    return a->length;
+}
+
+bool ubarray_is_valid(ubarray_t a) 
+    //@requires a != NULL && a->capacity == \length(a->storage);
+{
+    return a != NULL && a->length <= a->capacity;
+}
+

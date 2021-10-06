@@ -1,0 +1,89 @@
+#use <conio>
+
+// Fib(0) = 0
+// Fib(1) = 1
+// Fib(n) = Fib(n-1) + Fib(n-2)
+
+
+int fibonacci(int n, int *steps) {    
+    (*steps) += 1; // Comparison
+    if (n < 2) { return n; }
+
+    (*steps) += 1; // n-1
+    (*steps) += 1; // n-2
+    (*steps) += 1; // first recursive call
+    (*steps) += 1; // second recursive call
+    return fibonacci(n-1, steps) + fibonacci(n-2, steps);
+}
+
+struct FibState {
+    int n1;
+    int n2;
+};
+
+void fibstep(struct FibState *state, int *steps) {
+    int next = state->n1 + state->n2;
+    state->n1 = state->n2;
+    state->n2 = next;
+    (*steps) += 3;
+}
+
+int fibn(int n, int *steps) {
+    struct FibState *state = alloc(struct FibState);
+    state->n1 = 0;
+    state->n2 = 1;
+
+    (*steps)++;
+    if (n < 2) { return n; }
+
+    while (n > 1) {
+        (*steps)++; // Comparison.
+        fibstep(state, steps);
+        n--;
+        (*steps)++; // Decrement
+    }
+
+    return state->n2;
+}
+
+
+
+// fib(5) => fib(4) + fib(3)*
+// fib(4) => fib(3)* + fib(2)*
+// fib(3) =>> fib(2)* + fib(1)*
+// fib(2) => fib(1)* + fib(0)
+void tabulate_fib(int n) {
+
+    print("n\tfib\tsteps\n");
+    int laststep = 1;
+    for (int i = 0; i < n; i++) {
+        int *steps = alloc(int);
+        int f = fibn(i, steps);
+        printint(i);
+        print("\t");
+        printint(f);
+        print("\t");
+        printint(*steps);
+        print("\t");
+        printint(100 * (*steps) / (i+1));
+        print("\n");
+        flush();
+
+        laststep = (*steps);
+    }
+}
+
+// O(1.6^n) -> O(n)
+
+// 1) machine / architecture independence.
+// 2) large value performance - asymptotic performance.
+// 
+// worst case performance.
+// 
+// O(1) = constant time
+// O(log(n)) = logarithmic time
+// O(n) = linear time
+// O(n log(n)) = quicksort / mergesort
+// O(n^2) = quadratic ... cubic ...
+
+
