@@ -293,7 +293,10 @@ height of the node once the structure is stable.
     }
 
     // The recursive definition of "height" of a tree.
-    int calc_height(avltree t) {
+    int calc_height(avltree t) 
+        //@requires t != NULL
+        //@ensures \result >= height(t->left) && \result >= height(t->right)
+    {
         if (t == NULL) { return 0; }
         int h1 = calc_height(t->left);
         int h2 = calc_height(t->right);
@@ -307,10 +310,21 @@ height of the node once the structure is stable.
 
 
 We now need procedures to check the ordering criterion and the balancing criterion.
-(work-in-progress unchecked stuff below)
+
+.. WARNING:: The code below is unchecked and more of a sketch than tested and ready code.
+   I figured I'd rather share with you early than wait to fully check it. So if any of you
+   want to validate it, the help is much appreciated. Note that the contract statements
+   are not terminated with a ";". This is a temporary hack to make the code show up nicely
+   coloured for easy reading. If you're copying the code to try it, please do add the 
+   missing ";" for the contract lines.
 
 .. code-block:: C
 
+    int maxint(int m1, int m2) {
+        if (m1 > m2) { return m1; } else { return m2; }
+    }
+
+    // Computes the largest value of the key in the given tree or subtree.
     int maxkey(avltree t)
         //@requires t != NULL
     {
@@ -326,6 +340,7 @@ We now need procedures to check the ordering criterion and the balancing criteri
         return key;
     }
 
+    // The counterpart of maxkey, minkey computes the minimum key.
     int minkey(avltree t)
         //@requires t != NULL
     {
@@ -341,6 +356,10 @@ We now need procedures to check the ordering criterion and the balancing criteri
         return key;
     }
         
+    // Returns true if this node meets the ordering criterion.
+    // It does not make any statement about its children ... only
+    // that the particular given node (argument) meets the ordering
+    // criterion.
     bool is_ordered(avltree t) {
         if (t == NULL) { return true; }
         if (t->left != NULL) {
@@ -356,17 +375,30 @@ We now need procedures to check the ordering criterion and the balancing criteri
         return true;
     }
 
+    int balance_factor(avltree t) 
+        //@requires t != NULL
+    {
+        return height(t->right) - height(t->left);
+    }
+
+    // Checks that a given tree node meets the balancing
+    // criterion, assuming that the height of all the children
+    // are already calculated.
     bool is_balanced(avltree t) {
         if (t == NULL) { return true; }
-        int bfactor = height(t->right) - height(t->left);
+        int bfactor = balance_factor(t);
         return bfactor >= -1 && bfactor <= 1;
     }
 
+    // Checks that all nodes in the tree meet the balancing and
+    // ordering criteria for the tree to be ab AVL tree.
     bool is_avltree(avltree t) {
         if (t == NULL) { return true; }
         return is_balanced(t) && is_ordered(t) && is_avltree(t->left) && is_avltree(t->right);
     }
 
+    // Computes the height of this node from the already computed heights
+    // of its children.
     avltree fix_height(avltree t) {
         if (t == NULL) { return t; }
         int h1 = height(t->left);
@@ -378,21 +410,11 @@ We now need procedures to check the ordering criterion and the balancing criteri
         return t;
     }
         
-    avltree update_height(avltree t, int depth)
-        //@requires t != NULL
-        //@requires depth >= 1
-    {
-        if (depth > 1) {
-            if (t->left != NULL) { 
-                update_height(t->left, depth-1); 
-            }
-            if (t->right != NULL) { 
-                update_height(t->right, depth-1); 
-            }
-        }
-        return fix_height(t);
-    }
-        
+    // Performs a "left rotation" operation on the given
+    // node and returns the new root. The following few functions
+    // all have the same shape - they perform a manipulation on the
+    // tree, fix the height of the nodes after the manipulation,
+    // and return the new root.
     avltree rotate_left(avltree u)
         //@requires u != NULL
     {
@@ -447,12 +469,9 @@ We now need procedures to check the ordering criterion and the balancing criteri
         return fix_height(v);
     }
 
-    int balance_factor(avltree t) 
-        //@requires t != NULL
-    {
-        return height(t->right) - height(t->left);
-    }
-
+    // Applies the discussed rotation manipulations to
+    // ensure that the given node ends up balanced.
+    // Assumes that its children are balanced already.
     avltree balance_node(avltree t)
         //@requires t != NULL
     {
@@ -478,6 +497,7 @@ We now need procedures to check the ordering criterion and the balancing criteri
         return t;
     }
 
+    // Make a node that associates the given key with the given value.
     avltree mk_avlnode(int key, void *value) {
         avltree n       = (avltree)alloc(struct Node);
         n->key          = key;
@@ -488,6 +508,8 @@ We now need procedures to check the ordering criterion and the balancing criteri
         return n;
     }
 
+    // Lookup the node in the tree with the key, or return
+    // NULL if no such node exists.
     avltree avltree_get(avltree t, int key) {
         if (t == NULL) { return NULL; }
         if (t->key == key) { return t; }
@@ -496,6 +518,11 @@ We now need procedures to check the ordering criterion and the balancing criteri
         return NULL; // Unreachable.
     }
 
+    // Sets a value to be associated with the given key.
+    // If the key already exists in the tree, it'll change
+    // the value stored in the node. If it doesn't, it'll
+    // add a new node at an appropriate point and ensure that
+    // the tree remains balanced.
     avltree avltree_set(avltree t, int key, void *value) {
         if (t == NULL) { return NULL; }
         if (t->key == key) { 
@@ -521,3 +548,5 @@ We now need procedures to check the ordering criterion and the balancing criteri
 
         return balance_node(t);
     }
+
+
