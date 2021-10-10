@@ -131,9 +131,9 @@ void test_q1_interpolate_postcond(struct ScoreKeeper *_s) {
     xy_t p2 = xy(20,200);
     result(_s, "interpolate_postcond", "x < x1", 1, 1, interpolate_postcond(100, p1, p2, 5) == true);
     result(_s, "interpolate_postcond", "x == x1", 1, 1, interpolate_postcond(100, p1, p2, 10) == true);
-    result(_s, "interpolate_postcond", "x > x1 && x < x2", 1, 1, interpolate_postcond(120, p1, p2, 12) == true);
-    result(_s, "interpolate_postcond", "x > x1 && x < x2", 1, 1, interpolate_postcond(170, p1, p2, 17) == true);
-    result(_s, "interpolate_postcond", "x > x1 && x < x2", 1, 1, interpolate_postcond(-150, xy(10, -100), xy(20, -200), 15) == true);
+    result(_s, "interpolate_postcond", "(a) x > x1 && x < x2", 1, 1, interpolate_postcond(120, p1, p2, 12) == true);
+    result(_s, "interpolate_postcond", "(b) x > x1 && x < x2", 1, 1, interpolate_postcond(170, p1, p2, 17) == true);
+    result(_s, "interpolate_postcond", "(c) x > x1 && x < x2", 1, 1, interpolate_postcond(-150, xy(10, -100), xy(20, -200), 15) == true);
     result(_s, "interpolate_postcond", "x > x2", 1, 1, interpolate_postcond(200, p1, p2, 30) == true);
 }
 
