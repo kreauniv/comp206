@@ -10,6 +10,7 @@ Welcome to Principles of programming I: Imperative computation!
    :maxdepth: 2
    :caption: Contents:
 
+   welcome
    intro
    warmup
    reasoning
