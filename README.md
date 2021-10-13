@@ -27,3 +27,8 @@ in it. You're also welcome to install the compiler (get it from here -
 https://bitbucket.org/c0-lang/docs/wiki/Downloads (Links to an external 
 site.)) on your own laptops/desktops.
 
+You can download the course notes as a single PDF from the [releases][] page.
+
+[releases]: https://github.com/kreauniv/comp206/releases
+
+
