@@ -21,4 +21,6 @@ Welcome to Principles of programming I: Imperative computation!
    sorting
    binsearch
    avl
+   lists
+   c
 
