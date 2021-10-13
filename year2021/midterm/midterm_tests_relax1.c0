@@ -1,0 +1,616 @@
+
+#use <rand>
+#use <conio>
+#use <util>
+#use "./q1.c0"
+#use "./q2.c0"
+#use "./q3.c0"
+#use "./q4.c0"
+#use "./stack.c0"
+#use "./utils.c0"
+
+/* Functions to test --
+
+// Q1
+bool interpolate_precond(xy_t xy1, xy_t xy2, int x);
+bool interpolate_postcond(int result, xy_t xy1, xy_t xy2, int x);
+int interpolate(xy_t xy1, xy_t xy2, int x);
+bool lookup_precond(xy_t [] table, int len, int N, int x);
+bool lookup_postcond(int result, xy_t [] table, int len, int N, int x);
+int lookup(xy_t [] table, int N, int x, int *counter);
+int lookup_complexity(int N);
+bool lookup_is_best_algorithm(); // Indicator
+
+// Q2
+bool copy_stack_precond(stack_t s);
+bool copy_stack_postcond(stack_t result, stack_t s);
+stack_t copy_stack(stack_t s);
+
+// Q3
+bool reverse_stack_precond(stack_t s, int n);
+bool reverse_stack_postcond(stack_t s, int n);
+void reverse_stack(stack_t s, int n);
+
+// Q4
+bool reduce_stack_precond(stack_t s, int n, int initial_depth);
+bool reduce_stack_postcond(stack_t s, int n, int initial_depth);
+void reduce_stack(stack_t s, int n);
+void reduce_stack_helper(stack_t s, int n, int initial_depth);
+void reduce_one(stack_t s);
+bool sliding_window_sum_precond(int [] array, int len, int N, int W);
+bool sliding_window_sum_postcond(int [] result, int len_result, int [] array, int len_array, int N, int W);
+int []sliding_window_sum(int [] array, int N, int W, int *counter);
+int sliding_window_sum_complexity(int N, int W);
+bool sliding_window_sum_is_fastest(); // Indicator
+
+*/
+
+// Q1
+xy_t xy(int x, int y) {
+    xy_t p = alloc(struct XYPair);
+    p->x = x;
+    p->y = y;
+    return p;
+}
+
+xy_t [] _linear_lookup_table(int N, int xfrom, int xstep, int a, int b) {
+    xy_t [] table = alloc_array(xy_t, N);
+    for (int i = 0; i < N; i++) {
+        int x = xfrom + i * xstep;
+        table[i] = xy(x, a + b * x);
+    }
+    return table;
+}
+
+xy_t [] _random_lookup_table(int N, int xfrom, int xstep, int yfrom, int yto, rand_t r) {
+    xy_t [] table = alloc_array(xy_t, N);
+    for (int i = 0; i < N; i++) {
+        int x = xfrom + i * xstep;
+        int dy = yto - yfrom;
+        int y = yfrom + ((rand(r) % dy) + dy) % dy;
+        table[i] = xy(x, y);
+    }
+    return table;
+}
+
+bool _equal_tables(xy_t [] t1, xy_t [] t2, int N) 
+    //@requires \length(t1) == \length(t2) && \length(t1) == N;
+{
+    for (int i = 0; i < N; i++) {
+        if (t1[i]->x != t2[i]->x || t1[i]->y != t2[i]->y) {
+            return false;
+        }
+    }
+    return true;
+}
+
+struct ScoreKeeper {
+    int score;
+    int maxscore;
+};
+
+void _result(struct ScoreKeeper *s, string fn, string desc, int score, int maxscore, bool passed) {
+    print(fn);
+    print("[");
+    print(desc);
+    print("]: ");
+    if (passed) {
+        printint(score);
+        s->score += score;
+    } else {
+        printint(0);
+    }
+    print(" of ");
+    printint(maxscore);
+    print("\n");
+    flush();
+
+    s->maxscore += maxscore;
+}
+
+bool interpolate_precond(xy_t xy1, xy_t xy2, int x);
+
+void _test_q1_interpolate_precond(struct ScoreKeeper *_s) {
+    xy_t p1 = xy(0, 10);
+    xy_t p2 = xy(1, 20);
+
+    //_result(_s, "interpolate_precond", "xy1 != NULL", 1, 1, interpolate_precond(NULL, p2, -5) == false);
+    _result(_s, "interpolate_precond", "xy1 != NULL", 1, 1, false);
+    //_result(_s, "interpolate_precond", "xy2 != NULL", 1, 1, interpolate_precond(p1, NULL, -5) == false);
+    _result(_s, "interpolate_precond", "xy2 != NULL", 1, 1, false);
+    //_result(_s, "interpolate_precond", "xy1/xy2 != NULL", 1, 1, interpolate_precond(NULL, NULL, -5) == false);
+    _result(_s, "interpolate_precond", "xy1/xy2 != NULL", 1, 1, false);
+
+    _result(_s, "interpolate_precond", "invalid x ordering 1", 1, 1, interpolate_precond(p2, p1, -5) == false);
+    _result(_s, "interpolate_precond", "invalid x ordering 2", 1, 1, interpolate_precond(p2, p1, 1) == false);
+    _result(_s, "interpolate_precond", "invalid x ordering 3", 1, 1, interpolate_precond(p2, p1, 5) == false);
+    _result(_s, "interpolate_precond", "valid x ordering 1", 1, 1, interpolate_precond(p1, p2, -5) == true);
+    _result(_s, "interpolate_precond", "valid x ordering 2", 1, 1, interpolate_precond(p1, p2, 1) == true);
+    _result(_s, "interpolate_precond", "valid x ordering 3", 1, 1, interpolate_precond(p1, p2, 5) == true);
+}
+
+bool interpolate_postcond(int result, xy_t xy1, xy_t xy2, int x);
+
+void _test_q1_interpolate_postcond(struct ScoreKeeper *_s) {
+    xy_t p1 = xy(10,100);
+    xy_t p2 = xy(20,200);
+    _result(_s, "interpolate_postcond", "x < x1", 1, 1, interpolate_postcond(100, p1, p2, 5) == true);
+    _result(_s, "interpolate_postcond", "x == x1", 1, 1, interpolate_postcond(100, p1, p2, 10) == true);
+    _result(_s, "interpolate_postcond", "(a) x > x1 && x < x2", 1, 1, interpolate_postcond(120, p1, p2, 12) == true);
+    _result(_s, "interpolate_postcond", "(b) x > x1 && x < x2", 1, 1, interpolate_postcond(170, p1, p2, 17) == true);
+    _result(_s, "interpolate_postcond", "(c) x > x1 && x < x2", 1, 1, interpolate_postcond(-150, xy(10, -100), xy(20, -200), 15) == true);
+    _result(_s, "interpolate_postcond", "x > x2", 1, 1, interpolate_postcond(200, p1, p2, 30) == true);
+}
+
+void _test_q1_interpolate(struct ScoreKeeper *_s) {
+    _test_q1_interpolate_precond(_s);
+    _test_q1_interpolate_postcond(_s);
+    xy_t p1 = xy(10,100);
+    xy_t p2 = xy(20,200);
+    _result(_s, "interpolate", "x < x1", 1, 1, interpolate(p1, p2, 5) == 100);
+    _result(_s, "interpolate", "x == x1", 1, 1, interpolate(p1, p2, 10) == 100);
+    _result(_s, "interpolate", "x > x1 && x < x2", 1, 1, interpolate(p1, p2, 12) == 120);
+    _result(_s, "interpolate", "x > x1 && x < x2", 1, 1, interpolate(p1, p2, 17) == 170);
+    _result(_s, "interpolate", "x > x1 && x < x2", 1, 1, interpolate(xy(10, -100), xy(20, -200), 15) == -150);
+    _result(_s, "interpolate", "x > x2", 1, 1, interpolate(p1, p2, 30) == 200);
+}
+
+/*
+bool lookup_precond(xy_t [] table, int len, int N, int x);
+bool lookup_postcond(int result, xy_t [] table, int len, int N, int x);
+int lookup(xy_t [] table, int N, int x, int *counter);
+int lookup_complexity(int N);
+bool lookup_is_best_algorithm(); // Indicator
+*/
+
+xy_t []_discont(int x1, int x2, int x3, int y1, int y2, int y3, int y4) {
+    xy_t []table = alloc_array(xy_t, 4);
+    table[0] = xy(x1,y1);
+    table[1] = xy(x2,y2);
+    table[2] = xy(x2,y3);
+    table[3] = xy(x3,y4);
+    return table;
+}
+
+xy_t []_discont2(int x1, int x2, int x3, int y1, int y2, int y3, int y4) {
+    xy_t []table = alloc_array(xy_t, 5);
+    table[0] = xy(x1,y1);
+    table[1] = xy(x2,y2);
+    table[2] = xy(x2,(y2+y3)/2);
+    table[3] = xy(x2,y3);
+    table[4] = xy(x3,y4);
+    return table;
+}
+
+void _test_q1_lookup(struct ScoreKeeper *_s) {
+    int len = 10;
+    xy_t []lin = _linear_lookup_table(len, 10, 10, 100, 100);
+    int *counter = alloc(int);
+    (*counter) = 0;
+    xy_t []d = _discont(10,20,30,100,200,300,400);
+    xy_t []d2 = _discont2(10,20,30,100,200,300,400);
+
+    _result(_s, "lookup_precond", "N <= len", 1, 1, lookup_precond(lin, len, 5, 20) == true);
+    _result(_s, "lookup_precond", "N <= len", 1, 1, lookup_precond(lin, len, 15, 20) == false);
+    _result(_s, "lookup_precond", "N <= len", 1, 1, lookup_precond(lin, len, 11, 20) == false);
+    _result(_s, "lookup_precond", "N >= 0", 1, 1, lookup_precond(lin, len, -5, 20) == false);
+    _result(_s, "lookup_postcond", "x < xmin", 1, 1, lookup_postcond(100, lin, len, len, 0) == true);
+    _result(_s, "lookup_postcond", "x == xmin", 1, 1, lookup_postcond(100, lin, len, len, 10) == true);
+    _result(_s, "lookup_postcond", "x > xmin && x < xmax", 1, 1, lookup_postcond(5100, lin, len, len, 50) == true);
+    _result(_s, "lookup_postcond", "x > xmin && x < xmax", 1, 1, lookup_postcond(5200, lin, len, len, 51) == true);
+    _result(_s, "lookup_postcond", "x == xmax", 1, 1, lookup_postcond(9100, lin, len, len, 90) == true);
+    _result(_s, "lookup_postcond", "x > xmax", 1, 1, lookup_postcond(9100, lin, len, len, 100) == true);
+    _result(_s, "lookup_postcond", "before discontinuity", 1, 1, true == lookup_postcond(190, d, 4, 4, 19));
+    _result(_s, "lookup_postcond", "at discontinuity", 1, 1, true == lookup_postcond(300, d, 4, 4, 20));
+    _result(_s, "lookup_postcond", "at double discontinuity", 1, 1, true == lookup_postcond(300, d2, 4, 4, 20));
+    _result(_s, "lookup_postcond", "beyond discontinuity", 1, 1, true == lookup_postcond(350, d, 4, 4, 25));
+    _result(_s, "lookup", "x < xmin", 1, 1, 100 == lookup(lin, len, 0, counter));
+    _result(_s, "lookup", "x == xmin", 1, 1, 100 == lookup(lin, len, 10, counter));
+    _result(_s, "lookup", "x > xmin && x < xmax", 1, 1, 5100 == lookup(lin, len, 50, counter));
+    _result(_s, "lookup", "x > xmin && x < xmax", 1, 1, 5200 == lookup(lin, len, 51, counter));
+    _result(_s, "lookup", "x == xmax", 1, 1, 9100 == lookup(lin, len, 90, counter));
+    _result(_s, "lookup", "x > xmax", 1, 1, 9100 == lookup(lin, len, 100, counter));
+    _result(_s, "lookup", "before discontinuity", 1, 1, 190 == lookup(d, 4, 19, counter));
+    _result(_s, "lookup", "at discontinuity", 1, 1, 300 == lookup(d, 4, 20, counter));
+    _result(_s, "lookup", "at double discontinuity", 1, 1, 300 == lookup(d2, 4, 20, counter));
+    _result(_s, "lookup", "beyond discontinuity", 1, 1, 350 == lookup(d, 4, 25, counter));
+}
+
+void _test_q1_lookup_complexity(struct ScoreKeeper *_s) {
+    int N = 10;
+    int [] lens = alloc_array(int, N);
+    int [] computed = alloc_array(int, N);
+    int [] measured = alloc_array(int, N);
+    int [] ratio = alloc_array(int, N);
+    int *counter = alloc(int);
+
+    int len = 20;
+    int factor = 15;
+    int total = 0;
+
+    // You get 2 points if you measured performance.
+    // You get 2 more points if your measurement and estimate matched.
+    print("lookup_table_complexity[");
+    for (int i = 0; i < N; i++) {
+        xy_t []lin = _linear_lookup_table(len, 10, 10, 100, 100);
+
+        (*counter) = 0;
+        int steps = 5;
+        for (int j = 1; j <= steps; j++) {
+            int x = j * len / (steps+1);
+            lookup(lin, len, x, counter);
+        }
+        (*counter) = (*counter) / steps;
+        lens[i] = len;
+        measured[i] = (*counter);
+        computed[i] = lookup_complexity(len);
+
+        if (computed[i] < log(len)-1) {
+            // Must be at least logarithmic.
+            computed[i] = 0;
+        }
+        if (computed[i] > 0 && measured[i] > 0) {
+            ratio[i] = measured[i] * 10 / computed[i];
+        } else {
+            ratio[i] = -1;
+        }
+        total = total + measured[i];
+        len = len * factor / 10;
+    }
+    for (int i = 0; i < N; i++) {
+        if (ratio[i] < 0) { print("NA"); }
+        else { printint(ratio[i]); }
+        print("@");
+        printint(lens[i]);
+        if (i+1 < N) { print(" "); }
+    }
+    print("]: ");
+    int score = 0;
+    if (total > 0) { score = score + 2; }
+    if (ratio[N-1] > 0 && ratio[0] > 0 && ratio[N-1] / min(ratio[0], ratio[N-1]) == 1) {
+        score = score + 2;
+    }
+
+    printint(score);
+    print(" of ");
+    printint(4);
+    print("\n");
+    flush();
+    _s->score += score;
+    _s->maxscore += 4;
+}
+
+// Q2
+
+stack_t _empty_stack() {
+    return make_stack();
+}
+
+stack_t _invalid_stack() {
+    stack_t s = alloc(struct Stack);
+    s->capacity = 1;
+    s->storage = alloc_array(int, s->capacity);
+    s->top = s->capacity + 10;
+    return s;
+}
+
+bool _equal_stacks(stack_t s1, stack_t s2) {
+    if (s1 == s2) { return true; }
+    if (s1 != NULL && s2 != NULL) {
+        if (s1->top != s2->top) { return false; }
+        for (int i = 0; i < s1->top; i++) {
+            if (s1->storage[i] != s2->storage[i]) { return false; }
+        }
+        return true;
+    }
+    return false;
+}
+
+bool _equal_stacktops(int N, stack_t s1, stack_t s2) {
+    if (s1 == s2) { return true; }
+    if (s1 != NULL && s2 != NULL) {
+        int m = min(s1->top, s2->top);
+        if (N > m) { return false; }
+        for (int i = 0; i < N; i++) {
+            if (s1->storage[s1->top - i] != s2->storage[s2->top - i]) { return false; }
+        }
+        return true;
+    }
+    return false;
+}
+
+stack_t _seq(int N) {
+    stack_t s = make_stack();
+    for (int i = 0; i < N; i++) {
+        stack_push(s, 10 * i);
+    }
+    return s;
+}
+
+stack_t _seq_rev(int N, int tops) {
+    stack_t s = make_stack();
+    for (int i = 0; i < N - tops; i++) {
+        stack_push(s, 10 * i);
+    }
+    for (int i = N-1; i >= N - tops; i--) {
+        stack_push(s, 10 * i);
+    }
+    return s;
+}
+
+/*
+// These are the functions available to you for use.
+stack_t make_stack();
+void stack_push(stack_t s, int val);
+bool stack_is_empty(stack_t s);
+int stack_depth(stack_t s);
+int stack_pop(stack_t s);
+bool stack_is_valid(stack_t s);
+*/
+
+void _test_q2_copy_stack(struct ScoreKeeper *_s) {
+    _result(_s, "copy_stack_precond", "invalid stack", 1, 1, false == copy_stack_precond(_invalid_stack()));
+    _result(_s, "copy_stack_precond", "empty stack", 1, 1, true == copy_stack_precond(_empty_stack()));
+    _result(_s, "copy_stack_precond", "non-empty stack", 1, 1, true == copy_stack_precond(_seq(2)));
+    _result(_s, "copy_stack_postcond", "empty stack", 1, 1, true == copy_stack_postcond(_empty_stack(), _empty_stack()));
+    _result(_s, "copy_stack_postcond", "seq stack", 1, 1, true == copy_stack_postcond(_seq(3), _seq(2)));
+    _result(_s, "copy_stack_postcond", "non-copy", 1, 1, false == copy_stack_postcond(_seq_rev(2,2), _seq(2)));
+    _result(_s, "copy_stack", "empty stack", 1, 1, _equal_stacks(_empty_stack(), copy_stack(_empty_stack())));
+    _result(_s, "copy_stack", "seq stack 1", 1, 1, _equal_stacks(_seq(1), copy_stack(_seq(1))));
+    _result(_s, "copy_stack", "seq stack 100", 1, 1, _equal_stacks(_seq(100), copy_stack(_seq(100))));
+}
+
+
+void _test_q3_reverse_stack(struct ScoreKeeper *_s) {
+    _result(_s, "reverse_stack_precond", "invalid stack", 1, 1, false == reverse_stack_precond(_invalid_stack(), 1));
+    _result(_s, "reverse_stack_precond", "empty stack but N > 0", 1, 1, false == reverse_stack_precond(_empty_stack(), 10));
+    _result(_s, "reverse_stack_precond", "non-empty stack but N > depth", 1, 1, false == reverse_stack_precond(_seq(10), 20));
+    _result(_s, "reverse_stack_precond", "empty stack", 1, 1, true == reverse_stack_precond(_empty_stack(), 0));
+    _result(_s, "reverse_stack_precond", "too many elements", 1, 1, false == reverse_stack_precond(_seq(3), 5));
+    _result(_s, "reverse_stack_precond", "valid stack", 1, 1, true == reverse_stack_precond(_seq(3), 3));
+    _result(_s, "reverse_stack_precond", "valid stack but fewer elements", 1, 1, true == reverse_stack_precond(_seq(10), 3));
+    /*
+    _result(_s, "reverse_stack_postcond", "empty stack", 1, true == reverse_stack_postcond(_empty_stack(), _empty_stack(), 0));
+    _result(_s, "reverse_stack_postcond", "short seq stack", 1, true == reverse_stack_postcond(_seq_rev(7,7), _seq(7), 7));
+    _result(_s, "reverse_stack_postcond", "non-rev stack", 1, false == reverse_stack_postcond(_seq(5), _seq(5), 5));
+    _result(_s, "reverse_stack_postcond", "substack reversal short", 1, true == reverse_stack_postcond(_seq_rev(10,5), _seq(10), 5));
+    */
+    _result(_s, "reverse_stack_postcond", "empty stack", 1, 1, true == reverse_stack_postcond(_empty_stack(), 0));
+    _result(_s, "reverse_stack_postcond", "non-empty stack", 1, 1, true == reverse_stack_postcond(_seq(5), 5));
+    stack_t s = _empty_stack();
+    reverse_stack(s, 0);
+    _result(_s, "reverse_stack", "empty stack", 1, 1, _equal_stacks(_empty_stack(), s));
+    s = _seq(1);
+    reverse_stack(s, 1);
+    _result(_s, "reverse_stack", "seq stack 1", 1, 1, _equal_stacks(_seq(1), s));
+    s = _seq(3);
+    reverse_stack(s, 3);
+    _result(_s, "reverse_stack", "seq stack 3", 1, 1, _equal_stacks(_seq_rev(3,3), s));
+    s = _seq(100);
+    reverse_stack(s, 100);
+    _result(_s, "reverse_stack", "seq stack 100", 1, 1, _equal_stacks(_seq_rev(100,100), s));
+    s = _seq(100);
+    reverse_stack(s, 50);
+    _result(_s, "reverse_stack", "seq substack 50 of 100", 1, 1, _equal_stacktops(50, _seq_rev(100,50), s));
+}
+
+/*
+bool reduce_stack_precond(stack_t s, int n, int initial_depth);
+bool reduce_stack_postcond(stack_t s, int n, int initial_depth);
+void reduce_stack(stack_t s, int n);
+void reduce_stack_helper(stack_t s, int n, int initial_depth);
+void reduce_one(stack_t s);
+*/
+
+stack_t _reduce_one(stack_t s) {
+    if (stack_depth(s) > 1) {
+        int v1 = stack_pop(s);
+        int v2 = stack_pop(s);
+        stack_push(s, v1+v2);
+    }
+    return s;
+}
+
+stack_t _reduce_n(stack_t s, int n) {
+    stack_push(s, 0);
+    for (int i = 0; i < n; i++) {
+        _reduce_one(s);
+    }
+    return s;
+}
+
+int _topval(stack_t s) {
+    int val = stack_pop(s);
+    stack_push(s, val);
+    return val;
+}
+
+stack_t _sadd(stack_t s, int val) {
+    stack_push(s, val);
+    return s;
+}
+
+void _test_q4_reduce_stack(struct ScoreKeeper *_s) {
+    _result(_s, "reduce_stack_precond", "valid request", 1, 1, true == reduce_stack_precond(_seq(10), 10, 10));
+    _result(_s, "reduce_stack_precond", "valid request", 1, 1, true == reduce_stack_precond(_seq(10), 5, 10));
+    _result(_s, "reduce_stack_precond", "empty stack", 1, 1, true == reduce_stack_precond(_empty_stack(), 0, 0));
+    _result(_s, "reduce_stack_postcond", "invalid stack", 0, 0, false == reduce_stack_postcond(_invalid_stack(), 0, 0));
+    _result(_s, "reduce_stack_postcond", "valid stack", 1, 1, true == reduce_stack_postcond(_seq(5), 5, 10));
+    stack_t s = _seq(10);
+    reduce_stack(s, 0);
+    _result(_s, "reduce_stack", "zero", 1, 1, _equal_stacks(s, _seq(10)));
+    s = _seq(10);
+    reduce_stack(s, 1);
+    _result(_s, "reduce_stack", "singleton", 1, 1, _equal_stacks(s, _seq(10)));
+    s = _seq(10);
+    reduce_stack(s, 3);
+    _result(_s, "reduce_stack", "n values", 1, 1, _equal_stacks(s, _sadd(_seq(7), 240)));
+    s = _seq(3);
+    reduce_one(s);
+    _result(_s, "reduce_one", "one step", 1, 1, _topval(s) == 30);
+}
+
+/*
+bool sliding_window_sum_precond(int [] array, int len, int N, int W);
+bool sliding_window_sum_postcond(int [] result, int len_result, int [] array, int len_array, int N, int W);
+int []sliding_window_sum(int [] array, int N, int W, int *counter);
+int sliding_window_sum_complexity(int N, int W);
+bool sliding_window_sum_is_fastest(); // Indicator
+ */
+
+// Make a simple linear sequence.
+int [] a_seq(int N, int from, int step) {
+    int [] a = alloc_array(int, N);
+    for (int i = 0; i < N; i++) {
+        a[i] = from + i * step;
+    }
+    return a;
+}
+
+
+int sum(int [] a, int from, int to) {
+    int s = 0;
+    for (int i = from; i < to; i++) {
+        s = s + a[i];
+    }
+    return s;
+}
+
+int [] swsum(int [] a, int len, int w) {
+    int N = len-w+1;
+    int [] result = alloc_array(int, N);
+
+    for (int i = 0; i < N; i++) {
+        result[i] = sum(a, i, i+w);
+    }
+
+    return result;
+}
+
+bool equal_arrays(int N, int [] a, int [] b) {
+    for (int i = 0; i < N; i++) {
+        if (a[i] != b[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void _test_q4_sliding_window_sum(struct ScoreKeeper *_s) {
+    _result(_s, "sliding_window_sum_precond", "valid input", 1, 1, true == sliding_window_sum_precond(a_seq(10,0,1), 10, 10, 5));
+    _result(_s, "sliding_window_sum_precond", "zero window size", 1, 1, false == sliding_window_sum_precond(a_seq(10,0,1), 10, 10, 0));
+    _result(_s, "sliding_window_sum_precond", "invalid input", 1, 1, false == sliding_window_sum_precond(a_seq(10,0,1), 10, 10, 15));
+
+    int N = 10;
+    int W = 3;
+    int [] a = a_seq(N,0,1);
+    int *counter = alloc(int);
+    (*counter) = 0;
+    _result(_s, "sliding_window_sum_postcond", "10 element seq", 1, 1, true == sliding_window_sum_postcond(swsum(a,N,W), N-W+1, a, N, N, W));
+    _result(_s, "sliding_window_sum_postcond", "10 element seq", 1, 1, true == sliding_window_sum_postcond(swsum(a,N,1), N, a, N, N, 1));
+    _result(_s, "sliding_window_sum", "10 element seq W = 3", 1, 1, equal_arrays(N-W+1, sliding_window_sum(a, N, W, counter), swsum(a, N, W)));
+    _result(_s, "sliding_window_sum", "10 element seq W = 1", 1, 1, equal_arrays(N, sliding_window_sum(a, N, 1, counter), swsum(a, N, 1)));
+    _result(_s, "sliding_window_sum", "10 element seq W = 10", 1, 1, equal_arrays(1, sliding_window_sum(a, N, N, counter), swsum(a, N, N)));
+}
+
+void _test_q4_sliding_window_sum_complexity(struct ScoreKeeper *_s) {
+    int *counter = alloc(int);
+    (*counter) = 0;
+    int NN = 10;
+    int len = 10;
+    int factor = 15;
+    int total = 0;
+    int [] lens = alloc_array(int, 2*NN);
+    int [] ws = alloc_array(int, 2*NN);
+    int [] computed = alloc_array(int, 2*NN);
+    int [] measured = alloc_array(int, 2*NN);
+    int [] ratio = alloc_array(int, 2*NN);
+
+    // You get 2 points if you measured performance.
+    // You get 2 more points if your measurement and estimate matched.
+    print("sliding_window_sum_complexity[");
+    for (int i = 0; i < 2*NN; i = i + 2) {
+        int [] a = a_seq(len, 10, 1);
+
+        (*counter) = 0;
+        int W = len / 4;
+        sliding_window_sum(a, len, W, counter);
+        lens[i] = len;
+        ws[i] = W;
+        measured[i] = (*counter);
+        computed[i] = sliding_window_sum_complexity(len, W);
+        (*counter) = 0;
+        W = 3 * len / 4;
+        lens[i+1] = len;
+        ws[i] = W;
+        sliding_window_sum(a, len, W, counter);
+        measured[i] = (*counter);
+        computed[i] = sliding_window_sum_complexity(len, W);
+        
+        if (computed[i] < log(len)-1) {
+            // Must be at least log in len.
+            computed[i] = 0;
+        }
+        if (computed[i] > 0 && measured[i] > 0) {
+            ratio[i] = measured[i] * 10 / computed[i];
+        } else {
+            ratio[i] = -1;
+        }
+        total = total + measured[i];
+        len = len * factor / 10;
+    }
+    for (int i = 0; i < 2*NN; i = i + 1) {
+        if (ratio[i] < 0) { print("NA"); }
+        else { printint(ratio[i]); }
+        print("@");
+        printint(lens[i]);
+        if (i+1 < 2*NN) { print(" "); }
+    }
+    print("]: ");
+    int score = 0;
+    if (total > 0) { score = score + 2; }
+    if (ratio[2*NN-1] > 0 && ratio[1] > 0 && ratio[2*NN-1] / min(ratio[1], ratio[2*NN-1]) == 1) {
+        score = score + 1;
+    }
+    if (ratio[2*NN-2] > 0 && ratio[0] > 0 && ratio[2*NN-2] / min(ratio[0], ratio[2*NN-2]) == 1) {
+        score = score + 1;
+    }
+    if (ratio[2*NN-1] > 0 && ratio[2*NN-2] > 0 && ratio[2*NN-2] / min(ratio[2*NN-1], ratio[2*NN-2]) == 1) {
+        score = score + 2;
+    }
+
+    printint(score);
+    print(" of ");
+    printint(6);
+    print("\n");
+    flush();
+    _s->score += score;
+    _s->maxscore += 6;
+}
+
+int main() {
+    struct ScoreKeeper *_s = alloc(struct ScoreKeeper);
+    _s->score = 0;
+    _s->maxscore = 0;
+    _test_q1_interpolate(_s);
+    _test_q1_lookup(_s);
+    _test_q1_lookup_complexity(_s);
+    _test_q2_copy_stack(_s);
+    _test_q3_reverse_stack(_s);
+    _test_q4_reduce_stack(_s);
+    _test_q4_sliding_window_sum(_s);
+    _test_q4_sliding_window_sum_complexity(_s);
+
+    print("FINAL SCORE = ");
+    printint(_s->score);
+    print(" of ");
+    printint(_s->maxscore);
+    print("\n");
+    print("TOTAL SCORE = ");
+    printint(_s->score * 200 / _s->maxscore);
+    print(" of ");
+    printint(200);
+    print("\n");
+    return 0;
+}
+
