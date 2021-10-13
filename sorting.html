@@ -1,0 +1,708 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting - an information theoretic introduction &#8212; Principles of programming I: Imperative computation (forever alpha) documentation</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Binary search" href="binsearch.html" />
+    <link rel="prev" title="Searching" href="searching.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Principles of programming I: Imperative computation (forever alpha) documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p class="caption">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="welcome.html">
+   Welcome
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction to imperative computation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="warmup.html">
+   Warming up with the power function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reasoning.html">
+   Reasoning with imperative programs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="c0.html">
+   More C0
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="arrays.html">
+   Arrays
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gcd.html">
+   Assignment 1: GCD
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="practice.html">
+   Practice problems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="searching.html">
+   Searching
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Sorting - an information theoretic introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="binsearch.html">
+   Binary search
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="avl.html">
+   AVL trees
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lists.html">
+   Linked lists
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="c.html">
+   Transitioning to C
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/sorting.rst.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.rst</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#shannon-s-information-theory">
+   Shannon’s information theory
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-has-all-that-got-to-do-with-sorting">
+   What has all that got to do with sorting?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#siphoning-off-1-bit-of-information">
+   Siphoning off 1 bit of information
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sorting-considerations">
+   Sorting considerations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pathological-cases-in-quicksort">
+   Pathological cases in quicksort
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quicksort-partitioning-scheme">
+   Quicksort partitioning scheme
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#merge-sort">
+   Merge sort
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="sorting-an-information-theoretic-introduction">
+<h1>Sorting - an information theoretic introduction<a class="headerlink" href="#sorting-an-information-theoretic-introduction" title="Permalink to this headline">¶</a></h1>
+<p>We’ve seen how having an array of keys (integers in our case) in sorted order
+helps make <em>information retrieval</em> fast. So it is no surprise that algorithms
+that take an unsorted array and turn it into sorted form – ie. sorting
+algorihtms – are a focus of study in computer science.</p>
+<p>Before we look at the algorithms themselves, let’s consider the nature of
+the problem. We first look at the notion of “information” introduced by
+Claude Shannon.</p>
+<div class="section" id="shannon-s-information-theory">
+<h2>Shannon’s information theory<a class="headerlink" href="#shannon-s-information-theory" title="Permalink to this headline">¶</a></h2>
+<p>We won’t be dealing with this theory in any measure of completeness, but
+a gist of it that is sufficient for us to consider the sorting problem.</p>
+<p>We talk about “information” as though it were a quantity much like energy, or
+pressure, but we lacked a quantitative way to look at information until Shannon
+came along with his proposal. The gist of his proposal is to consider the state
+of our knowledge about a system and quantify what we need to know about the
+system in order to eliminate all lack of information about it.</p>
+<p>Consider an unbiased coin - i.e. one that flips to head or tail about evenly –
+i.e. without bias. If you flip the coin <span class="math notranslate nohighlight">\(N\)</span> times, where <span class="math notranslate nohighlight">\(N\)</span> is a
+suitably large number, about half of the flips will turn up heads and the other
+half tails.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Write a function using your favourite pseudo random number generator which
+when given an <code class="docutils literal notranslate"><span class="pre">N</span></code> returns the number of times heads turned up when you
+used it to decide the outcome of flipping a coin <code class="docutils literal notranslate"><span class="pre">N</span></code> times. Do you find it
+unbiased? Return the result from the function as a percentage value and see
+if it gets closer to 50.</p>
+</div>
+<p>Supposing I have a coin in my hand, I flip it and clap it shut in my hand.
+I take a peek at it and so I know what turned up. But you’re watching me
+and didn’t get to peek at the coin. We can say that there is now some
+“information discrepancy” between us. I know something you don’t. For
+such a two-faced coin flip, we say that this information discrepancy is
+“1 bit” worth of information.</p>
+<p>Supposing I flip <span class="math notranslate nohighlight">\(N\)</span> such two-faced unbiased coins and hide the result
+from you while I peek at them, then we say that the information discrepancy
+between us is <span class="math notranslate nohighlight">\(N\)</span> bits. This way we quantify information with the most
+common unit being “bits”. We just declared this “information quantity” to be
+additive in nature. Let’s explore this a bit more (pun not intended).</p>
+<p>With <span class="math notranslate nohighlight">\(N\)</span> coin flips, we see that there are <span class="math notranslate nohighlight">\(2^N\)</span> possible outcomes.
+So you could say that the information discrepancy between people who know
+the outcome and those who don’t is <span class="math notranslate nohighlight">\(\text{log}_(\text{possible outcomes})\)</span>.
+So if we toss a 6-faced unbiased cube instead, the information discrepancy would
+turn out to be <span class="math notranslate nohighlight">\(\text{log}_2(6)\)</span> bits.</p>
+<p>Supposing we toss such a 6-faced die and we classify the faces 1, 2 and 3 as
+“a” and 4, 5 and 6 as “b” and we concern ourselves with only whether the
+outcome was in category “a” or category “b”, we see that this ought to be
+equivalent to a coin flip and therefore the information discrepancy about which
+category turned up ought to be 1 bit.</p>
+<p>Now suppose instead we classify faces 1 and 2 as “a” and 3, 4, 5 and 6 as “b”,
+what should we take the information discrepancy to be? We know overall that we
+have <span class="math notranslate nohighlight">\(\text{log}_2(6)\)</span> bits of information. If we know that category “a”
+turned up, then we know there is 1 more bit of information to be gained (1 of 2
+possibilities, so <span class="math notranslate nohighlight">\(\text{log}_2(2)\)</span>).  If we know that “b” turned up, we
+know that there are 2 more bits of information to be gained (1 of 4
+possibilities, so <span class="math notranslate nohighlight">\(\text{log}_2(4)\)</span>). So the average information left to
+be gained is <span class="math notranslate nohighlight">\((2/6)\text{log}_2(2) + (4/6)\text{log}_2(4)\)</span>.
+Since the total information is <span class="math notranslate nohighlight">\(\text{log}_2{6}\)</span>, we may say that the
+information gained in knowing about whether the category “a” turned up or
+“b” is given by <span class="math notranslate nohighlight">\(\text{log}_2{6} - (2/6)\text{log}_2(2) + (4/6)\text{log}_2(4)\)</span>,
+which simplifies to <span class="math notranslate nohighlight">\(-\{(2/6)\text{log}_2(2/6) + (4/6)\text{log}_2(4/6)\}\)</span>.</p>
+<p>This gives us the full picture when we’re considering <span class="math notranslate nohighlight">\(N\)</span> possible
+outcomes where each outcome <span class="math notranslate nohighlight">\(i\)</span> has probability <span class="math notranslate nohighlight">\(p_i\)</span> (such that
+<span class="math notranslate nohighlight">\(\sum_i{p_i}=1\)</span>), we may state the average information gained by knowing
+which one of these turned up is given by –</p>
+<div class="math notranslate nohighlight">
+\[\text{Information} = -\sum_i{p_i\text{log}_2(p_i)} =
+-(1/\text{ln}(2))\sum_i{p_i\text{ln}(p_i)}\]</div>
+<p>The above is “Shannon’s information formula”. One thing to note is that
+if the probability of an outcome is <span class="math notranslate nohighlight">\(0\)</span>, then it looks like we might
+have an infinity lurking in there, since <span class="math notranslate nohighlight">\(\text{ln}(0)\)</span> is infinite.
+However, we need to consider not <span class="math notranslate nohighlight">\(\text{ln(p)}\)</span> near <span class="math notranslate nohighlight">\(0^+\)</span>, but
+<span class="math notranslate nohighlight">\(\lim_{p \to 0^+} {p\text{ln}(p)}\)</span>. It is easy to see that this
+limit is <span class="math notranslate nohighlight">\(0\)</span> though, using <a class="reference external" href="https://en.wikipedia.org/wiki/L%27H%C3%B4pital%27s_rule">L’Hospital’s rule</a> on the limit –</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp; \lim_{p \to 0^+} {p\text{ln}(p)} \\
+&amp; = \lim_{p \to 0^+} {\frac{\text{ln}(p)}{1/p}} \\
+&amp; = \lim_{p \to 0^+} {\frac{(1/p)}{-(1/p^2)}} \\
+&amp; = \lim_{p \to 0^+} {-p} \\
+&amp; = 0\end{split}\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the logarithm is to the base <span class="math notranslate nohighlight">\(e\)</span> in Shannon’s formula,
+the unit of information is called a “nit” since log to the base <span class="math notranslate nohighlight">\(e\)</span>,
+written as <span class="math notranslate nohighlight">\(ln(x)\)</span> is called the “natural logarithm”.</p>
+</div>
+<p>Shannon’s notion of information is deeply connected to the concept of “entropy”
+in physics. You could say they are both the same thing .. which can be
+surprising since entropy emerged from thermodynamic considerations at first in
+physics .. and is generally considered to be a measure of “disorder” in a
+system. Squint a little bit and you may see how the “disorder in a system” can
+be viewed as “lack of information about a system”.</p>
+</div>
+<div class="section" id="what-has-all-that-got-to-do-with-sorting">
+<h2>What has all that got to do with sorting?<a class="headerlink" href="#what-has-all-that-got-to-do-with-sorting" title="Permalink to this headline">¶</a></h2>
+<p>When we have an array of unsorted items, we consider that we wish to reduce
+any possible ordering of these items into exactly one ordering as determined
+by the comparison function of choice - i.e. “greater than” or “lesser than”.</p>
+<p>The number of possible ways to order a sequence of <span class="math notranslate nohighlight">\(N\)</span> items is
+<span class="math notranslate nohighlight">\(N!\)</span> (i.e. factorial of <span class="math notranslate nohighlight">\(N\)</span>), assuming all of them are different
+(which we’ll assume for now to simplify our analysis).</p>
+<p>So if we consider that the given array of items can be in any one of these <span class="math notranslate nohighlight">\(N!\)</span>
+orders with equal probability before we set out to sort it, we might say that
+the information discrepancy between the unsorted array and the sorted array
+(of which there is exactly one configuration), is <span class="math notranslate nohighlight">\(\text{log}_2(N!)\)</span>.</p>
+<p>From <a class="reference external" href="https://en.wikipedia.org/wiki/Stirling%27s_approximation">Stirling’s approximation</a>, we know that that is approximately
+<span class="math notranslate nohighlight">\(N\text{log}_2(N) - N/\text{ln}(2)\)</span>.</p>
+<p>We’ll ignore the second part and consider that the first part dominates for
+large <span class="math notranslate nohighlight">\(N\)</span>.  Note that in practice this is not that accurate an assumption
+since <span class="math notranslate nohighlight">\(N\)</span> will have to be really large for this to happen, considering
+that if <span class="math notranslate nohighlight">\(N\)</span> is about 1 billion, then <span class="math notranslate nohighlight">\(\text{log}_2(N)\)</span> is only
+about <span class="math notranslate nohighlight">\(30\)</span>. However, if we take our job of reducing the possibilities to
+be a little harder than it actually is, then our analysis would be ok. In that
+spirit, we’ll just consider the <span class="math notranslate nohighlight">\(N\text{log}_2(N)\)</span> part as the (slightly
+pessimistic measure) of information content in the ordering of an unsorted
+array.</p>
+<p>So where are we now? We now know that we need to siphon out about
+<span class="math notranslate nohighlight">\(N\text{log}_2(N)\)</span> bits of information from the ordering of an unsorted
+array in order to get it into sorted form. This means that if we have an
+algorithm that can reduce the information discrepancy by 1 bit in each step,
+we’ll need <span class="math notranslate nohighlight">\(N\text{log}_2(N)\)</span> steps to get to our end point.</p>
+</div>
+<div class="section" id="siphoning-off-1-bit-of-information">
+<h2>Siphoning off 1 bit of information<a class="headerlink" href="#siphoning-off-1-bit-of-information" title="Permalink to this headline">¶</a></h2>
+<p>So what does reducing the uncertainty in ordering by 1 bit mean? You could, for
+example, take one of the <span class="math notranslate nohighlight">\(N\)</span> elements and determine whether it will
+feature in the left-half of the sorted array or in the right-half.  It is easy
+to see that this would improve ordering by 1 bit, since if we didn’t manage to
+do it, the array is about as unsorted as it was before, and we only have
+information about one of two possibilities.</p>
+<p>So if we take the <span class="math notranslate nohighlight">\(N\)</span> elements and determine whether each one of them
+is going to occur in the left-half or the right-half, then we would have
+eliminated the information discrepancy by <span class="math notranslate nohighlight">\(N\)</span> bits.</p>
+<p>Can we verify that in some other way? Supposing we start with the sorted
+array and scramble the left-half and right-half independently, how many
+combinations can we end up with? That would be –</p>
+<div class="math notranslate nohighlight">
+\[(N/2)! \times (N/2)!\]</div>
+<p>So the remaining information discrepancy after determining the left-right
+affinity for each element would be –</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp; \text{log}_2((N/2)! \times (N/2)!) \\
+&amp; \approx 2 (N/2) \text{log}_2(N/2) \\
+&amp; = N \text{log}_2(N/2) \\
+&amp; = N\text{log}_2(N) - N\end{split}\]</div>
+<p>i.e. We started off with an information discrepancy of <span class="math notranslate nohighlight">\(N\text{log}_2(N)\)</span>
+and we’ve reduced it indeed by <span class="math notranslate nohighlight">\(N\)</span> bits.</p>
+<p>What might be a procedure to determine which half each element should wind up in?</p>
+<p>A candidate procedure for this is to pick an element at random (call it the
+“pivot”) and to put everything that is less than this into the left bucket and
+everything greater than this in the right bucket. Once that is done, we now
+know for sure what the position of this pivot in the final sorted array is,
+except that the left part and the right part remain unsorted.</p>
+<p>We can now apply the same procedure to the left-half (half in the average case)
+and right-half separately and recursively until we end up with all elements
+in their rightful places.</p>
+<p>This is the “quicksort” procedure.</p>
+</div>
+<div class="section" id="sorting-considerations">
+<h2>Sorting considerations<a class="headerlink" href="#sorting-considerations" title="Permalink to this headline">¶</a></h2>
+<p>Before we dive deeper, it is good to understand some common considerations
+for sorting algorithms.</p>
+<ol class="arabic simple">
+<li><p>We’re not usually interested in sorting integer arrays. We usually have
+an array of records and we want to sort according to some field of these
+records - which we can call the “key”.</p></li>
+<li><p>Given that we’re usually sorting records based on a key, it is quite
+possible that two unequal records may have the same key. In such cases, we
+usually want to preserve the order in which these records occurred in the
+unsorted list after the list gets sorted. This is because we way want to
+perform some other computation that might rely on this ordering that we’d
+deliberately prepared in the first place. A sorting algorithm that preserves
+this record ordering is said to be “stable”, and one that doesn’t preserve
+this ordering is said to be “unstable”.</p></li>
+<li><p>The main cost factor of a sorting algorithm is therefore the step of
+comparing two records to determine their relative order in the final sorted
+array. We wish to minimize the number of comparisons we need to make.</p></li>
+<li><p>If we tweak our “quicksort” description to collect all the records
+with equal keys into a “middle array” in the same order they were found in
+the original array, we can get a “stable quicksort”. Otherwise, the stability
+will depend on a number of implementation factors. In all those cases though,
+the compleixty analysis will remain the same.</p></li>
+<li><p>A sorting algorithm may behave well in the average case, but may show high
+complexity with specific input patterns - especially when the sequence is
+partially sorted. So it is important to address these “pathological cases”.</p></li>
+<li><p>While we discussed the complexity of computation, there is also the issue of
+memory usage. Sorting algorithms that can sort an array of records in-place
+instead of requiring additional memory are desirable since they can be used
+in resource constrained environments.</p></li>
+</ol>
+</div>
+<div class="section" id="pathological-cases-in-quicksort">
+<h2>Pathological cases in quicksort<a class="headerlink" href="#pathological-cases-in-quicksort" title="Permalink to this headline">¶</a></h2>
+<p>The quicksort algorithm described above is alright in the average case, where
+we get a sorted result in <span class="math notranslate nohighlight">\(N\text{log}_2(N)\)</span> steps. However, depending on
+how we choose the “pivot”, the complexity can vary.  Supposing we always pick
+the first element of the range to be sorted as the pivot (or equivalently the
+last element). In this case, It is easy to see that we need to do
+<span class="math notranslate nohighlight">\(\mathcal{O}(N^2)\)</span> comparisons since in each step where we partition the
+sequence into left-right portions, we first need to make <span class="math notranslate nohighlight">\(N-1\)</span>
+comparisons, followed by <span class="math notranslate nohighlight">\(N-2\)</span>, then <span class="math notranslate nohighlight">\(N-3\)</span> and so on till we have a
+singleton range. This means we need to do a total of <span class="math notranslate nohighlight">\(N(N-1)/2\)</span>
+comparisons .. which is <span class="math notranslate nohighlight">\(\mathcal{O}(N^2)\)</span>.</p>
+<p>For this reason, how to choose a pivot to approximate the median better is an
+important consideration. The following strategies are known to work better than
+the strategy above -</p>
+<ol class="arabic simple">
+<li><p>Pick a random element as the pivot. At least this break us away from the
+pathological cases in the average.</p></li>
+<li><p>Pick the middle element as the pivot. This works better when the array is
+partially sorted .. where we can expect the middle value to be the actual
+median.</p></li>
+<li><p>Pick the median of the first, middle and last element in the unsorted
+sequence. This is arguably a better approximation to the median than
+picking just the middle.</p></li>
+</ol>
+</div>
+<div class="section" id="quicksort-partitioning-scheme">
+<h2>Quicksort partitioning scheme<a class="headerlink" href="#quicksort-partitioning-scheme" title="Permalink to this headline">¶</a></h2>
+<p>The step of bucketing the elements of the array to “left” or “right” buckets
+based on a pivot is referred to as the “partitioning” step of the quicksort
+algorithm. It is clear that if the partitioning can be done in-place,
+the whole algorithm can be done in-place as well. The Hoare partitioning
+scheme lets us partition an array in-place. It works as follows.</p>
+<ol class="arabic simple">
+<li><p>Choose the middle element of the array as the pivot.</p></li>
+<li><p>Maintain two indices - one initially pointing to the start of the array,
+and the other to the end of the array. Call these <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code>
+respectively.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">a[i]</span></code> is less than the pivot and <code class="docutils literal notranslate"><span class="pre">a[j]</span></code> is greater than the pivot,
+they are already in the correct order. In such a case, we can step <code class="docutils literal notranslate"><span class="pre">i</span></code>
+forward and <code class="docutils literal notranslate"><span class="pre">j</span></code> backward. We can keep doing this until the element
+at <code class="docutils literal notranslate"><span class="pre">i</span></code> or <code class="docutils literal notranslate"><span class="pre">j</span></code> is not in the correct place.</p></li>
+<li><p>Once we locate an i/j pair that is in the wrong order, we swap them
+and continue as with step 3 again.</p></li>
+<li><p>We repeat this procedure until i and j cross at which point we’re done.</p></li>
+</ol>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="c1">// Note that here the [i,j] forms an inclusive interval.</span>
+<span class="kt">int</span> <span class="nf">partition</span><span class="p">(</span><span class="kt">int</span> <span class="p">[]</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pivot</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">j</span><span class="p">)</span>
+     <span class="c1">//@requires i &gt;= 0 &amp;&amp; i &lt; \length(a)</span>
+     <span class="c1">//@requires j+1 &gt;= i &amp;&amp; j &lt; \length(a)</span>
+     <span class="c1">//@ensures leq(a, from, \result, pivot)</span>
+     <span class="c1">//@ensures geq(a, \result, to, pivot)</span>
+ <span class="p">{</span>
+     <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">partition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="p">}</span>
+
+     <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">partition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="mi">-1</span><span class="p">);</span> <span class="p">}</span>
+
+     <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">j</span><span class="p">;</span> <span class="p">}</span>
+
+     <span class="c1">//@assert i &lt; j &amp;&amp; a[i] &gt;= pivot &amp;&amp; a[j] &lt;= pivot</span>
+     <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
+     <span class="c1">//@assert i &lt; j &amp;&amp; a[i] &lt;= pivot &amp;&amp; a[j] &gt;= pivot</span>
+     <span class="k">return</span> <span class="n">partition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="mi">-1</span><span class="p">);</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Since all the recursive calls to partition there are in</span>
+ <span class="c1">// the &quot;tail position&quot; - i.e. are the final calls, we can</span>
+ <span class="c1">// translate that into a loop as ..</span>
+ <span class="kt">int</span> <span class="nf">partition</span><span class="p">(</span><span class="kt">int</span> <span class="p">[]</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pivot</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">j</span><span class="p">)</span>
+ <span class="p">{</span>
+     <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+         <span class="k">while</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+
+         <span class="k">while</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+
+         <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">j</span><span class="p">;</span> <span class="p">}</span>
+
+         <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
+         <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+         <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+
+ <span class="c1">// The above is often expressed in C as shown below</span>
+ <span class="c1">// where the initial i,j to be passed in are not</span>
+ <span class="c1">// the indices of the first and last elements,  but</span>
+ <span class="c1">// one before and one after.</span>
+ <span class="kt">int</span> <span class="nf">partition</span><span class="p">(</span><span class="kt">int</span> <span class="p">[]</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pivot</span><span class="p">,</span> <span class="kt">int</span> <span class="n">from</span><span class="p">,</span> <span class="kt">int</span> <span class="n">to</span><span class="p">)</span> <span class="p">{</span>
+     <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">from</span><span class="mi">-1</span><span class="p">;</span>
+     <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">to</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+     <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+         <span class="k">do</span> <span class="p">{</span>
+             <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+         <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">);</span>
+
+         <span class="k">do</span> <span class="p">{</span>
+             <span class="n">j</span><span class="o">--</span><span class="p">;</span>
+         <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">pivot</span><span class="p">);</span>
+
+         <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">j</span><span class="p">;</span> <span class="p">}</span>
+
+         <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+<p>The return value <code class="docutils literal notranslate"><span class="pre">k</span></code> of the above partition function is used to
+recursively step into quicksort-ing the left and right parts,
+where the left consists of <code class="docutils literal notranslate"><span class="pre">[from,k)</span></code> and the right consists of
+<code class="docutils literal notranslate"><span class="pre">[k,to]</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We’re not guaranteed that <code class="docutils literal notranslate"><span class="pre">k</span></code> will point to a pivot-valued entry,
+so we need to include it in the recursive step.</p>
+</div>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Complete the in-place quicksort using the above discussed Hoare
+partitioning scheme.</p>
+</div>
+</div>
+<div class="section" id="merge-sort">
+<h2>Merge sort<a class="headerlink" href="#merge-sort" title="Permalink to this headline">¶</a></h2>
+<p>Consider the problem of combining two sorted arrays of (roughly) equal length
+into one sorted array that contains all the elements. It is easy to see how
+this operation can be done in <span class="math notranslate nohighlight">\(\mathcal{O}(N)\)</span> where <span class="math notranslate nohighlight">\(N\)</span> is the
+total number of elements. We can keep one index for each of the sub arrays, and
+step through one at a time to determine each element of the result <span class="math notranslate nohighlight">\(N\)</span>
+element array.</p>
+<p>Given some two such sorted arrays, the number of possible ways in which
+the process of combining them might have worked can be roughly thought of
+as <span class="math notranslate nohighlight">\(2^N\)</span> .. since for each element in the output, we might have to pick
+from one of two possible input arrays. This tells us that this procedure
+also reduces the information discrepancy by at most <span class="math notranslate nohighlight">\(N\)</span> bits.</p>
+<p>Let’s make that argument more precise like we did for the quicksort
+partitioning by starting with the actual count of possibilities. If we have two
+sorted arrays of length <span class="math notranslate nohighlight">\(N/2\)</span> (say <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>) and we want
+to count the number of ways in which we can construct a merged array where the
+ordering of the individual subsequences is preserved while otherwise choosing
+in arbitrary ways between the two arrays, what we need to do is to create an
+intermediate <span class="math notranslate nohighlight">\(N\)</span> element binary array where half the elements are
+<span class="math notranslate nohighlight">\(0\)</span> and the other half are <span class="math notranslate nohighlight">\(1\)</span> and count the number of ways we can
+permute this. Once we have such an array, we can walk through it and pick the
+next element of the merged array from <span class="math notranslate nohighlight">\(A\)</span> if we see a <span class="math notranslate nohighlight">\(0\)</span> and from
+<span class="math notranslate nohighlight">\(B\)</span> if we see a <span class="math notranslate nohighlight">\(1\)</span>, so counting the permutations of the binary
+array would yield the same number as the number of ways we can merge the two
+sorted subarrays. The number of ways to permute such a binary array is
+<span class="math notranslate nohighlight">\(\frac{N!}{(N/2)! \times (N/2)!}\)</span>.  So the information discrepancy resolved
+in such a merge is the logarithm of that –</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}&amp; = \text{log}_2\left(\frac{N!}{(N/2)! \times (N/2)!}\right) \text{ bits }\\
+&amp; = \text{log}_2(N!) - 2 \times \text{log}_2((N/2)!)  \text{ bits }\\
+&amp; \approx N\text{log}_2(N) - \frac{N}{\text{ln}(2)} - 2 \times ((N/2)\text{log}_2(N/2) - \frac{N/2}{\text{ln}(2)}) \\
+&amp; = N\text{log}_2(N) - \frac{N}{\text{ln}(2)} - (N\text{log}_2(N) - N - \frac{N}{\text{ln}(2)}) \\
+&amp; = N \text{ bits }\end{split}\]</div>
+<p>Once we implement such a merge step in linear time, we can come up
+with a sorting algorithm based on recursively applying this step
+as follows –</p>
+<ol class="arabic simple">
+<li><p>Divide the given array into two roughly equal halves.</p></li>
+<li><p>Sort the left and right halves recursively.</p></li>
+<li><p>Combine the sorted left/right halves using the linear merge step.</p></li>
+</ol>
+<p>Note that in this case, we’re doing things the other way around to quicksort,
+where we split first and then recursively sorted the split parts. Here we
+recurse into the sorting first and finally merge the sorted arrays. the
+terminating condition of the sort of course is that once we hit a 1-element
+array, there is no sorting left to be done and we can just return.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Write a function that performs the linear merge step for two given
+sorted arrays and writes the merged result into a third given array:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">merge</span><span class="p">(</span><span class="nb">int</span> <span class="p">[]</span> <span class="n">left</span><span class="p">,</span> <span class="nb">int</span> <span class="n">nleft</span><span class="p">,</span> <span class="nb">int</span> <span class="p">[]</span> <span class="n">right</span><span class="p">,</span> <span class="nb">int</span> <span class="n">nright</span><span class="p">,</span> <span class="nb">int</span> <span class="p">[]</span> <span class="n">result</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<p>This mergesort is again <span class="math notranslate nohighlight">\(\mathcal{O}(N\text{log}(N))\)</span> in complexity since
+we can at most continue the “divide into two halves” procedure
+<span class="math notranslate nohighlight">\(\text{log}_2(N)\)</span> times, but that is its <strong>worst case</strong> complexity,
+<strong>unlike</strong> quicksort. This is because we’re always guaranteed to have a roughly
+equal division step unlike quicksort where the balance of the division is
+dependent on the choice of pivot.</p>
+<p>Merge sort is also useful in other ways –</p>
+<ol class="arabic simple">
+<li><p>If we have multiple processors available, the tasks of sorting the
+left and right halves can be independently done by the processors,
+unlike the pivot split step in quicksort. i.e. mergesort can exploit
+parallelism to gain additional (constant factor) speed up.</p></li>
+<li><p>If the data we need to sort cannot fit into main memory, then
+mergesort can be useful to split the data into chunks that do fit into
+RAM, sort them in RAM and finally combine them into the result
+on disk storage.</p></li>
+</ol>
+<div class="admonition-question admonition">
+<p class="admonition-title">Question</p>
+<p>Can you think of how the merge step can be implemented without requiring
+additional memory?</p>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="searching.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Searching</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="binsearch.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Binary search</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Srikumar K. S.<br/>
+        
+            &copy; Copyright 2021, Srikumar K. S..<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
