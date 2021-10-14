@@ -47,7 +47,7 @@ expression is to be interpreted as the following list structure ::
 
 A "node" in such a list consists of two "cells" - the first one holds the
 "content" of the node and the second one (usually) holds a pointer or
-reference to the next node.[#car]_ If you have a mechanism to indicate what type
+reference to the next node. [#car]_ If you have a mechanism to indicate what type
 the "content" is, then you can generalize the notion of content to include
 other lists. After all, why shouldn't we be able to make lists of lists?
 
