@@ -385,16 +385,15 @@ perspectives.</p>
 <tr class="row-even"><td><p>Use standard libraries</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">#use</span> <span class="pre">&lt;conio.h&gt;</span></code> etc. Must occur first in source file.</p></td>
 <td><p>Include the library’s headers. Common ones given below</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   #include &lt;stdio.h&gt;
-   #include &lt;stdlib.h&gt;
-   #include &lt;math.h&gt;
-   #include &lt;assert.h&gt;
-
-They can technically occur anywhere as ``#include &lt;stdio.h&gt;`` just
-means &quot;copy paste contents of stdio.h into my code at this point&quot;,
-however they&#39;re usually placed at top of source file.
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#include &lt;stdio.h&gt;</span>
+<span class="c1">#include &lt;stdlib.h&gt;</span>
+<span class="c1">#include &lt;math.h&gt;</span>
+<span class="c1">#include &lt;assert.h&gt;</span>
 </pre></div>
 </div>
+<p>They can technically occur anywhere as <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;stdio.h&gt;</span></code> just
+means “copy paste contents of stdio.h into my code at this point”,
+however they’re usually placed at top of source file.</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p>Contracts</p></td>

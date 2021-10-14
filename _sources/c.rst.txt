@@ -157,9 +157,9 @@ perspectives.
            #include <math.h>
            #include <assert.h>
 
-        They can technically occur anywhere as ``#include <stdio.h>`` just
-        means "copy paste contents of stdio.h into my code at this point",
-        however they're usually placed at top of source file.
+       They can technically occur anywhere as ``#include <stdio.h>`` just
+       means "copy paste contents of stdio.h into my code at this point",
+       however they're usually placed at top of source file.
    * - Contracts
      - ``@requires``, ``@ensures`` and ``@assert``
      - Not supported in general, but if you ``#include <assert.h>``,
