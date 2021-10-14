@@ -150,7 +150,9 @@ perspectives.
      - ``gcc -O3 program.c`` - turns on maximum "level 3" optimizations.
    * - Use standard libraries
      - ``#use <conio.h>`` etc. Must occur first in source file.
-     - Include the library's headers. Common ones given below ::
+     - Include the library's headers. Common ones given below.
+
+       .. code-block:: C
 
            #include <stdio.h>
            #include <stdlib.h>
