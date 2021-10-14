@@ -1,0 +1,819 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Binary search &#8212; Principles of programming I: Imperative computation (forever alpha) documentation</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="AVL trees" href="avl.html" />
+    <link rel="prev" title="Sorting - an information theoretic introduction" href="sorting.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Principles of programming I: Imperative computation (forever alpha) documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p class="caption">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="welcome.html">
+   Welcome
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction to imperative computation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="warmup.html">
+   Warming up with the power function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reasoning.html">
+   Reasoning with imperative programs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="c0.html">
+   More C0
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="arrays.html">
+   Arrays
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gcd.html">
+   Assignment 1: GCD
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="practice.html">
+   Practice problems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="searching.html">
+   Searching
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sorting.html">
+   Sorting - an information theoretic introduction
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Binary search
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="avl.html">
+   AVL trees
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lists.html">
+   Linked lists
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="c.html">
+   Transitioning to C
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/binsearch.rst.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.rst</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#binary-search-trees">
+   Binary search trees
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#problems-problems-problems">
+   Problems, problems, problems!
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#where-did-the-pointers-go">
+   Where did the pointers go?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="binary-search">
+<h1>Binary search<a class="headerlink" href="#binary-search" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Between this section and the preceding one, we’ve already looked at
+stacks, queues, (some) sorting and the notion of computational complexity.
+I discuss binary search here as a leap off point for tree algorithms and
+linked lists. We’ll return to some simple sorts along the way.</p>
+</div>
+<p>We saw earlier that sorting is an operation that can help speed up searching
+through an array very fast using the binary search algorithm.</p>
+<p>While we’ll be illustrating sorting and searching using integer arrays,
+in practice we’re not so interested in integer data for these purposes.
+However, we very often want to use some kind of an ordered key like an
+integer that we associate with a value and we want to find the value given
+the key.</p>
+<p>Let’s look at a structure that reflects this reality better. Having done
+stacks already, the following approach should look familiar. I’m omitting
+contracts here in the interest of brevity and since you’re already familiar
+with these patterns by now. <a class="footnote-reference brackets" href="#conts" id="id1">1</a></p>
+<dl class="footnote brackets">
+<dt class="label" id="conts"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>In the code in this section, you’ll find that contract lines are
+not terminated by semicolons. Please do add them yourselves. I excluded
+them since a bug in the documentation generator tool falsely declares that
+it is not valid C code with the semicolon in there. I’ll revert this code
+to correctly include the semicolons once I’ve fixed that bug.</p>
+</dd>
+</dl>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">Assoc</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">key</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">value</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="nc">KeyValAssoc</span> <span class="o">*</span><span class="n">dictionary_t</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nc">KeyValAssoc</span> <span class="p">{</span>
+    <span class="k">struct</span> <span class="nc">Assoc</span> <span class="p">[]</span> <span class="n">table</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">capacity</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">dictionary_t</span> <span class="nf">make_dict</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">dictionary_t</span> <span class="n">d</span> <span class="o">=</span> <span class="n">alloc</span><span class="p">(</span><span class="n">KeyValAssoc</span><span class="p">);</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">capacity</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span> <span class="o">=</span> <span class="n">alloc_array</span><span class="p">(</span><span class="n">Assoc</span><span class="p">,</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">capacity</span><span class="p">);</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">d</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">dict_size</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="o">*</span><span class="nf">dict_get</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// This is a linear scan through the array and</span>
+    <span class="c1">// therefore of complexity O(N) where N is the</span>
+    <span class="c1">// number of key-value pairs in the dictionary.</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="c1">// Question: How will we distinguish between &quot;No such key</span>
+    <span class="c1">// in the table&quot; and &quot;This key is associated with a NULL</span>
+    <span class="c1">// value&quot;? What assumptions are we making by returning</span>
+    <span class="c1">// NULL here?</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">dict_ensure_capacity</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="n">d</span><span class="p">)</span>
+    <span class="c1">//@requires dict_is_valid(d)</span>
+    <span class="c1">//@ensures d-&gt;length &lt; d-&gt;capacity</span>
+<span class="p">{</span>
+    <span class="c1">// If we don&#39;t have enough space, make more.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">==</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">capacity</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">newcapacity</span> <span class="o">=</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">capacity</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="k">struct</span> <span class="nc">Assoc</span> <span class="p">[]</span> <span class="n">newtable</span> <span class="o">=</span> <span class="n">alloc_array</span><span class="p">(</span><span class="k">struct</span> <span class="nc">Assoc</span><span class="p">,</span> <span class="n">newcapacity</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">newtable</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="p">}</span>
+        <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span> <span class="o">=</span> <span class="n">newtable</span><span class="p">;</span>
+        <span class="n">d</span><span class="o">-&gt;</span><span class="n">capacity</span> <span class="o">=</span> <span class="n">newcapacity</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">dict_set</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Check if key is present. If present, replace the value there.</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">dict_ensure_capacity</span><span class="p">(</span><span class="n">d</span><span class="p">);</span>
+
+    <span class="c1">//@assert d-&gt;length &lt; d-&gt;capacity</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">].</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">].</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">=</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Observe that for this “interface” to a key-value storage structure, there is
+no information about the ordering of the internal structures that is exposed via
+the available functions. The entire set of functions are listed below.</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">dictionary_t</span> <span class="nf">make_dict</span><span class="p">();</span>
+<span class="kt">int</span> <span class="nf">dict_size</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="n">d</span><span class="p">);</span>
+<span class="kt">void</span><span class="o">*</span> <span class="nf">dict_get</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">dict_set</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">value</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>That’s it. If we just wanted a small key-value store for 10s of items, this
+might even be viable without imposing too much cost. However, the cost of
+the <code class="docutils literal notranslate"><span class="pre">dict_get</span></code> operation, which is <span class="math notranslate nohighlight">\(O(N)\)</span> as noted, makes some kinds
+of usage patterns very expensive, making a linear search unviable in many
+contexts.</p>
+<p>However, if we place the constraint that we always keep the table sorted by
+the key, then we can speed up <code class="docutils literal notranslate"><span class="pre">dict_get</span></code> to be <span class="math notranslate nohighlight">\(O(\text{log} N)\)</span> which is
+a fantastic speed up.</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="o">*</span><span class="nf">binary_search</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">from</span><span class="p">,</span> <span class="kt">int</span> <span class="n">to</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="o">*</span><span class="nf">dict_get</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">binary_search</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="o">*</span><span class="nf">binary_search</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">from</span><span class="p">,</span> <span class="kt">int</span> <span class="n">to</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">from</span> <span class="o">&gt;=</span> <span class="n">to</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">from</span> <span class="o">+</span> <span class="n">to</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">mid</span><span class="p">].</span><span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">mid</span><span class="p">].</span><span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">mid</span><span class="p">].</span><span class="n">key</span> <span class="o">&gt;</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">binary_search</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">from</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span> <span class="p">}</span>
+
+    <span class="c1">//@assert d-&gt;table[mid].key &lt; key</span>
+    <span class="k">return</span> <span class="n">binary_search</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">to</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Going from <span class="math notranslate nohighlight">\(O(N)\)</span> to <span class="math notranslate nohighlight">\(O(\text{log} N)\)</span> is huge improvement.
+However, we’ve now complicated the task of maintaining the table sorted.
+So when we now insert a new element into the table, we have to move things
+around so it remains sorted. So <code class="docutils literal notranslate"><span class="pre">dict_set</span></code> unfortunately remains <span class="math notranslate nohighlight">\(O(N)\)</span>
+in the worst case. In the previous implementation, <code class="docutils literal notranslate"><span class="pre">dict_set</span></code> had to do
+a linear search to first figure out if the key was present, which is an
+<span class="math notranslate nohighlight">\(O(N)\)</span> operation. But if it determined it to be absent, the insertion
+step was <span class="math notranslate nohighlight">\(O(1)\)</span>. Now, that insertion step itself becomes <span class="math notranslate nohighlight">\(O(N)\)</span>
+since we need to move things around.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Implement a <code class="docutils literal notranslate"><span class="pre">dict_set</span></code> that maintains the table in a sorted form when
+a new key-value pair is inserted.</p>
+</div>
+<p>Can we get around this and make <code class="docutils literal notranslate"><span class="pre">dict_set</span></code> also faster? To understand how,
+we need to look deeper into the relationship between binary search as an
+algorithm and the data pattern that it is relying on to do its job.</p>
+<div class="section" id="binary-search-trees">
+<h2>Binary search trees<a class="headerlink" href="#binary-search-trees" title="Permalink to this headline">¶</a></h2>
+<p>When doing binary search on our sorted table, for each range, we focus
+on one entry - the midpoint. Based on the key at the midpoint, we branch
+either to the left or to the right if the key we’re looking for
+does not happen to match the one at the mid point. The “left” and “right”
+ranges can themselves now be represented with their respsective midpoints
+as the focus of search. We therefore get two sequences as shown in the
+table below. We place “-1” to indicate there are no more left or right
+branch intervals to explore.</p>
+<p>In the below table for a 10-sized dictionary, the <code class="docutils literal notranslate"><span class="pre">mid</span></code> is calculated as
+<code class="docutils literal notranslate"><span class="pre">(from</span> <span class="pre">+</span> <span class="pre">to)/2</span></code>, the <code class="docutils literal notranslate"><span class="pre">left-mid</span></code> is calculated as <code class="docutils literal notranslate"><span class="pre">(from+mid)/2</span></code> and the
+<code class="docutils literal notranslate"><span class="pre">right-mid</span></code> is calculated as <code class="docutils literal notranslate"><span class="pre">(mid+1+to)/2</span></code> .. according to the left/right
+range calculations in the binary search algorithm above.</p>
+<table class="table" id="id2">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Index sequence in binary search</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>range</p></th>
+<th class="head"><p>left-range</p></th>
+<th class="head"><p>right-range</p></th>
+<th class="head"><p>mid</p></th>
+<th class="head"><p>left-mid</p></th>
+<th class="head"><p>right-mid</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>[0-10)</p></td>
+<td><p>[0-5)</p></td>
+<td><p>[6-10)</p></td>
+<td><p>5</p></td>
+<td><p>2</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-odd"><td><p>[0-5)</p></td>
+<td><p>[0-2)</p></td>
+<td><p>[3-5)</p></td>
+<td><p>2</p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p>[6-10)</p></td>
+<td><p>[6-8)</p></td>
+<td><p>[9-10)</p></td>
+<td><p>8</p></td>
+<td><p>7</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-odd"><td><p>[0-2)</p></td>
+<td><p>[0-1)</p></td>
+<td><p>[]</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>-1</p></td>
+</tr>
+<tr class="row-even"><td><p>[3-5)</p></td>
+<td><p>[3-4)</p></td>
+<td><p>[]</p></td>
+<td><p>4</p></td>
+<td><p>3</p></td>
+<td><p>-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>[6-8)</p></td>
+<td><p>[6-7)</p></td>
+<td><p>[]</p></td>
+<td><p>7</p></td>
+<td><p>6</p></td>
+<td><p>-1</p></td>
+</tr>
+<tr class="row-even"><td><p>[9-10)</p></td>
+<td><p>[]</p></td>
+<td><p>[]</p></td>
+<td><p>9</p></td>
+<td><p>-1</p></td>
+<td><p>-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>[0-1)</p></td>
+<td><p>[]</p></td>
+<td><p>[]</p></td>
+<td><p>0</p></td>
+<td><p>-1</p></td>
+<td><p>-1</p></td>
+</tr>
+<tr class="row-even"><td><p>[3-4)</p></td>
+<td><p>[]</p></td>
+<td><p>[]</p></td>
+<td><p>3</p></td>
+<td><p>-1</p></td>
+<td><p>-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>[6-7)</p></td>
+<td><p>[]</p></td>
+<td><p>[]</p></td>
+<td><p>6</p></td>
+<td><p>-1</p></td>
+<td><p>-1</p></td>
+</tr>
+</tbody>
+</table>
+<p>In the above table, there is one entry for every element in the dictionary
+which assures us of the completeness of the search procedure. The interesting
+point here is that we don’t need to perform the mid point calculations if
+we already know the values of <code class="docutils literal notranslate"><span class="pre">left-mid</span></code> and <code class="docutils literal notranslate"><span class="pre">right-mid</span></code> columns when we’re
+examining a given <code class="docutils literal notranslate"><span class="pre">mid</span></code> value. We can turn those columns into simple <code class="docutils literal notranslate"><span class="pre">int</span></code>
+arrays like this -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">KeyValAssoc</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">capacity</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">length</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">Assoc</span> <span class="p">[]</span> <span class="n">table</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="p">[]</span> <span class="n">left</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="p">[]</span> <span class="n">right</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Implement a function <code class="docutils literal notranslate"><span class="pre">make_index(dictionary_t</span> <span class="pre">d,</span> <span class="pre">int</span> <span class="pre">from,</span> <span class="pre">int</span> <span class="pre">to)</span></code> that fills
+the <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> index arrays of the dictionary, assuming that the table
+is sorted in ascending order by the integer <code class="docutils literal notranslate"><span class="pre">key</span></code> field of <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">Assoc</span></code>.</p>
+</div>
+<p>If the <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> arrays were correctly initialized, then our <code class="docutils literal notranslate"><span class="pre">binary_search</span></code>
+becomes –</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="o">*</span><span class="nf">binary_search</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">start</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">)</span>
+    <span class="c1">//@requires dict_is_valid(d)</span>
+    <span class="c1">//@requires start == -1 || (start &gt;= 0 &amp;&amp; start &lt; d-&gt;length)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">start</span> <span class="o">==</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// Not found.</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">==</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">start</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// Found.</span>
+
+    <span class="c1">// Left branch.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">binary_search</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">[</span><span class="n">start</span><span class="p">],</span> <span class="n">key</span><span class="p">);</span> <span class="p">}</span>
+
+    <span class="c1">// Right branch.</span>
+    <span class="c1">//@assert d-&gt;table[start] &gt; key</span>
+    <span class="k">return</span> <span class="n">binary_search</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">[</span><span class="n">start</span><span class="p">],</span> <span class="n">key</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We gain something interesting with this structure. If we want to add one more key-value
+association, we no longer need to shift the array items around in an <span class="math notranslate nohighlight">\(O(N)\)</span> manner.
+We can simply use the <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> arrays and adjust the indices to include
+the new entry.</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="c1">// We&#39;re assuming there&#39;s enough capacity because you know how to deal</span>
+<span class="c1">// with that. You can write a separate dict_ensure_capacity(d) function</span>
+<span class="c1">// that will make sure length &lt; capacity at the end by reallocating</span>
+<span class="c1">// the array with a larger capacity if necessary.</span>
+<span class="kt">bool</span> <span class="nf">binary_search_set</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="o">*</span><span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">start</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">value</span><span class="p">)</span>
+    <span class="c1">//@requires dict_is_valid(d)</span>
+    <span class="c1">//@requires start &gt;= 0 &amp;&amp; start &lt; d-&gt;length &amp;&amp; d-&gt;length &lt; d-&gt;capacity</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Found. Set the value and wrap up.</span>
+        <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">start</span><span class="p">].</span><span class="n">key</span> <span class="o">&gt;</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Left branch.</span>
+        <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">[</span><span class="n">start</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">l</span> <span class="o">&gt;</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">binary_search_set</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">dict_ensure_capacity</span><span class="p">(</span><span class="n">d</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">insert_key_value_left</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">[</span><span class="n">start</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">&gt;</span> <span class="mi">-1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">binary_search_set</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">dict_ensure_capacity</span><span class="p">(</span><span class="n">d</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">insert_key_value_right</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="nf">insert_key_value_left</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="o">*</span><span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">parent</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">value</span><span class="p">)</span>
+    <span class="c1">//@requires dict_is_valid(d)</span>
+    <span class="c1">//@requires d-&gt;length &lt; d-&gt;capacity</span>
+    <span class="c1">//@requires parent &gt;= 0 &amp;&amp; parent &lt; d-&gt;length</span>
+    <span class="c1">//@requires d-&gt;left[parent] == -1 &amp;&amp; d-&gt;table[parent].key &gt; key</span>
+    <span class="c1">//@ensures d-&gt;table[d-&gt;length-1].key == key</span>
+    <span class="c1">//@ensures d-&gt;table[d-&gt;length-1].value == value</span>
+    <span class="c1">//@ensures d-&gt;left[parent] == d-&gt;length-1</span>
+    <span class="c1">//@ensures d-&gt;left[d-&gt;length-1] == -1 &amp;&amp; d-&gt;right[d-&gt;length-1] == -1</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">=</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">n</span><span class="p">].</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span> <span class="c1">// YAY! No need to shift blocks of array entries!</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">n</span><span class="p">].</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="nf">insert_key_value_right</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="o">*</span><span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">parent</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">value</span><span class="p">)</span>
+    <span class="c1">//@requires dict_is_valid(d)</span>
+    <span class="c1">//@requires d-&gt;length &lt; d-&gt;capacity</span>
+    <span class="c1">//@requires parent &gt;= 0 &amp;&amp; parent &lt; d-&gt;length</span>
+    <span class="c1">//@requires d-&gt;right[parent] == -1 &amp;&amp; d-&gt;table[parent].key &lt; key</span>
+    <span class="c1">//@ensures d-&gt;table[d-&gt;length-1].key == key</span>
+    <span class="c1">//@ensures d-&gt;table[d-&gt;length-1].value == value</span>
+    <span class="c1">//@ensures d-&gt;right[parent] == d-&gt;length-1</span>
+    <span class="c1">//@ensures d-&gt;left[d-&gt;length-1] == -1 &amp;&amp; d-&gt;right[d-&gt;length-1] == -1</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">=</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">n</span><span class="p">].</span><span class="n">key</span> <span class="o">=</span> <span class="n">key</span><span class="p">;</span> <span class="c1">// YAY! No need to shift blocks of array entries!</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">table</span><span class="p">[</span><span class="n">n</span><span class="p">].</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="mi">-1</span><span class="p">;</span>
+    <span class="n">d</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">void</span> <span class="nf">dict_set</span><span class="p">(</span><span class="n">dictionary_t</span> <span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">binary_search_set</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">length</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="problems-problems-problems">
+<h2>Problems, problems, problems!<a class="headerlink" href="#problems-problems-problems" title="Permalink to this headline">¶</a></h2>
+<p>That all sounded nice on paper, but we have a problem!</p>
+<div class="admonition-the-problem admonition">
+<p class="admonition-title">The problem!</p>
+<p>The structure of the elements in our dictionary is now dependent on the order in
+which we insert key-value pairs!! The reason we should be alarmed by this is
+that if we somehow intend the collection to remain organized, this cannot be true,
+at least it must “mostly” remain independent of the insertion order.</p>
+</div>
+<p>To understand this, consider how we’d build such a binary tree for
+a sequence of elements <code class="docutils literal notranslate"><span class="pre">[10,20,30,40,50,60,70,80,90,100]</span></code>.
+If we start with <code class="docutils literal notranslate"><span class="pre">10</span></code>, then the next value goes to the right
+of 10. The value after goes to the right of 20 and so on, so each
+node in our “binary tree” now only has a right branch and the left
+branch is left unused. This is, in essence, a “linked list” which
+has <span class="math notranslate nohighlight">\(O(N)\)</span> lookup complexity, though addition is (amortized)
+<span class="math notranslate nohighlight">\(O(1)\)</span> at a known point in the list</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span>
+ \<span class="n">_</span> <span class="mi">20</span>
+     \<span class="n">_</span> <span class="mi">30</span>
+         \<span class="n">_</span> <span class="mi">40</span>
+             \<span class="n">_</span> <span class="mi">50</span>
+                 \<span class="n">_</span> <span class="mi">60</span>
+                     \<span class="n">_</span> <span class="mi">70</span>
+                         \<span class="n">_</span> <span class="mi">80</span>
+                             \<span class="n">_</span> <span class="mi">90</span>
+                                 \<span class="n">_</span> <span class="mi">100</span>
+</pre></div>
+</div>
+<p>The trick is to keep the tree “balanced” as we add new elements, so that
+the depth of the tree remains <span class="math notranslate nohighlight">\(O(\text{log} N)\)</span> as we add more and
+more elements. We’ll look at this balancing process as part of the “AVL tree”
+structure and procedures in the next part.</p>
+</div>
+<div class="section" id="where-did-the-pointers-go">
+<h2>Where did the pointers go?<a class="headerlink" href="#where-did-the-pointers-go" title="Permalink to this headline">¶</a></h2>
+<p>We wrote the tree using two integer arrays now, but in an earlier instance,
+we’d defined an expression tree where the expression parts were pointers.
+These two ways of representing a tree are equivalent - i.e. you understand
+one, you understand the other.</p>
+<p>In other words, the pointer representation is as though the pointer is an
+integer index into a global large array of bytes that is all of the memory
+available to your program.</p>
+<p>Just as you can include the <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> indices into your
+<code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">Assoc</span></code> like below</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">Assoc</span> <span class="p">{</span>
+    <span class="nb">int</span> <span class="n">key</span><span class="p">;</span>
+    <span class="n">void</span> <span class="o">*</span><span class="n">value</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">left</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">right</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>which will permit you to get rid of the explicit <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">[]</span> <span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">[]</span> <span class="pre">right</span></code>
+in the dictionary structure, you can turn these into pointers and get rid of the
+array itself as shown below</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">Assoc</span> <span class="o">*</span><span class="n">tree_t</span><span class="p">;</span>
+
+<span class="n">struct</span> <span class="n">Assoc</span> <span class="p">{</span>
+    <span class="nb">int</span> <span class="n">key</span><span class="p">;</span>
+    <span class="n">void</span> <span class="o">*</span><span class="n">value</span><span class="p">;</span>
+    <span class="n">tree_t</span> <span class="n">left</span><span class="p">;</span>
+    <span class="n">tree_t</span> <span class="n">right</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Now you can treat your whole dictionary as just a pointer to the root node.
+There’s one subtlety there – we may need to create a “dummy” root node
+in order to represent the possibility of an empty dictionary. Otherwise
+we will not have anything to add new elements to.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Throughout this, notice that we can continue to maintain the same
+set of functions to operate the dictionary while we play around with ways
+to implement it “under the hood”. This set of functions constitutes the
+dictionary’s “interface” and this “interface-implementation” separation is
+one of the corner stone techniques to manage complexity in large programs.
+A piece of code that uses a structure like a dictionary must not make
+any assumptions about how it is implemented and only rely on the contracts
+provided by its interface functions. This is pretty much the definition of
+“modularity”.</p>
+</div>
+<p>Next up - balanced binary trees and balancing techniques.</p>
+</div>
+<div class="section" id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<p>In all these, write the contracts too.</p>
+<ol class="arabic">
+<li><p>Implement a function that computes the <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> arrays
+given a binary search interval of length <code class="docutils literal notranslate"><span class="pre">N</span></code> (given as a half-open
+interval <span class="math notranslate nohighlight">\([\text{from},\text{to})\)</span>. It should place <code class="docutils literal notranslate"><span class="pre">-1</span></code> as
+the value for those indices that don’t have left/right children. For
+what the left/right arrays should contain, refer to the table in
+the previous section:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">build_left_right_indices</span><span class="p">(</span><span class="nb">int</span> <span class="n">from</span><span class="p">,</span> <span class="nb">int</span> <span class="n">to</span><span class="p">,</span> <span class="nb">int</span> <span class="p">[]</span> <span class="n">left</span><span class="p">,</span> <span class="nb">int</span> <span class="p">[]</span> <span class="n">right</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p>Implement a function that uses the <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> arrays a computes
+a “tree depth” given a starting point. The tree depth is defined as the maximum
+number of times you can step into the left or right branches until you hit a
+<code class="docutils literal notranslate"><span class="pre">-1</span></code> value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">tree_depth</span><span class="p">(</span><span class="nb">int</span> <span class="p">[]</span> <span class="n">left</span><span class="p">,</span> <span class="nb">int</span> <span class="p">[]</span> <span class="n">right</span><span class="p">,</span> <span class="nb">int</span> <span class="n">start</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p>Implement a function which when given the left/right arrays and a start position,
+checks that all the reachable nodes meet the ordering property - i.e.
+that all nodes to the left of a node have values less than the node value,
+and all nodes to the right of a node have values greater than the node value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bool</span> <span class="n">check_ordering</span><span class="p">(</span><span class="nb">int</span> <span class="p">[]</span> <span class="n">left</span><span class="p">,</span> <span class="nb">int</span> <span class="p">[]</span> <span class="n">right</span><span class="p">,</span> <span class="nb">int</span> <span class="n">start</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p>Compute some simple “tree traversals” to get a feel of the common recursive
+traversal pattern -</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li><p>Find the maximum value of all reachable nodes.</p></li>
+<li><p>Find the sum of all reachable nodes.</p></li>
+<li><p>Find the count of all reachable nodes.</p></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p>Can you generalize (using the C1 language extension) the above traversals so
+we can use the same generic “traverse” function that takes a function argument
+that tells what to compute while traversing?</p></li>
+<li><p>Given a sorted list of numbers <code class="docutils literal notranslate"><span class="pre">[1,2,3,4,5,6,7,8,9,10]</span></code>, in what order
+should we insert these elements using the naive tree insertion function we
+wrote earlier? Can you generalize it to an array of <code class="docutils literal notranslate"><span class="pre">N</span></code> elements?</p></li>
+</ol>
+</div>
+</div>
+
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="sorting.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Sorting - an information theoretic introduction</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="avl.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">AVL trees</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Srikumar K. S.<br/>
+        
+            &copy; Copyright 2021, Srikumar K. S..<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Linked lists &#8212; Principles of programming I: Imperative computation (forever alpha) documentation</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Transitioning to C" href="c.html" />
+    <link rel="prev" title="AVL trees" href="avl.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Principles of programming I: Imperative computation (forever alpha) documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p class="caption">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="welcome.html">
+   Welcome
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction to imperative computation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="warmup.html">
+   Warming up with the power function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reasoning.html">
+   Reasoning with imperative programs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="c0.html">
+   More C0
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="arrays.html">
+   Arrays
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gcd.html">
+   Assignment 1: GCD
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="practice.html">
+   Practice problems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="searching.html">
+   Searching
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sorting.html">
+   Sorting - an information theoretic introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="binsearch.html">
+   Binary search
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="avl.html">
+   AVL trees
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Linked lists
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="c.html">
+   Transitioning to C
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/lists.rst.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.rst</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#circular-lists">
+   Circular lists
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="linked-lists">
+<h1>Linked lists<a class="headerlink" href="#linked-lists" title="Permalink to this headline">¶</a></h1>
+<p>We saw linked lists briefly when looking at binary search trees and what
+happens if we use a naive insertion algorithm. Usually, linked lists are dealt
+with before trees, but we dealt with trees first since we’d already dealt with
+searching and sorting.</p>
+<p>That said, linked lists are a strange beast in the computing world.  On the one
+hand, they are a generic data structure that some programming languages use to
+underpin much of the structures of the language (ex: LisP – short for List
+Processor – which is actualy a family of languages including Common Lisp,
+Scheme and Clojure .. or functional languages like Haskell). The reason for
+this is the simplicity of the structure is also its power. That said, in real
+world algorithms, linked lists (or lists for short) rarely ever feature due to
+the <span class="math notranslate nohighlight">\(\mathcal{O}(N)\)</span> complexity for basic operations like lookup, insert/delete at a
+position, and so on.</p>
+<p>And yet, they have a conceptual elegance that you can use them to understand
+much about data structures. For example, lists can also be used as trees. We’ll
+see a taste of the possibilities here.</p>
+<p>The LisP family of languages represents a list in text form as a sequence
+of items within parentheses. Below is a program represented as a (nested) list.</p>
+<div class="highlight-scheme notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nb">max </span><span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">&gt; </span><span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>In the LisP family of languages, a list expression of the form <code class="docutils literal notranslate"><span class="pre">(a</span> <span class="pre">b</span> <span class="pre">c</span> <span class="pre">d)</span></code> is
+interpreted as though the first item is an “operator” and the rest are its
+“operands”. So <span class="math notranslate nohighlight">\(1+2\)</span> is notated as <code class="docutils literal notranslate"><span class="pre">(+</span> <span class="pre">1</span> <span class="pre">2)</span></code>.  The above shown
+expression is to be interpreted as the following list structure</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">define</span><span class="p">]</span><span class="o">|---&gt;</span><span class="p">()</span><span class="o">|----&gt;</span><span class="p">()</span><span class="o">|----</span><span class="n">X</span>
+              \       \
+               \       <span class="o">--&gt;</span><span class="p">[</span><span class="k">if</span><span class="p">]</span><span class="o">|----&gt;</span><span class="p">()</span><span class="o">|-----&gt;</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">|----&gt;</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">|---&gt;</span><span class="n">X</span>
+                \                    \
+                 \                    <span class="o">--&gt;</span><span class="p">[</span><span class="o">&gt;</span><span class="p">]</span><span class="o">|---&gt;</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">|----&gt;</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">|----</span><span class="n">X</span>
+                  \
+                   <span class="o">--&gt;</span><span class="p">[</span><span class="nb">max</span><span class="p">]</span><span class="o">|----&gt;</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">|----&gt;</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">|---</span><span class="n">X</span>
+</pre></div>
+</div>
+<p>A “node” in such a list consists of two “cells” - the first one holds the
+“content” of the node and the second one (usually) holds a pointer or
+reference to the next node. <a class="footnote-reference brackets" href="#car" id="id1">1</a> If you have a mechanism to indicate what type
+the “content” is, then you can generalize the notion of content to include
+other lists. After all, why shouldn’t we be able to make lists of lists?</p>
+<dl class="footnote brackets">
+<dt class="label" id="car"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>For historical reasons, the “content” cell is referred to as <code class="docutils literal notranslate"><span class="pre">car</span></code>
+and the cell holding the pointer to the next cell is referred to as <code class="docutils literal notranslate"><span class="pre">cdr</span></code>.
+They are respectively the abbreviations of “Contents of Address Register”
+and “Contents of Data Register”. An unusual feature of Common Lisp is that
+it lets you talk about the “contents of the address register of the contents
+of the data register” (i.e. the second item in the list) using a short form
+like <code class="docutils literal notranslate"><span class="pre">cadr</span></code>.</p>
+</dd>
+</dl>
+<p>That is the facility used to represent the above program for computing the
+maximum of two numbers. You can see that the list picture looks more like a
+tree and indeed, it is called the “abstract syntax tree” of the program,
+commonly abbreviated as AST. The lisp “language” is a direct representation of
+the program’s AST. Since the language also has functions using which you can
+make and manipulate lists, you can write lisp programs that produce programs
+and output which are then passed to the cmopiler. It is even possible in some
+lisps to write programs that can modify themselves. It is for that reason that
+lisps enjoyed support during the early days of artificial intelligence when
+“symbolic AI” was the dominant paradigm.</p>
+<p>In code, a list’s form (i.e. interface) should be quite familiar to you by now –</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">Node</span> <span class="o">*</span><span class="n">list_t</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nc">Node</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">content</span><span class="p">;</span>
+    <span class="n">list_t</span> <span class="n">next</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// Constructs a new node with the given content</span>
+<span class="c1">// and with the next pointer pointing to ... well,</span>
+<span class="c1">// the rest of the list. This function is also known</span>
+<span class="c1">// as &quot;cons&quot; -- short for &quot;construct a node&quot;.</span>
+<span class="n">list_t</span> <span class="nf">mk_node</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">content</span><span class="p">,</span> <span class="n">list_t</span> <span class="n">next</span><span class="p">);</span>
+
+<span class="c1">// These get the parts of a list&#39;s node.</span>
+<span class="c1">// It is conventional to talk about the first</span>
+<span class="c1">// node of a list as its &quot;head&quot; and the rest of the</span>
+<span class="c1">// list as its &quot;tail&quot;.</span>
+<span class="kt">void</span> <span class="o">*</span><span class="nf">get_content</span><span class="p">(</span><span class="n">list_t</span> <span class="n">node</span><span class="p">);</span>
+<span class="n">list_t</span> <span class="nf">get_tail</span><span class="p">(</span><span class="n">list_t</span> <span class="n">node</span><span class="p">);</span>
+
+<span class="c1">// These modify the respective parts of a node.</span>
+<span class="kt">void</span> <span class="nf">set_content</span><span class="p">(</span><span class="n">list_t</span> <span class="n">node</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">content</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">set_tail</span><span class="p">(</span><span class="n">list_t</span> <span class="n">node</span><span class="p">,</span> <span class="n">list_t</span> <span class="n">tail</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>As with a tree, a list is also a recursively defined
+data structure, where the “rest of the list” is of the
+same type as the list.</p>
+<p>All algorithms working on singly linked lists can be written
+using the above set of functions. To represent the end of a list,
+we use the <code class="docutils literal notranslate"><span class="pre">NULL</span></code> pointer. So when a node has a <code class="docutils literal notranslate"><span class="pre">next</span></code> field
+which is <code class="docutils literal notranslate"><span class="pre">NULL</span></code>, it means there is no following node in the list.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Write a function to compute the length of a given list only using the above
+functions. The list is passed as a pointer to the first node. What
+considerations will apply?</p>
+</div>
+<p>For example, here is a function to insert/delete a given node after
+a particular identified node in the list –</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">insert_after</span><span class="p">(</span><span class="n">list_t</span> <span class="n">node</span><span class="p">,</span> <span class="n">list_t</span> <span class="n">insertee</span><span class="p">)</span>
+    <span class="c1">//@requires node != NULL</span>
+    <span class="c1">//@requires insertee != NULL</span>
+    <span class="c1">//@ensures node-&gt;next == insertee</span>
+<span class="p">{</span>
+    <span class="n">list_t</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">get_tail</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+    <span class="n">set_tail</span><span class="p">(</span><span class="n">insertee</span><span class="p">,</span> <span class="n">tail</span><span class="p">);</span>
+    <span class="n">set_tail</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">insertee</span><span class="p">);</span>
+
+    <span class="c1">// Note that if the insertee had a tail, that</span>
+    <span class="c1">// will now be forgotten. So the following function</span>
+    <span class="c1">// might be safer.</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">insert_content_after</span><span class="p">(</span><span class="n">list_t</span> <span class="n">node</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">content</span><span class="p">)</span>
+    <span class="c1">//@requires node != NULL</span>
+<span class="p">{</span>
+    <span class="n">insert_after</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">mk_node</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">delete_after</span><span class="p">(</span><span class="n">list_t</span> <span class="n">node</span><span class="p">)</span>
+    <span class="c1">//@requires node != NULL</span>
+<span class="p">{</span>
+    <span class="n">list_t</span> <span class="n">tail</span> <span class="o">=</span> <span class="n">get_tail</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tail</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">set_tail</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">get_tail</span><span class="p">(</span><span class="n">tail</span><span class="p">));</span>
+    <span class="c1">// Note that the ``tail`` pointer will now</span>
+    <span class="c1">// be forgotten since, at least within this function,</span>
+    <span class="c1">// there are no more references to the tail once</span>
+    <span class="c1">// the variable goes out of scope.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="circular-lists">
+<h2>Circular lists<a class="headerlink" href="#circular-lists" title="Permalink to this headline">¶</a></h2>
+<p>Given that the next pointer of a node of a list can refer to any node,
+what if we set up a list such that the next pointer of the 10th node
+points to the 5th node?</p>
+<p>Such a list does not have a defined “length” property. So when trying to
+compute the length of a list, we will need to ensure that the list is
+not circular.</p>
+<p>There is an elegant algorithm called the “hare and tortoise algorithm” that can
+be used to determine whether a list is circular or not.  Note that if we
+linearly scan a list, we will reach the end if and only if the list is not
+circular. So a simple linear scan will not suffice.</p>
+<p>Take a circular list where we number the nodes in the order we can visit them,
+with the first node being 0 as usual. Furthermore, let’s say the list has (an
+unknown) <span class="math notranslate nohighlight">\(N\)</span> nodes that we can visit before it loops back to the node
+numbered <span class="math notranslate nohighlight">\(l\)</span>. We can then see how if we try to reach the <span class="math notranslate nohighlight">\(k\)</span>-th
+node after <span class="math notranslate nohighlight">\(k\)</span> steps, we will land on the node numbered <span class="math notranslate nohighlight">\(k\)</span> if
+<span class="math notranslate nohighlight">\(k \leq l\)</span>, and on the node numbered <span class="math notranslate nohighlight">\(n(k) = l + (k - l) \text{mod}
+(N-l)\)</span> if <span class="math notranslate nohighlight">\(k &gt; l\)</span>.</p>
+<p>The “hare and tortoise algorithm” is based on the observation that <span class="math notranslate nohighlight">\(n(k)
+= n(2k)\)</span> if <span class="math notranslate nohighlight">\(k \text{mod} (N-l) = 0\)</span>. So we start with two pointers to
+the beginning of the list. In each iteration we step one of them – the
+“tortoise” – by one node down the list, and the other – the “hare” – by two
+nodes. If the pointers ever become equal again, then the list is circular.
+Otherwise the hare will reach the end of the list first and we can terminate
+the iteration.</p>
+<div class="admonition-exercise admonition">
+<p class="admonition-title">Exercise</p>
+<p>Write a function <code class="docutils literal notranslate"><span class="pre">bool</span> <span class="pre">is_circular_list(node_t</span> <span class="pre">n)</span></code> which takes a pointer
+to a node and uses the hare-tortoise algorithm to find out whether the list
+is circular.</p>
+</div>
+<p>For the purpose of this course, we’ll stop there with lists and revisit them
+when dealing with hash tables.</p>
+</div>
+</div>
+
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="avl.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">AVL trees</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="c.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">Transitioning to C</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Srikumar K. S.<br/>
+        
+            &copy; Copyright 2021, Srikumar K. S..<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
