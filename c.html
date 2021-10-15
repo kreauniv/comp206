@@ -391,7 +391,7 @@ perspectives.</p>
 <span class="cp">#include</span> <span class="cpf">&lt;assert.h&gt;</span><span class="cp"></span>
 </pre></div>
 </div>
-<p>They can technically occur anywhere as <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;stdio.h&gt;</span></code> just
+<p>They can technically occur anywhere, since <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&lt;stdio.h&gt;</span></code> just
 means “copy paste contents of stdio.h into my code at this point”,
 however they’re usually placed at top of source file.</p>
 </td>
@@ -460,7 +460,7 @@ types are available.</p></td>
 you can use <code class="docutils literal notranslate"><span class="pre">bool</span></code> along with <code class="docutils literal notranslate"><span class="pre">true</span></code> and <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p>Get address of a variable</p></td>
-<td><p>Not allowed. You need can only get pointers using <code class="docutils literal notranslate"><span class="pre">alloc</span></code>.</p></td>
+<td><p>Not allowed. You can only get pointers using <code class="docutils literal notranslate"><span class="pre">alloc</span></code>.</p></td>
 <td><p>If <code class="docutils literal notranslate"><span class="pre">x</span></code> is a variable of type <code class="docutils literal notranslate"><span class="pre">T</span></code>, then <code class="docutils literal notranslate"><span class="pre">&amp;x</span></code>
 gives its address and is an expression of type <code class="docutils literal notranslate"><span class="pre">T*</span></code> –
 i.e. a pointer to <code class="docutils literal notranslate"><span class="pre">T</span></code>. <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> can also be used on
