@@ -226,7 +226,11 @@ perspectives.
             int *yptr = &p1.y;
             printf("%d\n", *yptr); // Prints 23
 
-
+       In general, ``&`` can be used on any expression that is valid on
+       the LHS of an assignment statement and will yield a pointer to
+       the memory location that is the target of that assignment. The
+       technical term for such an expression that can be used on the LHS
+       is, unsurprisingly, "l-value".
    * - Get contents of a pointer
      - If ``p`` is of type ``T*``, then its contents are obtained
        using ``*p``.
