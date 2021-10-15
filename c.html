@@ -478,6 +478,11 @@ members of <code class="docutils literal notranslate"><span class="pre">struct</
 <span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">yptr</span><span class="p">);</span> <span class="o">//</span> <span class="n">Prints</span> <span class="mi">23</span>
 </pre></div>
 </div>
+<p>In general, <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> can be used on any expression that is valid on
+the LHS of an assignment statement and will yield a pointer to
+the memory location that is the target of that assignment. The
+technical term for such an expression that can be used on the LHS
+is, unsurprisingly, “l-value”.</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p>Get contents of a pointer</p></td>
