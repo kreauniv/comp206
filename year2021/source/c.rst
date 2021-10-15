@@ -159,7 +159,7 @@ perspectives.
            #include <math.h>
            #include <assert.h>
 
-       They can technically occur anywhere as ``#include <stdio.h>`` just
+       They can technically occur anywhere, since ``#include <stdio.h>`` just
        means "copy paste contents of stdio.h into my code at this point",
        however they're usually placed at top of source file.
    * - Contracts
@@ -208,7 +208,7 @@ perspectives.
      - You need to ``#include <stdbool.h>`` and then
        you can use ``bool`` along with ``true`` and ``false``.
    * - Get address of a variable
-     - Not allowed. You need can only get pointers using ``alloc``.
+     - Not allowed. You can only get pointers using ``alloc``.
      - If ``x`` is a variable of type ``T``, then ``&x``
        gives its address and is an expression of type ``T*`` --
        i.e. a pointer to ``T``. ``&`` can also be used on
