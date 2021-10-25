@@ -1,0 +1,475 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bit sets &#8212; Principles of programming I: Imperative computation (forever alpha) documentation</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Dictionaries and associated data structures" href="dict.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Principles of programming I: Imperative computation (forever alpha) documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p class="caption">
+ <span class="caption-text">
+  Contents:
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="welcome.html">
+   Welcome
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Introduction to imperative computation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="warmup.html">
+   Warming up with the power function
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reasoning.html">
+   Reasoning with imperative programs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="c0.html">
+   More C0
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="arrays.html">
+   Arrays
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="gcd.html">
+   Assignment 1: GCD
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="practice.html">
+   Practice problems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="searching.html">
+   Searching
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sorting.html">
+   Sorting - an information theoretic introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="binsearch.html">
+   Binary search
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="avl.html">
+   AVL trees
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lists.html">
+   Linked lists
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="c.html">
+   Transitioning to C
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="dict.html">
+   Dictionaries and associated data structures
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Bit sets
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/bitset.rst.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.rst</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="bit-sets">
+<h1>Bit sets<a class="headerlink" href="#bit-sets" title="Permalink to this headline">¶</a></h1>
+<p>When we discussed the “trie” structure for organizing a literal dictionary that
+maps words to their meaning strings, we treated it as a 26-way branching tree.
+The reality is that for quite some nodes, many of those 26 entries will be
+NULL.  For example, a vowel is more likely to follow a consonant than a
+consonant and that too the preceding character may determine what consonant may
+actually follow. Therefore, a strict 26-way branching node structure ends up
+wasting a lot of space.</p>
+<p>Can we do better?</p>
+<p>What we want to do here is to have a variable length array where at each index
+we store the branch corresponding to some character. One way to do that is -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">TrieNode</span> <span class="o">*</span><span class="n">trie_t</span><span class="p">;</span>
+
+<span class="k">struct</span> <span class="nc">CharSet</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">ch</span><span class="p">;</span>
+    <span class="n">trie_t</span> <span class="n">branch</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="nc">TrieNode</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">ch</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">N</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="nc">CharSet</span> <span class="o">*</span><span class="n">branches</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>This is a better strategy relative to what we had before and we can even get rid
+of the <code class="docutils literal notranslate"><span class="pre">ch</span></code> field within the <code class="docutils literal notranslate"><span class="pre">TrieNode</span></code> structure since it is already a part of
+the <code class="docutils literal notranslate"><span class="pre">CharSet</span></code> structure.</p>
+<p>The problem we’re now faced with is that even testing whether a character is part of
+the <code class="docutils literal notranslate"><span class="pre">branches</span></code> array involves a linear scan .. or we need to invest in keeping the
+array sorted by character.</p>
+<p>The broader problem of representing a small set of values is quite common though
+and has a rather elegant way of treating it where set membership tests are constant
+time and so are addition and deletion of members.</p>
+<p>What we want to represent at each branch point is a selection of characters
+from the alphabet and use an array of appropriate length. We can model the
+“selection of characters” by dedicating one bit to each character that says
+whether it is included in the set or not. This requires only 26 bits and CPUs
+usually provide cheap bit-wise operations on 32-bit integers. So a single
+32-bit integer suffices to answer the question of “which characters are part of
+the next trie set?”. We can map Bit0 to <code class="docutils literal notranslate"><span class="pre">'a'</span></code>, Bit1 to <code class="docutils literal notranslate"><span class="pre">'b'</span></code> and so on to
+mapping Bit25 to <code class="docutils literal notranslate"><span class="pre">'z'</span></code>.</p>
+<p>So we have our “bitset” type of size 32 which is as simple as -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">bitset32</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The “unsigned” indicates the positive numeric range <span class="math notranslate nohighlight">\([0,2^{32})\)</span> of 32 bits.</p>
+<p>So how do we test whether a character belongs to a given bitset?</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdbool.h&gt;</span><span class="cp"></span>
+
+<span class="kt">bool</span> <span class="nf">bitset_haschar</span><span class="p">(</span><span class="n">bitset32</span> <span class="n">bs</span><span class="p">,</span> <span class="kt">char</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">c</span> <span class="o">&gt;=</span> <span class="sc">&#39;a&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="sc">&#39;z&#39;</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">c</span> <span class="o">-</span> <span class="sc">&#39;a&#39;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">bs</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The expression <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">&lt;&lt;</span> <span class="pre">i</span></code> calculates <span class="math notranslate nohighlight">\(2^i\)</span> and the bit-wise and operation <code class="docutils literal notranslate"><span class="pre">&amp;</span></code>
+picks out the bit corresponding to <span class="math notranslate nohighlight">\(2^i\)</span> from the binary representation.
+If the result happens to be 0, then that bit is not set and the character is not
+a member. If it happens to be non-zero, then that bit is set and the character is
+a member.</p>
+<p>We can use similarly use bit-wise “or” to add a character to a bitset.</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">bitset32</span> <span class="nf">bitset_add</span><span class="p">(</span><span class="n">bitset32</span> <span class="n">bs</span><span class="p">,</span> <span class="kt">char</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">c</span> <span class="o">&gt;=</span> <span class="sc">&#39;a&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="sc">&#39;z&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">bs</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Things start getting interesting when we want to find out more about the bitset,
+like count the number of characters that belong to it. The straight forward way to
+do that is -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">bitset_size_spec</span><span class="p">(</span><span class="n">bitset32</span> <span class="n">bs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">bs</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">count</span> <span class="o">+=</span> <span class="n">bs</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">bs</span> <span class="o">=</span> <span class="n">bs</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>However, we can be smart about it and write a loop that only has to run as many
+times as the number of bits that are set in the bitset. To do this, we need to use
+the “bitwise XOR” operator, which is the “exclusive or” - i.e. the result is 1 only
+if exactly one of the two inputs are 1 and is 0 otherwise. This is in contrast with
+the previously used “inclusive or” which will produce a 1 if at least one of the
+two input bits is 1.</p>
+<p>Given a number whose bits are, say, <code class="docutils literal notranslate"><span class="pre">101001000</span></code>, subtracting 1 from this
+number gives us the bit pattern <code class="docutils literal notranslate"><span class="pre">101000111</span></code> – i.e. all the trailing zeroes
+turn to 1 and the least significant bit that is 1 turns to 0. If we now
+bit-wise XOR this with the original number, we will get <code class="docutils literal notranslate"><span class="pre">000001111</span></code>. Notice
+that the number of 1s in this number corresponds to the bit position of the
+least significant bit that is set.  If we then add 1 to this value, we will get
+<code class="docutils literal notranslate"><span class="pre">000010000</span></code>. The value of that result is that if we then divide (integer division)
+the original number by this, we will get <code class="docutils literal notranslate"><span class="pre">10100</span></code> .. and we have counted one
+set bit. We can now repeat the process until we get 0 to count all the set bits
+in the number.</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">bitset_size</span><span class="p">(</span><span class="n">bitset32</span> <span class="n">bs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">bs</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">count</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">bs</span> <span class="o">=</span> <span class="n">bs</span> <span class="o">/</span> <span class="p">((</span><span class="n">bs</span> <span class="o">^</span> <span class="p">(</span><span class="n">bs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">struct</span> <span class="nc">BSIterState</span> <span class="p">{</span>
+    <span class="n">bitset32</span> <span class="n">bs</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">count</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">BSIterState</span> <span class="nf">bitset_size_iter</span><span class="p">(</span><span class="n">BSIterState</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Note that s is passed by value and we&#39;re also returning</span>
+    <span class="c1">// a structure by value. This is not permitted in C0 but</span>
+    <span class="c1">// is valid (and very useful + efficient for small structures)</span>
+    <span class="c1">// in C.</span>
+    <span class="n">BSIterState</span> <span class="n">s2</span><span class="p">;</span>
+    <span class="n">s2</span><span class="p">.</span><span class="n">bs</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">bs</span> <span class="o">/</span> <span class="p">((</span><span class="n">s</span><span class="p">.</span><span class="n">bs</span> <span class="o">^</span> <span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">bs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">s2</span><span class="p">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// Here is our iteration invariant declared as a post condition</span>
+    <span class="c1">// on the calculation we do here.</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">bitset_size_spec</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="n">bs</span><span class="p">)</span> <span class="o">+</span> <span class="n">s</span><span class="p">.</span><span class="n">count</span> <span class="o">==</span> <span class="n">bitset_size_spec</span><span class="p">(</span><span class="n">s2</span><span class="p">.</span><span class="n">bs</span><span class="p">)</span> <span class="o">+</span> <span class="n">s2</span><span class="p">.</span><span class="n">count</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">s2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This loop will run only as many times as the number of “characters” we’ve added
+to the bitset.</p>
+<p>We can use the same logic to also get the index position of a character in
+our array of trie branches.</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">bitset_index</span><span class="p">(</span><span class="n">bitset32</span> <span class="n">bs</span><span class="p">,</span> <span class="kt">char</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">c</span> <span class="o">&gt;=</span> <span class="sc">&#39;a&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">c</span> <span class="o">&lt;=</span> <span class="sc">&#39;z&#39;</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="n">bitset_haschar</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="n">c</span><span class="p">));</span>
+
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">c</span><span class="o">-</span><span class="sc">&#39;a&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">bitset_size</span><span class="p">(</span><span class="n">bs</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">i</span><span class="mi">-1</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">bs</span> <span class="pre">&amp;</span> <span class="pre">(i-1)</span></code> will result in only the bits less significant than the bit
+corresponding to <code class="docutils literal notranslate"><span class="pre">c</span></code> being included in the count. Therefore that is a subset
+of the original bitset. For example, if <code class="docutils literal notranslate"><span class="pre">c</span></code> is <code class="docutils literal notranslate"><span class="pre">'d'</span></code> and <code class="docutils literal notranslate"><span class="pre">bs</span></code> is <code class="docutils literal notranslate"><span class="pre">10010101001</span></code>,
+then <code class="docutils literal notranslate"><span class="pre">i</span></code> is <code class="docutils literal notranslate"><span class="pre">1000</span></code> and <code class="docutils literal notranslate"><span class="pre">i-1</span></code> is <code class="docutils literal notranslate"><span class="pre">0111</span></code> and therefore <code class="docutils literal notranslate"><span class="pre">bs</span> <span class="pre">&amp;</span> <span class="pre">(i-1)</span></code> is
+<code class="docutils literal notranslate"><span class="pre">10010101001</span> <span class="pre">&amp;</span> <span class="pre">0111</span></code> which gives us <code class="docutils literal notranslate"><span class="pre">001</span></code>. Counting the number of bits of that
+gets us 1, which is the index of the character <code class="docutils literal notranslate"><span class="pre">'d'</span></code> in the set. We can now
+use this index to lookup the corresponding trie branch in the array.</p>
+<p>C is in some sense a “I guess you know what you’re doing” language and will let
+you do things like allocate an array of N elements and index beyond N without
+complaining about it at compilation, though the operation may bomb at runtime.
+We can at times exploit this behaviour to make compact data structures like
+out bitset-trie branches array.</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">TrieNode</span> <span class="o">*</span><span class="n">trie_t</span><span class="p">;</span>
+<span class="k">struct</span> <span class="nc">TrieNode</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">ch</span><span class="p">;</span>
+    <span class="n">bitset32</span> <span class="n">bs</span><span class="p">;</span>
+    <span class="n">trie_t</span> <span class="n">branches</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Note how we declared a zero-length array in there. The size of this structure
+will be 8 bytes, with 4-bytes being allocated for the <code class="docutils literal notranslate"><span class="pre">ch</span></code> field and 4 being
+allocated for the <code class="docutils literal notranslate"><span class="pre">bs</span></code> field. If we tell the compiler to compact this structure,
+then it will be only 5 bytes (which will be slightly slower to operate due
+to misaligned data).</p>
+<p>However, if we want to have, say, 6 branches, we can allocate a node like this -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">trie_t</span> <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">trie_t</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="nc">TrieNode</span><span class="p">)</span> <span class="o">+</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">trie_t</span><span class="p">)</span> <span class="o">*</span> <span class="mi">6</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>See how we’re allocating not just enough memory for the <code class="docutils literal notranslate"><span class="pre">ch</span></code> and <code class="docutils literal notranslate"><span class="pre">bs</span></code> fields,
+but we’re including space for 6 more pointers to <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">TrieNode</span></code> which will
+be 8 bytes each. It is as though we’ve allocated memory for the following
+structure -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">TrieNode6</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">ch</span><span class="p">;</span>
+    <span class="n">bitset32</span> <span class="n">bs</span><span class="p">;</span>
+    <span class="n">trie_t</span> <span class="n">branches</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>We can then proceed to populate the <code class="docutils literal notranslate"><span class="pre">bs</span></code> field with an appropriate set of 6
+characters. If we want to store more, we can always reallocate the structure.</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="c1">// We can access the index corresponding to the &#39;d&#39; branch</span>
+<span class="c1">// like this -</span>
+<span class="n">n</span><span class="o">-&gt;</span><span class="n">branches</span><span class="p">[</span><span class="n">bitset_index</span><span class="p">(</span><span class="n">n</span><span class="o">-&gt;</span><span class="n">bs</span><span class="p">,</span> <span class="sc">&#39;d&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>The cost of calculating <code class="docutils literal notranslate"><span class="pre">bitset_index</span></code> is the number of elements in the set
+since we have to count each one at worst. Can we do better in cases where
+we’re likely to have, say, &gt; 20 characters in the set?</p>
+<p>Because of the way we’ve defined the <code class="docutils literal notranslate"><span class="pre">bitset_index</span></code>, our array is actually
+ordered by character value – i.e. characters corresponding to higher bits
+will be present after characters corresponding to lower bits. So, we can
+indeed use binary search here. Though binary search is not really needed for
+a small set like 26 characters, it might be valuable for larger bitsets
+like 128 bits … if we have a use case for tries of that sort. Such tries
+are not entirely unthinkable since we can use it for a set of known character
+combinations or “tokens” instead of single characters.</p>
+<p>This should give you a flavour of a case in which we’re making certain kinds
+of “processing versus memory” trade offs.</p>
+</div>
+
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="dict.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Dictionaries and associated data structures</p>
+            </div>
+        </a>
+    </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Srikumar K. S.<br/>
+        
+            &copy; Copyright 2021, Srikumar K. S..<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

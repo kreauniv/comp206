@@ -24,4 +24,6 @@ Welcome to Principles of programming I: Imperative computation!
    avl
    lists
    c
+   dict
+   bitset
 
