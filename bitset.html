@@ -216,6 +216,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#c-tricks">
+   C tricks
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -373,11 +386,24 @@ then <code class="docutils literal notranslate"><span class="pre">i</span></code
 <code class="docutils literal notranslate"><span class="pre">10010101001</span> <span class="pre">&amp;</span> <span class="pre">0111</span></code> which gives us <code class="docutils literal notranslate"><span class="pre">001</span></code>. Counting the number of bits of that
 gets us 1, which is the index of the character <code class="docutils literal notranslate"><span class="pre">'d'</span></code> in the set. We can now
 use this index to lookup the corresponding trie branch in the array.</p>
-<p>C is in some sense a “I guess you know what you’re doing” language and will let
-you do things like allocate an array of N elements and index beyond N without
-complaining about it at compilation, though the operation may bomb at runtime.
-We can at times exploit this behaviour to make compact data structures like
-out bitset-trie branches array.</p>
+<p>Why can it be worth bothering with this if we can use a sorted array instead?</p>
+<p>You will have to make a choice about that based on measurements on the system
+your program will be running on .. or something equivalent. For small enough
+collections, you saw how a 32-bit integer suffices to represent the set.
+We did all our counting and indexing operations by directly manipulating
+this 32-bit integer. An integer fits within a CPU “register” which is the
+fastest kind of storage available to you and all our processing never needed
+to go back to memory for any data .. except the final stage. Not even to the
+closest and fastest memory - the L1 cache. The large constant costs of going
+back to memory may be more than enough to offset the cost of “linear” search
+through the bitset. So we have to make the choice based on measurement.</p>
+<div class="section" id="c-tricks">
+<h2>C tricks<a class="headerlink" href="#c-tricks" title="Permalink to this headline">¶</a></h2>
+<p>C is in some sense an “I guess you know what you’re doing” language and will
+let you do things like allocate an array of N elements and index beyond N
+without complaining about it at compilation, though the operation may bomb at
+runtime. We can at times exploit this behaviour to make compact data
+structures like our bitset-trie branches array.</p>
 <div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">TrieNode</span> <span class="o">*</span><span class="n">trie_t</span><span class="p">;</span>
 <span class="k">struct</span> <span class="nc">TrieNode</span> <span class="p">{</span>
     <span class="kt">char</span> <span class="n">ch</span><span class="p">;</span>
@@ -426,6 +452,7 @@ are not entirely unthinkable since we can use it for a set of known character
 combinations or “tokens” instead of single characters.</p>
 <p>This should give you a flavour of a case in which we’re making certain kinds
 of “processing versus memory” trade offs.</p>
+</div>
 </div>
 
 

@@ -173,11 +173,27 @@ then ``i`` is ``1000`` and ``i-1`` is ``0111`` and therefore ``bs & (i-1)`` is
 gets us 1, which is the index of the character ``'d'`` in the set. We can now
 use this index to lookup the corresponding trie branch in the array.
 
-C is in some sense a "I guess you know what you're doing" language and will let
-you do things like allocate an array of N elements and index beyond N without
-complaining about it at compilation, though the operation may bomb at runtime.
-We can at times exploit this behaviour to make compact data structures like
-out bitset-trie branches array.
+Why can it be worth bothering with this if we can use a sorted array instead?
+
+You will have to make a choice about that based on measurements on the system
+your program will be running on .. or something equivalent. For small enough
+collections, you saw how a 32-bit integer suffices to represent the set. 
+We did all our counting and indexing operations by directly manipulating
+this 32-bit integer. An integer fits within a CPU "register" which is the
+fastest kind of storage available to you and all our processing never needed
+to go back to memory for any data .. except the final stage. Not even to the
+closest and fastest memory - the L1 cache. The large constant costs of going
+back to memory may be more than enough to offset the cost of "linear" search
+through the bitset. So we have to make the choice based on measurement.
+
+C tricks
+^^^^^^^^
+
+C is in some sense an "I guess you know what you're doing" language and will
+let you do things like allocate an array of N elements and index beyond N
+without complaining about it at compilation, though the operation may bomb at
+runtime. We can at times exploit this behaviour to make compact data
+structures like our bitset-trie branches array.
 
 .. code-block:: C
 
@@ -239,8 +255,3 @@ combinations or "tokens" instead of single characters.
 This should give you a flavour of a case in which we're making certain kinds
 of "processing versus memory" trade offs.
 
-
-
-
-
-            
