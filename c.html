@@ -689,7 +689,20 @@ needs.</p>
 </div>
 <p>We could have three functions to do that, but that will usually result in a lot
 of duplicate code needing to be written between the three functions and this way
-is more compact and sufficiently general.</p>
+is more compact and sufficiently general. The reason for that redundancy is that
+the contract it needs to follow is not merely about how it treats its input
+and what set of values it returns. Such a comparison function must also meet some
+additional criteria -</p>
+<ol class="arabic simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">compare(v1,v2)</span> <span class="pre">==</span> <span class="pre">compare(v2,v3)</span></code>, then <code class="docutils literal notranslate"><span class="pre">compare(v1,v2)</span> <span class="pre">==</span> <span class="pre">compare(v1,v3)</span></code>
+as well. This captures the transitive nature of comparisons -
+a. If a &lt; b and b &lt; c, then a &lt; c.
+b. If a == b and b == c, then a == c.
+C. If a &gt; b and b &gt; c, then a &gt; c.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">compare(v1,v2)</span> <span class="pre">+</span> <span class="pre">compare(v2,v1)</span> <span class="pre">==</span> <span class="pre">0</span></code>. This captures the reflexivity of
+equality - i.e. a == b implies b == a. It also captures the relationship between
+“less than” and “greater than” - i.e. a &lt; b implies b &gt; a.</p></li>
+</ol>
 <p>The <code class="docutils literal notranslate"><span class="pre">compare</span></code> argument to <code class="docutils literal notranslate"><span class="pre">qsort</span></code> also has the same structure as the
 comparison function given above, except that the <code class="docutils literal notranslate"><span class="pre">thing_t</span></code> is a <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">void</span>
 <span class="pre">*</span></code> since <code class="docutils literal notranslate"><span class="pre">qsort</span></code> doesn’t know anything about the type of values in the
