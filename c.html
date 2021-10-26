@@ -695,10 +695,13 @@ and what set of values it returns. Such a comparison function must also meet som
 additional criteria -</p>
 <ol class="arabic simple">
 <li><p>If <code class="docutils literal notranslate"><span class="pre">compare(v1,v2)</span> <span class="pre">==</span> <span class="pre">compare(v2,v3)</span></code>, then <code class="docutils literal notranslate"><span class="pre">compare(v1,v2)</span> <span class="pre">==</span> <span class="pre">compare(v1,v3)</span></code>
-as well. This captures the transitive nature of comparisons -
-a. If a &lt; b and b &lt; c, then a &lt; c.
-b. If a == b and b == c, then a == c.
-C. If a &gt; b and b &gt; c, then a &gt; c.</p></li>
+as well. This captures the transitive nature of comparisons -</p>
+<ul class="simple">
+<li><p>If a &lt; b and b &lt; c, then a &lt; c.</p></li>
+<li><p>If a == b and b == c, then a == c.</p></li>
+<li><p>If a &gt; b and b &gt; c, then a &gt; c.</p></li>
+</ul>
+</li>
 <li><p><code class="docutils literal notranslate"><span class="pre">compare(v1,v2)</span> <span class="pre">+</span> <span class="pre">compare(v2,v1)</span> <span class="pre">==</span> <span class="pre">0</span></code>. This captures the reflexivity of
 equality - i.e. a == b implies b == a. It also captures the relationship between
 “less than” and “greater than” - i.e. a &lt; b implies b &gt; a.</p></li>
