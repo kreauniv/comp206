@@ -236,6 +236,11 @@
    Differences from C0
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#function-pointers">
+   Function pointers
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -363,8 +368,8 @@ functions, you’ll be writing valid C code. The difference will be in the
 functions available to you in the two languages. C offers more to the
 adventurous though. Below we consider the language differences from several
 perspectives.</p>
-<table class="colwidths-given table" id="id1">
-<caption><span class="caption-number">Table 3 </span><span class="caption-text">C0 versus C - pragmatics</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<table class="colwidths-given table" id="id2">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">C0 versus C - pragmatics</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 40%" />
@@ -422,8 +427,8 @@ slided from the code.</p>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id2">
-<caption><span class="caption-number">Table 4 </span><span class="caption-text">C0 versus C - basic language features</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<table class="colwidths-given table" id="id3">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">C0 versus C - basic language features</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 40%" />
@@ -547,8 +552,8 @@ character <code class="docutils literal notranslate"><span class="pre">'\n'</spa
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id3">
-<caption><span class="caption-number">Table 5 </span><span class="caption-text">C0 versus C - memory management</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<table class="colwidths-given table" id="id4">
+<caption><span class="caption-number">Table 5 </span><span class="caption-text">C0 versus C - memory management</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 40%" />
@@ -597,8 +602,8 @@ ex: from <code class="docutils literal notranslate"><span class="pre">int</span>
 </tr>
 </tbody>
 </table>
-<table class="colwidths-given table" id="id4">
-<caption><span class="caption-number">Table 6 </span><span class="caption-text">C0 versus C - iteration</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<table class="colwidths-given table" id="id5">
+<caption><span class="caption-number">Table 6 </span><span class="caption-text">C0 versus C - iteration</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 20%" />
 <col style="width: 40%" />
@@ -637,6 +642,125 @@ ex: from <code class="docutils literal notranslate"><span class="pre">int</span>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="function-pointers">
+<h2>Function pointers<a class="headerlink" href="#function-pointers" title="Permalink to this headline">¶</a></h2>
+<p>You’re used to passing around functions in python as “first class values”.
+They were called by various names, “lambda”, “closure” or just plain “function”.</p>
+<p>Lower level languages like C eschew the complexity that comes with implementing
+closures in favour of simpler primitives that you can build up from. While C
+does not have the concept of “lambda” or “closure” <a class="footnote-reference brackets" href="#cblocks" id="id1">1</a>, it does permit
+you to write code that can store and pass around stateless functions as values
+as “function pointers”.</p>
+<p>The underlying principle is that a function is just a block of code or machine
+instructions itself residing in memory at a certain location. So if we have the
+address of this location and know something about what the code residing there
+will do if we jump to that location, then we can use that to add customizations
+to behaviour of our code. This is, once more, the notion of “interface” coming
+up of use.</p>
+<p>A common kind of function pointer usage is to write custom comparison functions
+for sorting algorithms. For example, the standard C <code class="docutils literal notranslate"><span class="pre">qsort</span></code> function has the
+following signature -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">qsort</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">nitems</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">compare</span><span class="p">)(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Let’s break that down.</p>
+<ol class="arabic simple">
+<li><p>We will want to be able to sort arrays of arbitrary items. The <code class="docutils literal notranslate"><span class="pre">base</span></code> argument
+is used to provide a pointer to the first element of the array of items.</p></li>
+<li><p>The sorting algorithm needs to know how many items and how big each item is
+in order to be able to compare them, swap items at indices and such. The <code class="docutils literal notranslate"><span class="pre">nitems</span></code>
+argument gives the length of the array and <code class="docutils literal notranslate"><span class="pre">size</span></code> gives how many bytes to
+skip from one item to the next.</p></li>
+<li><p>It also needs to know how to declare one item to be “less than” another
+so that it can decide whether to swap them or not. This is the <code class="docutils literal notranslate"><span class="pre">compare</span></code>
+argument.</p></li>
+</ol>
+<p>It does not need to know anything else about the structure of the array and its items,
+and therefore the <code class="docutils literal notranslate"><span class="pre">qsort</span></code> function’s signature precisely declares only what it
+needs.</p>
+<p>What’s of interest here is the last <code class="docutils literal notranslate"><span class="pre">compare</span></code> argument.</p>
+<p>It is common to provide comparison functions with the following contract -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">my_comparison_fn</span><span class="p">(</span><span class="n">thing_t</span> <span class="n">t1</span><span class="p">,</span> <span class="n">thing_t</span> <span class="n">t2</span><span class="p">);</span>
+<span class="c1">// Returns -1 if t1 is &quot;less than&quot; t2,</span>
+<span class="c1">// Returns 1 if t1 is &quot;greater than&quot; t2,</span>
+<span class="c1">// Returns 0 if t1 is &quot;equal to&quot; t2.</span>
+</pre></div>
+</div>
+<p>We could have three functions to do that, but that will usually result in a lot
+of duplicate code needing to be written between the three functions and this way
+is more compact and sufficiently general.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">compare</span></code> argument to <code class="docutils literal notranslate"><span class="pre">qsort</span></code> also has the same structure as the
+comparison function given above, except that the <code class="docutils literal notranslate"><span class="pre">thing_t</span></code> is a <code class="docutils literal notranslate"><span class="pre">const</span> <span class="pre">void</span>
+<span class="pre">*</span></code> since <code class="docutils literal notranslate"><span class="pre">qsort</span></code> doesn’t know anything about the type of values in the
+array. The <code class="docutils literal notranslate"><span class="pre">const</span></code> here is used to signify that the comparison function will
+not modify the contents of what it is comparing. That would be a disaster if
+we were to permit it.</p>
+<p>You can turn an ordinary C function signature into a type that represents
+“functions like this” by simply wrapping the function name as <code class="docutils literal notranslate"><span class="pre">(*comparison_fn)</span></code>
+and using it in a <code class="docutils literal notranslate"><span class="pre">typedef</span></code> -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="nf">int</span> <span class="p">(</span><span class="o">*</span><span class="n">comparison_fn</span><span class="p">)(</span><span class="n">thing_t</span> <span class="n">t1</span><span class="p">,</span> <span class="n">thing_t</span> <span class="n">t2</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Once defined like that, the name <code class="docutils literal notranslate"><span class="pre">comparison_fn</span></code> will be a type that represents
+“function that takes two <code class="docutils literal notranslate"><span class="pre">thing_t</span></code> values as arguments and returns an <code class="docutils literal notranslate"><span class="pre">int</span></code>”.
+So for <code class="docutils literal notranslate"><span class="pre">qsort</span></code>, we could’ve split the declaration like this as well -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="nf">int</span> <span class="p">(</span><span class="o">*</span><span class="n">qsort_comparator</span><span class="p">)(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v2</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">qsort</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">nitems</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="n">qsort_comparator</span> <span class="n">compare</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>… which is equivalent to the previous declaration but perhaps a little
+more readable. If we have an array of <code class="docutils literal notranslate"><span class="pre">float</span></code> values and want to sort
+based on, say, the <code class="docutils literal notranslate"><span class="pre">sin</span></code> of these values for some reason, we could do it
+like this -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">sin_compare</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="kt">float</span> <span class="o">*</span><span class="n">f1</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="kt">float</span> <span class="o">*</span><span class="p">)</span><span class="n">v1</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">float</span> <span class="o">*</span><span class="n">f2</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="kt">float</span> <span class="o">*</span><span class="p">)</span><span class="n">v2</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">sf1</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">f1</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="kt">float</span> <span class="n">sf2</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">f2</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sf1</span> <span class="o">&lt;</span> <span class="n">sf2</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">sf1</span> <span class="o">&gt;</span> <span class="n">sf2</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Although equality of floats is not good to rely on.</span>
+<span class="p">}</span>
+
+<span class="kt">float</span> <span class="n">values</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+<span class="c1">// Fill up values array with some values.</span>
+
+<span class="c1">// Sort them according to our ``sin_compare`` function.</span>
+<span class="n">qsort</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">),</span> <span class="o">&amp;</span><span class="n">sin_compare</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The expression <code class="docutils literal notranslate"><span class="pre">&amp;sin_compare</span></code> gives us the “function pointer” for the
+<code class="docutils literal notranslate"><span class="pre">sin_compare</span></code> function. Since <code class="docutils literal notranslate"><span class="pre">sin_compare</span></code> has the exact same signature
+as the <code class="docutils literal notranslate"><span class="pre">compare</span></code> argument of <code class="docutils literal notranslate"><span class="pre">qsort</span></code>, we can simply pass this pointer to
+<code class="docutils literal notranslate"><span class="pre">qsort</span></code> and it will use it to determine the order within the array.</p>
+<p>It is arguable that a more flexible way to provide such a sorting facility is
+to include a “context” pointer that <code class="docutils literal notranslate"><span class="pre">qsort</span></code> can make available to the comparison
+function. For example, we may have an array of indices into another array and we
+may want to sort the array of indices based on some property of the corresponding
+item in the other array. With the current implementation of qsort, you will be forced
+to model your problem as an array of pointers first and then convert back to indices.
+However, if we include a context pointer that can be passed around, that lets us
+model the problem whatever way we want to and write an appropriate comparison
+function. Indeed, the <code class="docutils literal notranslate"><span class="pre">qsort_s</span></code> function provides exactly that.</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">qsort_s</span><span class="p">(</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">base</span><span class="p">,</span>
+    <span class="kt">size_t</span> <span class="n">items</span><span class="p">,</span>
+    <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span>
+    <span class="kt">int</span> <span class="p">(</span><span class="o">*</span><span class="n">compare</span><span class="p">)(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v2</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">context</span><span class="p">),</span>
+    <span class="kt">void</span> <span class="o">*</span><span class="n">context</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+<p>The expectation is that the context pointer you pass to <code class="docutils literal notranslate"><span class="pre">qsort</span></code> will be
+passed to every call to the compare function so that additional information it
+needs to decide the comparison can be made available through it.</p>
+<dl class="footnote brackets">
+<dt class="label" id="cblocks"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Although Apple added a notion of “blocks” to C which are closures
+<a class="reference external" href="https://en.wikipedia.org/wiki/Blocks_(C_language_extension">https://en.wikipedia.org/wiki/Blocks_(C_language_extension</a>).</p>
+</dd>
+</dl>
 </div>
 </div>
 

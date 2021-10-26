@@ -334,4 +334,139 @@ perspectives.
      - ``<return-type> <fn-name>(<arg1-type> <var1>, ...) { <body> }``
      - Same
 
+Function pointers
+-----------------
 
+You're used to passing around functions in python as "first class values".
+They were called by various names, "lambda", "closure" or just plain "function".
+
+Lower level languages like C eschew the complexity that comes with implementing
+closures in favour of simpler primitives that you can build up from. While C
+does not have the concept of "lambda" or "closure" [#cblocks]_, it does permit
+you to write code that can store and pass around stateless functions as values
+as "function pointers".
+
+The underlying principle is that a function is just a block of code or machine
+instructions itself residing in memory at a certain location. So if we have the
+address of this location and know something about what the code residing there
+will do if we jump to that location, then we can use that to add customizations
+to behaviour of our code. This is, once more, the notion of "interface" coming
+up of use.
+
+A common kind of function pointer usage is to write custom comparison functions
+for sorting algorithms. For example, the standard C ``qsort`` function has the
+following signature -
+
+.. code-block:: C
+
+    void qsort(void *base, size_t nitems, size_t size, int (*compare)(const void *, const void*));
+
+Let's break that down. 
+
+1. We will want to be able to sort arrays of arbitrary items. The ``base`` argument
+   is used to provide a pointer to the first element of the array of items.
+2. The sorting algorithm needs to know how many items and how big each item is
+   in order to be able to compare them, swap items at indices and such. The ``nitems``
+   argument gives the length of the array and ``size`` gives how many bytes to
+   skip from one item to the next.
+3. It also needs to know how to declare one item to be "less than" another
+   so that it can decide whether to swap them or not. This is the ``compare``
+   argument.
+
+It does not need to know anything else about the structure of the array and its items,
+and therefore the ``qsort`` function's signature precisely declares only what it
+needs.
+
+What's of interest here is the last ``compare`` argument. 
+
+It is common to provide comparison functions with the following contract -
+
+.. code-block:: C
+
+    int my_comparison_fn(thing_t t1, thing_t t2);
+    // Returns -1 if t1 is "less than" t2,
+    // Returns 1 if t1 is "greater than" t2,
+    // Returns 0 if t1 is "equal to" t2.
+
+We could have three functions to do that, but that will usually result in a lot
+of duplicate code needing to be written between the three functions and this way
+is more compact and sufficiently general.
+
+The ``compare`` argument to ``qsort`` also has the same structure as the
+comparison function given above, except that the ``thing_t`` is a ``const void
+*`` since ``qsort`` doesn't know anything about the type of values in the
+array. The ``const`` here is used to signify that the comparison function will
+not modify the contents of what it is comparing. That would be a disaster if
+we were to permit it.
+
+You can turn an ordinary C function signature into a type that represents
+"functions like this" by simply wrapping the function name as ``(*comparison_fn)``
+and using it in a ``typedef`` -
+
+.. code-block:: C
+
+    typedef int (*comparison_fn)(thing_t t1, thing_t t2);
+
+Once defined like that, the name ``comparison_fn`` will be a type that represents
+"function that takes two ``thing_t`` values as arguments and returns an ``int``".
+So for ``qsort``, we could've split the declaration like this as well -
+
+.. code-block:: C
+
+    typedef int (*qsort_comparator)(const void *v1, const void *v2);
+    void qsort(void *base, size_t nitems, size_t size, qsort_comparator compare);
+
+... which is equivalent to the previous declaration but perhaps a little
+more readable. If we have an array of ``float`` values and want to sort
+based on, say, the ``sin`` of these values for some reason, we could do it
+like this -
+
+.. code-block:: C
+
+    int sin_compare(const void *v1, const void *v2) {
+        const float *f1 = (const float *)v1;
+        const float *f2 = (const float *)v2;
+        float sf1 = sin(f1[0]);
+        float sf2 = sin(f2[0]);
+        if (sf1 < sf2) { return -1; }
+        if (sf1 > sf2) { return 1; }
+        return 0; // Although equality of floats is not good to rely on.
+    }
+
+    float values[100];
+    // Fill up values array with some values.
+    
+    // Sort them according to our ``sin_compare`` function.
+    qsort(values, 100, sizeof(float), &sin_compare);
+
+The expression ``&sin_compare`` gives us the "function pointer" for the
+``sin_compare`` function. Since ``sin_compare`` has the exact same signature
+as the ``compare`` argument of ``qsort``, we can simply pass this pointer to
+``qsort`` and it will use it to determine the order within the array.
+
+It is arguable that a more flexible way to provide such a sorting facility is
+to include a "context" pointer that ``qsort`` can make available to the comparison
+function. For example, we may have an array of indices into another array and we
+may want to sort the array of indices based on some property of the corresponding
+item in the other array. With the current implementation of qsort, you will be forced
+to model your problem as an array of pointers first and then convert back to indices.
+However, if we include a context pointer that can be passed around, that lets us
+model the problem whatever way we want to and write an appropriate comparison
+function. Indeed, the ``qsort_s`` function provides exactly that.
+
+.. code-block:: C
+
+    void qsort_s(
+        void *base, 
+        size_t items, 
+        size_t size, 
+        int (*compare)(const void *v1, const void *v2, void *context),
+        void *context
+        );
+
+The expectation is that the context pointer you pass to ``qsort`` will be
+passed to every call to the compare function so that additional information it
+needs to decide the comparison can be made available through it.
+
+.. [#cblocks] Although Apple added a notion of "blocks" to C which are closures
+   https://en.wikipedia.org/wiki/Blocks_(C_language_extension).
