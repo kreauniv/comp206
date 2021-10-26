@@ -334,6 +334,86 @@ perspectives.
      - ``<return-type> <fn-name>(<arg1-type> <var1>, ...) { <body> }``
      - Same
 
+Casting
+-------
+
+Casting is about treating a value of one type as a value of another type.
+The syntax for that in C is -
+
+.. code-block:: C
+
+    one_type val1;
+    another_type val2 = (another_type)val1;
+
+i.e. You place the type you want to treat ``val1`` as within parentheses preceding the
+value of interest. A common need is to cast between various numeric types, ``int``
+to ``float``, ``uint8_t`` to ``uint32_t`` and so on.
+
+"Downcasting" is the term used to refer to a casting operation from a "larger" type
+to a "smaller" type. For example, since ``uint32_t`` is 4-bytes in size, casting a
+``uint32_t`` value to ``uint8_t`` which is only one byte would be a "downcasting".
+Downcasting usually results in loss of information unless you know by some other
+means that there won't be information loss. For example, you may have a ``uint32_t``
+value that you know is in the range :math:`[0,255]` and therefore that it is safe
+to cast it down to ``uint8_t``. The compiler won't be able to validate that for you
+in general and will at most warn you about potential information loss.
+
+Another commonly used casting operation in C is between pointer types, known as
+a "reinterpret cast". The syntax is the same, except that two types are both
+pointer types. While C may not permit you to cast from a ``float`` to a particular
+``struct Something``, C permits you to cast between **any** two pointer types.
+
+For example -
+
+.. code-block:: C
+
+    #include <stdio.h>
+    #include <stdint.h> // For uint8_t and such
+
+    int main() {
+        int v = 878265;
+        printf("v = %d\n", v);
+        int *vptr = *v; // vptr points to an int, which is stored ass 4 consecutive bytes,
+                        // (depending on CPU type) in least-significant-byte-first order.
+
+        // We're now looking at the bytes that make up the integer.
+        uint8_t *vbytes = (uint8_t*)vptr;
+        printf("vbytes = ");
+        for (int i = 0; i < sizeof(int); i++) {
+            printf("%d ", vbytes[i]);
+        }
+        printf("\n");
+
+        // We now compute the integer back from the individual bytes and check it.
+        // Note that the order of the bytes is machine dependent. So this program
+        // will print out whether it uses "little endian" or "big endian" ordering.
+        int computed1_v = vbytes[0] + vbytes[1] * 256 + vbytes[2] * 256 * 256 + vbytes[3] * 256 * 256 * 256;
+        int computed2_v = vbytes[3] + vbytes[2] * 256 + vbytes[1] * 256 * 256 + vbytes[0] * 256 * 256 * 256;
+        if (computed1_v == v) {
+            printf("computed_v = %d and your computer is 'little endian'\n", computed1_v);
+        } else if (computed2_v == v) {
+            printf("computed_v = %d and your computer is 'big endian'\n", computed2_v);
+        } else {
+            printf("little_endian_v = %d, big_endian_v = %d and I don't know what went wrong.\n", 
+                   computed1_v, computed2_v);
+        }
+        return 0;
+    }
+
+
+.. Warning:: C's permission to cast between **any** two pointer types is a
+   double edged sword.  It can be used very effectively to implement various
+   abstractions (example ``qsort`` discussed in the next section) including
+   what was the origins of "object oriented programming". It also comes with
+   the danger of crashing your system if you don't really know what you're
+   doing. For example, casting a ``float`` to an ``int`` will get you a
+   truncating behaviour. However, if you cast a ``float*`` to an ``int*`` since
+   both are 4-bytes in size, there is no information loss, but the integer
+   value won't make any sense unless your intention is to work with the
+   bit-representation of floating point numbers for some reason.
+
+The cast operation can also be "chained" like this - ``(float)(int)(uint8_t)val``.
+
 Function pointers
 -----------------
 
