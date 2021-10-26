@@ -397,9 +397,10 @@ additional criteria -
 
 1. If ``compare(v1,v2) == compare(v2,v3)``, then ``compare(v1,v2) == compare(v1,v3)``
    as well. This captures the transitive nature of comparisons -
-   a. If a < b and b < c, then a < c.
-   b. If a == b and b == c, then a == c.
-   C. If a > b and b > c, then a > c.
+
+   * If a < b and b < c, then a < c.
+   * If a == b and b == c, then a == c.
+   * If a > b and b > c, then a > c.
 
 2. ``compare(v1,v2) + compare(v2,v1) == 0``. This captures the reflexivity of
    equality - i.e. a == b implies b == a. It also captures the relationship between
