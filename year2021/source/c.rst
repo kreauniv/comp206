@@ -390,7 +390,20 @@ It is common to provide comparison functions with the following contract -
 
 We could have three functions to do that, but that will usually result in a lot
 of duplicate code needing to be written between the three functions and this way
-is more compact and sufficiently general.
+is more compact and sufficiently general. The reason for that redundancy is that
+the contract it needs to follow is not merely about how it treats its input
+and what set of values it returns. Such a comparison function must also meet some
+additional criteria -
+
+1. If ``compare(v1,v2) == compare(v2,v3)``, then ``compare(v1,v2) == compare(v1,v3)``
+   as well. This captures the transitive nature of comparisons -
+   a. If a < b and b < c, then a < c.
+   b. If a == b and b == c, then a == c.
+   C. If a > b and b > c, then a > c.
+
+2. ``compare(v1,v2) + compare(v2,v1) == 0``. This captures the reflexivity of
+   equality - i.e. a == b implies b == a. It also captures the relationship between
+   "less than" and "greater than" - i.e. a < b implies b > a.   
 
 The ``compare`` argument to ``qsort`` also has the same structure as the
 comparison function given above, except that the ``thing_t`` is a ``const void
