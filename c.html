@@ -32,6 +32,7 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Dictionaries and associated data structures" href="dict.html" />
@@ -234,6 +235,11 @@
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#differences-from-c0">
    Differences from C0
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#casting">
+   Casting
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -642,6 +648,79 @@ ex: from <code class="docutils literal notranslate"><span class="pre">int</span>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="casting">
+<h2>Casting<a class="headerlink" href="#casting" title="Permalink to this headline">¶</a></h2>
+<p>Casting is about treating a value of one type as a value of another type.
+The syntax for that in C is -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">one_type</span> <span class="n">val1</span><span class="p">;</span>
+<span class="n">another_type</span> <span class="n">val2</span> <span class="o">=</span> <span class="p">(</span><span class="n">another_type</span><span class="p">)</span><span class="n">val1</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>i.e. You place the type you want to treat <code class="docutils literal notranslate"><span class="pre">val1</span></code> as within parentheses preceding the
+value of interest. A common need is to cast between various numeric types, <code class="docutils literal notranslate"><span class="pre">int</span></code>
+to <code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">uint8_t</span></code> to <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> and so on.</p>
+<p>“Downcasting” is the term used to refer to a casting operation from a “larger” type
+to a “smaller” type. For example, since <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> is 4-bytes in size, casting a
+<code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> value to <code class="docutils literal notranslate"><span class="pre">uint8_t</span></code> which is only one byte would be a “downcasting”.
+Downcasting usually results in loss of information unless you know by some other
+means that there won’t be information loss. For example, you may have a <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code>
+value that you know is in the range <span class="math notranslate nohighlight">\([0,255]\)</span> and therefore that it is safe
+to cast it down to <code class="docutils literal notranslate"><span class="pre">uint8_t</span></code>. The compiler won’t be able to validate that for you
+in general and will at most warn you about potential information loss.</p>
+<p>Another commonly used casting operation in C is between pointer types, known as
+a “reinterpret cast”. The syntax is the same, except that two types are both
+pointer types. While C may not permit you to cast from a <code class="docutils literal notranslate"><span class="pre">float</span></code> to a particular
+<code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">Something</span></code>, C permits you to cast between <strong>any</strong> two pointer types.</p>
+<p>For example -</p>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdint.h&gt;</span><span class="c1"> // For uint8_t and such</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">v</span> <span class="o">=</span> <span class="mi">878265</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;v = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">vptr</span> <span class="o">=</span> <span class="o">*</span><span class="n">v</span><span class="p">;</span> <span class="c1">// vptr points to an int, which is stored ass 4 consecutive bytes,</span>
+                    <span class="c1">// (depending on CPU type) in least-significant-byte-first order.</span>
+
+    <span class="c1">// We&#39;re now looking at the bytes that make up the integer.</span>
+    <span class="kt">uint8_t</span> <span class="o">*</span><span class="n">vbytes</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span><span class="p">)</span><span class="n">vptr</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;vbytes = &quot;</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span> <span class="n">vbytes</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+    <span class="c1">// We now compute the integer back from the individual bytes and check it.</span>
+    <span class="c1">// Note that the order of the bytes is machine dependent. So this program</span>
+    <span class="c1">// will print out whether it uses &quot;little endian&quot; or &quot;big endian&quot; ordering.</span>
+    <span class="kt">int</span> <span class="n">computed1_v</span> <span class="o">=</span> <span class="n">vbytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">vbytes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">+</span> <span class="n">vbytes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">+</span> <span class="n">vbytes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">computed2_v</span> <span class="o">=</span> <span class="n">vbytes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">vbytes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">+</span> <span class="n">vbytes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">+</span> <span class="n">vbytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span> <span class="o">*</span> <span class="mi">256</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">computed1_v</span> <span class="o">==</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;computed_v = %d and your computer is &#39;little endian&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">computed1_v</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">computed2_v</span> <span class="o">==</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;computed_v = %d and your computer is &#39;big endian&#39;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">computed2_v</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&quot;little_endian_v = %d, big_endian_v = %d and I don&#39;t know what went wrong.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span>
+               <span class="n">computed1_v</span><span class="p">,</span> <span class="n">computed2_v</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>C’s permission to cast between <strong>any</strong> two pointer types is a
+double edged sword.  It can be used very effectively to implement various
+abstractions (example <code class="docutils literal notranslate"><span class="pre">qsort</span></code> discussed in the next section) including
+what was the origins of “object oriented programming”. It also comes with
+the danger of crashing your system if you don’t really know what you’re
+doing. For example, casting a <code class="docutils literal notranslate"><span class="pre">float</span></code> to an <code class="docutils literal notranslate"><span class="pre">int</span></code> will get you a
+truncating behaviour. However, if you cast a <code class="docutils literal notranslate"><span class="pre">float*</span></code> to an <code class="docutils literal notranslate"><span class="pre">int*</span></code> since
+both are 4-bytes in size, there is no information loss, but the integer
+value won’t make any sense unless your intention is to work with the
+bit-representation of floating point numbers for some reason.</p>
+</div>
+<p>The cast operation can also be “chained” like this - <code class="docutils literal notranslate"><span class="pre">(float)(int)(uint8_t)val</span></code>.</p>
 </div>
 <div class="section" id="function-pointers">
 <h2>Function pointers<a class="headerlink" href="#function-pointers" title="Permalink to this headline">¶</a></h2>
