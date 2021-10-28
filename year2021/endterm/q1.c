@@ -73,7 +73,7 @@ bool print_words_precond(trie_t t, const char *prefix) {
     // and return true if met and false if not.
     //
     // Hint: This function depends on what your implementation
-    // of print_trie permits the arguments to be.
+    // of print_words permits the arguments to be.
     return true;
 }
 
