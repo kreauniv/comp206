@@ -22,7 +22,7 @@ Instructions
    be generated in the parent directory. You can submit that
    file. Do not modify the Makefile.
 
-4. You may use the provided main.c0 for your tests. This file
+4. You may use the provided main.c for your tests. This file
    is not part of the submission. You may do whatever you want
    within this. By default it calls the test functions declared
    in each module.
@@ -38,17 +38,12 @@ Instructions
    the given function stubs for basic contracts.
 
 8. Any additional functions you add that are used by your code are ok.
-   You will need to add the appropriate #use directives at the top 
-   depending on what you need to use.
+   Most of the necessary #include declarations are already made for you.
+   You shouldn't need any additional ones. If you need, please add.
 
-9. Normal plagiarism checks apply. So feel free to discuss with your
-   classmates, but implement the code on your own.
+9. Normal plagiarism checks apply.
 
 10. Please use appropriate indentation to make your code readable.
 
 11. Do place explanatory comments where you see necessary.
-
-12. There is a utility file named "utils.c0" which contains a couple of
-    approximate integer functions that you can use in your complexity
-    calculations.
 
