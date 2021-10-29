@@ -25,7 +25,7 @@ uint32_t hash4(uint32_t x);
 uint32_t hash5(uint32_t x);
 int num_bits_different(uint32_t a, uint32_t b, int nbits);
 float eval_hash(hashfn hash, uint32_t xfrom, uint32_t xto, int nbits);
-uint32_t best_string_hash(const char *str);
+uint32_t hash_string(const char *str);
 
 
 // Q3
