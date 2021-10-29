@@ -20,8 +20,8 @@
  *    change in the hash when you increment the hash argument
  *    by 1.
  * 2. You can calculate the variance in the number of
- *    hashes for, say, 100000 random keys selected from a larger range 
- *    like [100,100000000] and mapped to, as many buckets.
+ *    hashes for, say, 10000 random keys selected from a larger range 
+ *    like [100,1000000] and mapped to 10000 buckets.
  *    Variance = mean(n^2) - mean(n)^2 where n is the number 
  *    of keys mapped to a particular bucket and the mean
  *    runs over all the buckets.
@@ -150,22 +150,16 @@ float eval_hash(hashfn hash, uint32_t xfrom, uint32_t xto, int nbits) {
                  // a floating point constant.
 }
 
-// Using the best hash function (i.e. the one from the above 3
-// that scores the lowest according to your eval_hash implementation),
-// implement this function that can be used to produce an integer
-// code given a string. The integer can then be used to determine
-// a bucket in a hash table, say, using (h % nbuckets).
-// Note - you can either use the hash functions as is or implement
-// your own hash_str function based on the ideas in them.
+// We often want to store values associated with string keys and so
+// need good hash functions on strings. Use what you figured out with
+// eval_hash to write a string hash below. 
 //
-// Bonus: You'll receive a bonus score based on the number of
-// collisions generated on a predetermined set of words to which
-// this hash function will be applied. The hash range will be reduced
-// to the number of buckets available by taking the remainder when
-// divided by the number of buckets.
-uint32_t best_string_hash(const char *str) {
-    // TODO: Implement using what you found to be the best of the
-    // given hash functions.
+// Hint: You may be able to take ideas on how to implement such a hash
+// by looking through the above given hash functions. After all, a
+// string in C is just a sequence of bytes terminated by a '\0' character
+// with ASCII value 0.
+uint32_t hash_string(const char *str) {
+    // TODO:  Your implementation.
     return 0;
 }
 
