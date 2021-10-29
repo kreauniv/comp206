@@ -2,7 +2,9 @@ Instructions
 ============
 
 1. Each question appears in a separate file named "qn.c0" where n 
-   is the question number. There are 3 questions totaling 25 points.
+   is the question number. There are 4 questions totaling 25 points.
+   Q1 is 10 points, Q2 is 5 points, Q3 is 10 points, Q4 is 10 points.
+   You have a choice to tackle either Q3 or Q4.
 
 2. The question appears as a comment at the top of the file.
    The rest of the file has placeholder functions for you
@@ -18,14 +20,13 @@ Instructions
    to test it out, you can run "make" to produce the program
    and run it. As a shorthand, you can also type "make run".
    Once your work is complete and you want to submit, run
-   "make submission" and a file named "midterm.tar.gz" will
+   "make submission" and a file named "endterm.tar.gz" will
    be generated in the parent directory. You can submit that
    file. Do not modify the Makefile.
 
 4. You may use the provided main.c for your tests. This file
    is not part of the submission. You may do whatever you want
-   within this. By default it calls the test functions declared
-   in each module.
+   within this.
 
 6. DO NOT modify the file names of the questions.
 

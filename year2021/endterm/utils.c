@@ -13,13 +13,3 @@ uint32_t hash_int(uint32_t x) {
     return hash;
 }
 
-uint32_t hash_str(const char *str) {
-    uint32_t a = 1664525;
-    uint32_t b = 1013904223;
-    uint32_t hash = b;
-    while (*str) {
-        hash = a * (hash ^ (*str++)) + b;
-    }
-    return hash;
-}
-

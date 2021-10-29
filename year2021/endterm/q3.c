@@ -3,73 +3,142 @@
 #include <stdint.h>
 #include <assert.h>
 #include <stdbool.h>
-#include <math.h>
+#include "utils.h"
 
 /*
- * Q3: 5 points
+ * Q3: 10 points
+ * You can choose to tackle this or Q4.
+ * 
+ * You're given 4 hash functions, several based on the
+ * "linear congruential generator" idea. You're expected
+ * to write the "eval_hash" function implementation such
+ * that the value returned by eval_hash indicates the
+ * "quality" of the hash function.
  *
- * For this question, your function will be provided with an array of
- * characters - i.e. a string - terminated by a null character of ASCII value
- * 0. This string is "normalized" from ordinary prose by removing all digits
- * and punctuations and converting all upper case letters to lower case.
- * Therefore the only characters which can feature in this string are the lower
- * case letters and the space character (a set of 27 characters).
+ * For the purpose of this question, we will evaluate
+ * "quality" based on the average number of bits that change
+ * in the hash when the input is incremented by 1. You will
+ * have to determine your "score" for eval_hash based on
+ * this average.
  *
- * Write a function to sort such an array of characters and place the sorted
- * result in the given output array of the same length as the input.
+ * We will also consider only the lower 24 bits of the hash
+ * for the evaluation since we want to use it to implement
+ * a hash table of a few million buckets.
  *
- * NOTE: Points will be given for writing appropriate assert() expressions.
- * Consider expressing loop invariants using such assertions too.
+ * NOTE: Read the description above eval_hash carefully.
+ * You will also have to provide a comment explaining
+ * why you think the value you return characterizes the
+ * quality of the hash function.
  *
- * You can write any helper function you want to and call them from these
- * functions given below.
+ * Points will also be awarded for appropriate use of
+ *         assert(<boolean-expr>);
+ * in your code to call out what you know to be true
+ * at various points in your code.
  *
- * Hint(s):
+ * Hints:
  *
- * 1. In case you need temporary storage, you can allocate using malloc.
- *    Ensure that you free whatever you allocate so that there are no
- *    "memory leaks" in your program.
+ * 1. You can convert an integer x into float value using
+ *           (float)x
  *
- * 2. No specific sorting algorithm is mandated. You can write any
- *    algorithm you want to.
+ * 2. Be aware of whether you're doing integer division or
+ *    floating point division when computing the average.
  *
- * 3. size_t is just a short hand for "enough sized integer to hold
- *    the length of an array." Often it is a 64-bit unsigned integer.
- *
- * 4. Think through the problem first ... allowing for the possibility that
- *    it may be simpler than you imagine it to be.
+ * 3. You'll have to use appropriate bit-wise operators and
+ *    write the necessary helper functions.
  */
 
-bool sort_normalized_text_precond(const char *input, char *output, size_t output_len) {
-    // TODO: Implement this. You'll need to validate the input here.
-    return true;
+// This is the type of any "hash function" that takes
+// a uint32_t (unsigned 32 bit integer) argument and computes
+// a "hash" that is also of the same type. The hash functions
+// given below are of this form.
+typedef uint32_t (*hashfn)(uint32_t x);
+
+uint32_t hash1(uint32_t x) {
+    uint32_t a = 1664525;
+    uint32_t b = 1013904223;
+    return a * x + b;
 }
 
-bool sort_normalized_text_postcond(const char *input, const char *output, size_t output_len) {
-    // TODO: Implement this.
-    return true;
-}
+uint32_t hash2(uint32_t x) {
+    uint32_t a = 1664525;
+    uint32_t b = 1013904223;
+    uint32_t x0 = x & 65535;
+    uint32_t x1 = (x >> 16) & 65535;
 
-// You have to sort the characters you find in the input string which will be
-// given with a terminating null character ... and place the result into the
-// given output array which has been preallocated with capacity output_len bytes.
-// You'll need output_len to be large enough to hold all the characters of the
-// input string in order to proceed with your algorithm.
-void sort_normalized_text(const char *input, char *output, size_t output_len) {
-    assert(sort_normalized_text_precond(input, output, output_len));
-
-    // TODO: Implement this.
-
-    assert(sort_normalized_text_postcond(input, output, output_len));
+    uint32_t hash = 0;
+    hash = a * (hash ^ x0) + b;
+    hash = a * (hash ^ x1) + b;
+    return hash;
 }
 
 
-float sort_normalized_text_complexity(int input_len) {
-    // TODO: Implement this function to return the complexity of your
-    // sorting algorithm as an expression. (Do not call
-    // sort_normalized_text and count steps).
-    //
-    // You can use any of the math.h functions like log, sqrt
-    // and so on.
-    return 1.0;
+uint32_t hash3(uint32_t x) {
+    uint32_t a = 1664525;
+    uint32_t b = 1013904223;
+    uint32_t x0 = x & 255;
+    uint32_t x1 = (x >> 8) & 255;
+    uint32_t x2 = (x >> 16) & 255;
+    uint32_t x3 = (x >> 24) & 255;
+
+    uint32_t hash = 0;
+    hash = a * (hash ^ x0) + b;
+    hash = a * (hash ^ x1) + b;
+    hash = a * (hash ^ x2) + b;
+    hash = a * (hash ^ x3) + b;
+    return hash;
 }
+
+uint32_t hash4(uint32_t x) {
+    return x * (x + 1013904223);
+}
+
+
+int num_bits_different(uint32_t a, uint32_t b, int nbits) {
+    assert(nbits > 0 && nbits <= 24);
+
+    // TODO: Implement this to compute the number of
+    // bits that differ between the two given numbers,
+    // considering only the lower "nbits" bits of both
+    // numbers.
+    return 0;
+}
+
+
+// This function will be called, for example, using hash1 as follows -
+//
+//    float score = eval_hash(&hash1, 100, 1000000);
+//
+// The score is expected to be indicative of how "bad" the hash
+// function is. The lower the score, the better the hash function
+// likely is. You will need to find a way to convert the indicated
+// average calculation into such a score. You also need to state in
+// a comment why you think the score is indicative of the hash quality.
+float eval_hash(hashfn hash, uint32_t xfrom, uint32_t xto, int nbits) {
+    assert(xfrom < xto);
+    assert(nbits > 0 && nbits <= 24);
+
+    // TODO: Implement the evaluation.
+    // You can call the given hash function like this -
+    //    uint32_t h = (*hash)(x);
+
+    return 0.0f; // A decimal number with an 'f' suffix indicates
+                 // a floating point constant.
+}
+
+// Using the best hash function (i.e. the one from the above 3
+// that scores the lowest according to your eval_hash implementation),
+// implement this function that can be used to produce an integer
+// code given a string. The integer can then be used to determine
+// a bucket in a hash table, say, using (h % nbuckets).
+//
+// Bonus: You'll receive a bonus score based on the number of
+// collisions generated on a predetermined set of words to which
+// this hash function will be applied. The hash range will be reduced
+// to the number of buckets available by taking the remainder when
+// divided by the number of buckets.
+uint32_t best_string_hash(const char *str) {
+    // TODO: Implement using what you found to be the best of the
+    // given hash functions.
+    return 0;
+}
+

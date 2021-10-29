@@ -32,3 +32,7 @@ bool sort_normalized_text_postcond(const char *input, const char *output, size_t
 void sort_normalized_text(const char *input, char *output, size_t output_len);
 float sort_normalized_text_complexity(int input_len);
 
+// Q4
+void hadamard(int n, const float *in, float *out);
+int hadamard_complexity(int n);
+
