@@ -9,17 +9,24 @@
  * Q3: 10 points
  * You can choose to tackle this or Q4.
  * 
- * You're given 4 hash functions, several based on the
+ * You're given several hash functions, many based on the
  * "linear congruential generator" idea. You're expected
  * to write the "eval_hash" function implementation such
  * that the value returned by eval_hash indicates the
  * "quality" of the hash function.
  *
- * For the purpose of this question, we will evaluate
- * "quality" based on the average number of bits that change
- * in the hash when the input is incremented by 1. You will
- * have to determine your "score" for eval_hash based on
- * this average.
+ * You can use either of a couple of possible approaches -
+ * 1. You can estimate the average number of bits that will
+ *    change in the hash when you increment the hash argument
+ *    by 1.
+ * 2. You can calculate the variance in the number of
+ *    hashes for, say, 100000 random keys selected from a larger range 
+ *    like [100,100000000] and mapped to, as many buckets.
+ *    Variance = mean(n^2) - mean(n)^2 where n is the number 
+ *    of keys mapped to a particular bucket and the mean
+ *    runs over all the buckets.
+ *    For an even distribution, we'd expect the variance
+ *    to be near zero.
  *
  * We will also consider only the lower 24 bits of the hash
  * for the evaluation since we want to use it to implement
@@ -52,6 +59,11 @@
 // a "hash" that is also of the same type. The hash functions
 // given below are of this form.
 typedef uint32_t (*hashfn)(uint32_t x);
+
+uint32_t hash0(uint32_t x) {
+    // Base line that we have to do better than.
+    return x;
+}
 
 uint32_t hash1(uint32_t x) {
     uint32_t a = 1664525;
@@ -92,6 +104,22 @@ uint32_t hash4(uint32_t x) {
     return x * (x + 1013904223);
 }
 
+uint32_t hash5(uint32_t x) {
+    uint32_t a = 16777619;
+    uint32_t b = 2166136261;
+    uint32_t x0 = x & 255;
+    uint32_t x1 = (x >> 8) & 255;
+    uint32_t x2 = (x >> 16) & 255;
+    uint32_t x3 = (x >> 24) & 255;
+
+    uint32_t hash = b;
+    hash = a * (hash ^ x0);
+    hash = a * (hash ^ x1);
+    hash = a * (hash ^ x2);
+    hash = a * (hash ^ x3);
+    return hash;
+}
+
 
 int num_bits_different(uint32_t a, uint32_t b, int nbits) {
     assert(nbits > 0 && nbits <= 24);
@@ -103,16 +131,13 @@ int num_bits_different(uint32_t a, uint32_t b, int nbits) {
     return 0;
 }
 
-
 // This function will be called, for example, using hash1 as follows -
 //
-//    float score = eval_hash(&hash1, 100, 1000000);
+//    float score = eval_hash(&hash1, 100, 1000000, 16);
 //
 // The score is expected to be indicative of how "bad" the hash
 // function is. The lower the score, the better the hash function
-// likely is. You will need to find a way to convert the indicated
-// average calculation into such a score. You also need to state in
-// a comment why you think the score is indicative of the hash quality.
+// likely is. 
 float eval_hash(hashfn hash, uint32_t xfrom, uint32_t xto, int nbits) {
     assert(xfrom < xto);
     assert(nbits > 0 && nbits <= 24);
@@ -130,6 +155,8 @@ float eval_hash(hashfn hash, uint32_t xfrom, uint32_t xto, int nbits) {
 // implement this function that can be used to produce an integer
 // code given a string. The integer can then be used to determine
 // a bucket in a hash table, say, using (h % nbuckets).
+// Note - you can either use the hash functions as is or implement
+// your own hash_str function based on the ideas in them.
 //
 // Bonus: You'll receive a bonus score based on the number of
 // collisions generated on a predetermined set of words to which

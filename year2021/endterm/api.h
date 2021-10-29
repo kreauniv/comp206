@@ -17,10 +17,12 @@ int depth_trie(trie_t t);
 
 // Q2
 typedef uint32_t (*hashfn)(uint32_t x);
+uint32_t hash0(uint32_t x);
 uint32_t hash1(uint32_t x);
 uint32_t hash2(uint32_t x);
 uint32_t hash3(uint32_t x);
 uint32_t hash4(uint32_t x);
+uint32_t hash5(uint32_t x);
 int num_bits_different(uint32_t a, uint32_t b, int nbits);
 float eval_hash(hashfn hash, uint32_t xfrom, uint32_t xto, int nbits);
 uint32_t best_string_hash(const char *str);
