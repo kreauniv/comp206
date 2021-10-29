@@ -46,8 +46,8 @@
  * of a given floating point vector of numbers and store the result
  * into another floating point vector of numbers.
  *
- * If you're doing this question instead of Q2, you will need to
- * prove that your implementation is correct using appropriate contracts
+ * If you're doing this question instead of Q3, you will need to
+ * prove that your implementation is correct supported by appropriate contracts
  * in the code.
  */
 
