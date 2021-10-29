@@ -6,7 +6,7 @@ run: program
 	./program
 
 submission:
-	date -Iseconds > timestamp.txt
+	date -R > timestamp.txt
 	chmod a-w timestamp.txt
 	cd .. && tar zcvf $(shell whoami)-endterm.tar.gz endterm
 
