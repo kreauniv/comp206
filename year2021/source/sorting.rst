@@ -50,7 +50,7 @@ additive in nature. Let's explore this a bit more (pun not intended).
 
 With :math:`N` coin flips, we see that there are :math:`2^N` possible outcomes.
 So you could say that the information discrepancy between people who know
-the outcome and those who don't is :math:`\text{log}_(\text{possible outcomes})`.
+the outcome and those who don't is :math:`\text{log}_2(\text{possible outcomes})`.
 So if we toss a 6-faced unbiased cube instead, the information discrepancy would
 turn out to be :math:`\text{log}_2(6)` bits.
 
