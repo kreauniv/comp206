@@ -40,17 +40,23 @@ I take a peek at it and so I know what turned up. But you're watching me
 and didn't get to peek at the coin. We can say that there is now some
 "information discrepancy" between us. I know something you don't. For
 such a two-faced coin flip, we say that this information discrepancy is
-"1 bit" worth of information. 
+"1 bit" worth of information. We can fix this discrepancy if I utter
+a single syllable "head" or "tails".
 
 Supposing I flip :math:`N` such two-faced unbiased coins and hide the result
 from you while I peek at them, then we say that the information discrepancy
-between us is :math:`N` bits. This way we quantify information with the most
-common unit being "bits". We just declared this "information quantity" to be
-additive in nature. Let's explore this a bit more (pun not intended).
+between us is :math:`N` bits, because we can fix the discrepancy by uttering a
+sequence of N syllables consisting of "head" or "tails". This way we quantify
+information with the most common unit being "bits". We just declared this
+"information quantity" to be additive in nature. Let's explore this a bit more
+(pun not intended).
 
 With :math:`N` coin flips, we see that there are :math:`2^N` possible outcomes.
 So you could say that the information discrepancy between people who know
 the outcome and those who don't is :math:`\text{log}_2(\text{possible outcomes})`.
+This is because we can play a game of "which half?" to communicate which
+of the :math:`2^N` outcomes I encountered to communicate it, and it'll take
+:math:`\text{log}_2(\text{possible outcomes})` syllables to communicate it.
 So if we toss a 6-faced unbiased cube instead, the information discrepancy would
 turn out to be :math:`\text{log}_2(6)` bits.
 
