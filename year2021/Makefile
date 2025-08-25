@@ -28,4 +28,6 @@ pages: html
 		&& git add . \
 		&& git commit -m "Updated gh-pages" \
 		&& git push
+	rm -rf /tmp/comp206_build
+	rm /tmp/comp206-html.tar.gz
 
