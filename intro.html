@@ -1,295 +1,352 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="./" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Introduction to imperative computation &#8212; Principles of programming I: Imperative computation (forever alpha) documentation</title>
-    
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
-    
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
-
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="_static/documentation_options.js?v=f81aabf2"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Warming up with the power function" href="warmup.html" />
     <link rel="prev" title="Welcome" href="welcome.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">Principles of programming I: Imperative computation (forever alpha) documentation</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p class="caption">
- <span class="caption-text">
-  Contents:
- </span>
-</p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="welcome.html">
-   Welcome
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Introduction to imperative computation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="warmup.html">
-   Warming up with the power function
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="reasoning.html">
-   Reasoning with imperative programs
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="c0.html">
-   More C0
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="arrays.html">
-   Arrays
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gcd.html">
-   Assignment 1: GCD
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="practice.html">
-   Practice problems
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="searching.html">
-   Searching
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="sorting.html">
-   Sorting - an information theoretic introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="binsearch.html">
-   Binary search
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="avl.html">
-   AVL trees
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="lists.html">
-   Linked lists
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="c.html">
-   Transitioning to C
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="dict.html">
-   Dictionaries and associated data structures
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bitset.html">
-   Bit sets
-  </a>
- </li>
-</ul>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
 
-    </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
-</div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
 
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
         
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/intro.rst.txt"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.rst</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
 
-            <!-- Source interaction buttons -->
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
+  
+    
+  
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Principles of programming I: Imperative computation (forever alpha) documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
 
-            <!-- Launch buttons -->
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#functions-as-abstractions">
-   Functions as abstractions
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#safety">
-   Safety
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#correctness">
-   Correctness
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#safety-correctness-abstraction">
-   Safety + Correctness = Abstraction
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#specifications-algorithms-and-implementations">
-   Specifications, algorithms and implementations
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#specifications">
-     Specifications
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#algorithms">
-     Algorithms
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#implementations">
-     Implementations
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#our-approach">
-   Our approach
-  </a>
- </li>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to imperative computation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="warmup.html">Warming up with the power function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning with imperative programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c0.html">More C0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arrays.html">Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gcd.html">Assignment 1: GCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">Practice problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searching.html">Searching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sorting.html">Sorting - an information theoretic introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binsearch.html">Binary search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="avl.html">AVL trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lists.html">Linked lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c.html">Transitioning to C</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dict.html">Dictionaries and associated data structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bitset.html">Bit sets</a></li>
 </ul>
 
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/intro.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to imperative computation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-as-abstractions">Functions as abstractions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#safety">Safety</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correctness">Correctness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#safety-correctness-abstraction">Safety + Correctness = Abstraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specifications-algorithms-and-implementations">Specifications, algorithms and implementations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specifications">Specifications</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithms">Algorithms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementations">Implementations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#our-approach">Our approach</a></li>
+</ul>
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
-              <div>
+
+              
                 
-  <div class="section" id="introduction-to-imperative-computation">
-<h1>Introduction to imperative computation<a class="headerlink" href="#introduction-to-imperative-computation" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="introduction-to-imperative-computation">
+<h1>Introduction to imperative computation<a class="headerlink" href="#introduction-to-imperative-computation" title="Link to this heading">#</a></h1>
 <p>Imperative computation is about seeing a program as a process that achieves a
 desired end state from a given starting state through a sequence of
 intermediate states that can be shown to progress towards the goal. Hence
 imperative computation is about working with state. In this course, we’ll be
 looking at implementations of algorithms and how to reason about them when
 expressed as such “state manipulation machines”.</p>
-<div class="section" id="functions-as-abstractions">
-<h2>Functions as abstractions<a class="headerlink" href="#functions-as-abstractions" title="Permalink to this headline">¶</a></h2>
+<section id="functions-as-abstractions">
+<h2>Functions as abstractions<a class="headerlink" href="#functions-as-abstractions" title="Link to this heading">#</a></h2>
 <p>Most all programming languages, except some lowest level ones, provide the
 ability to encapsulate a calculation as a “function” or “procedure”, as a means
 of “absraction”. A abstraction helps you reason about a complex activity as through
@@ -312,17 +369,17 @@ lower level in a <strong>safe</strong> manner.</p>
 <p>Therefore, understanding how to establish that a function call is both <strong>safe</strong>
 and <strong>correct</strong> is crucial in the activity of building complex systems through
 programs.</p>
-</div>
-<div class="section" id="safety">
-<h2>Safety<a class="headerlink" href="#safety" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="safety">
+<h2>Safety<a class="headerlink" href="#safety" title="Link to this heading">#</a></h2>
 <p>A function or procedure requires that the caller provide valid inputs that it
 can work on.  If its inputs are not valid, a function implementation can make
 no guarantees about the value that it will produce as the result.</p>
 <p>Therefore the responsibility to ensure that a function call is <strong>safe</strong> lies with
 the caller.</p>
-</div>
-<div class="section" id="correctness">
-<h2>Correctness<a class="headerlink" href="#correctness" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="correctness">
+<h2>Correctness<a class="headerlink" href="#correctness" title="Link to this heading">#</a></h2>
 <p>Given valid input parameters, a function then promises that it will produce an
 output that meets a requirement contract. A function implementation is said to be
 <strong>correct</strong> if it can be shown to meet this contract. The correctness of a function
@@ -333,9 +390,9 @@ produces when it gets valid inputs.</p>
 (or rather the author of the function or procedure) and not the caller.</p>
 <p>When a function is shown to produce incorrect results for safe inputs, it is
 informally said to <a class="reference external" href="https://en.wikipedia.org/wiki/Software_bug#History">have a bug</a>.</p>
-</div>
-<div class="section" id="safety-correctness-abstraction">
-<h2>Safety + Correctness = Abstraction<a class="headerlink" href="#safety-correctness-abstraction" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="safety-correctness-abstraction">
+<h2>Safety + Correctness = Abstraction<a class="headerlink" href="#safety-correctness-abstraction" title="Link to this heading">#</a></h2>
 <p>When the conditions of calling a function safely are met and the function is
 known to be correct, it can serve as an <strong>abstraction</strong> - i.e. you can forget
 about how the function does what it promised to do and simply rely on the fact
@@ -344,17 +401,17 @@ that it will definitely do it when you’re building other procedures using it.<
 arguments to a function or the function does not provide valid result values
 when passed safe arguments – the function can no longer serve as an
 abstraction to build other procedures that uses it.</p>
-</div>
-<div class="section" id="specifications-algorithms-and-implementations">
-<h2>Specifications, algorithms and implementations<a class="headerlink" href="#specifications-algorithms-and-implementations" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="specifications-algorithms-and-implementations">
+<h2>Specifications, algorithms and implementations<a class="headerlink" href="#specifications-algorithms-and-implementations" title="Link to this heading">#</a></h2>
 <p>A program captures “how to” knowledge about a particular problem or task, much
 as a recipe captures such knowledge about making a particular dish.  In trying
 to understand how to work with such recipes, it is valuable to understand the
 difference between “specifications”, “algorithms” and “implementations”, even
 if at times the boundary between them can get blurred as languages and systems
 become more expressive and sophisticated.</p>
-<div class="section" id="specifications">
-<h3>Specifications<a class="headerlink" href="#specifications" title="Permalink to this headline">¶</a></h3>
+<section id="specifications">
+<h3>Specifications<a class="headerlink" href="#specifications" title="Link to this heading">#</a></h3>
 <p>A specification of a procedure states <strong>what</strong> the procedure should accomplish,
 leaving out the <strong>how</strong>.</p>
 <p>Let’s take the example of a sorting function that sorts an array of numbers.
@@ -370,9 +427,9 @@ for all pairs of valid indices <span class="math notranslate nohighlight">\((i,j
 produce and not <strong>how</strong> it should do it. It describes a property of the function’s
 result that a caller would expect, without dictating how the function ought to
 achieve that result.</p>
-</div>
-<div class="section" id="algorithms">
-<h3>Algorithms<a class="headerlink" href="#algorithms" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="algorithms">
+<h3>Algorithms<a class="headerlink" href="#algorithms" title="Link to this heading">#</a></h3>
 <p>An algorithm describes <strong>how</strong> to obtain the result given by a specification. To
 continue the above sorting example, the “quick sort” algorithm provides a way to
 derive a result array that meets the specification. The algorithm can be described
@@ -397,9 +454,9 @@ to meet a particular specification makes no claims about the correctness of that
 specification .. which would be of concern only to the ones who specify it.</p>
 <p>Also note that this description says nothing about how to implement it as a
 program that runs on a specific machine.</p>
-</div>
-<div class="section" id="implementations">
-<h3>Implementations<a class="headerlink" href="#implementations" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="implementations">
+<h3>Implementations<a class="headerlink" href="#implementations" title="Link to this heading">#</a></h3>
 <p>Programming environments (languages + runtimes) provide facilities using
 which the steps of algorithms can be expressed. Different environments therefore
 call for different expressions of an algorithm. Even within a single environment,
@@ -408,7 +465,7 @@ multiple implementations of the “same” algorithm are possible. Therefore an
 computation.</p>
 <p>For example, here is an implementation of the quicksort algorithm expressed
 in basic python:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">quicksort</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">quicksort</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">arr</span>
 
@@ -424,7 +481,7 @@ same algorithm which does not do that and sorts the array in-place. It
 is therefore considered to be better from a memory allocation perspective.
 It also makes use of the fact that the “pivot” can be any element in the array:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sorts arr indices range(i,j)</span>
-<span class="k">def</span> <span class="nf">quicksort</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">quicksort</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">arr</span>
 
@@ -462,10 +519,10 @@ algorithm that it “implements”. For example, an implementation of quicksort 
 C may be done only for arrays of 32-bit integers, whereas the algorithm is
 general enough to work on any sequence of objects that can be compared in some
 manner.</p>
-</div>
-</div>
-<div class="section" id="our-approach">
-<h2>Our approach<a class="headerlink" href="#our-approach" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="our-approach">
+<h2>Our approach<a class="headerlink" href="#our-approach" title="Link to this heading">#</a></h2>
 <p>We’ll learn how to design a few data structures, implement some algorithms that
 operate on them, and learn how to prove the correctness of those algorithms
 given safety conditions. We’ll learn about “checked contracts” and how to
@@ -481,60 +538,117 @@ implementations starting to look like the algorithm they implement in its most
 general form, or even simply the specification of the result, but the notions
 of safety and correctness are still required to build up your edifice in a way
 that ensures that it doesn’t turn into a house of cards.</p>
-</div>
-</div>
+</section>
+</section>
 
 
-              </div>
+                </article>
               
-        
-            
 
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="welcome.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Welcome</p>
-            </div>
-        </a>
-    </div>
-     <div id="next">
-        <a class="right-next" href="warmup.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Warming up with the power function</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
-</div>
-        
-        </div>
-    </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Srikumar K. S.<br/>
-        
-            &copy; Copyright 2021, Srikumar K. S..<br/>
-      </p>
-    </div>
-  </footer>
-</main>
-
-
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="welcome.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Welcome</p>
       </div>
-    </div>
-  
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+    </a>
+    <a class="right-next"
+       href="warmup.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Warming up with the power function</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-as-abstractions">Functions as abstractions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#safety">Safety</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correctness">Correctness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#safety-correctness-abstraction">Safety + Correctness = Abstraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specifications-algorithms-and-implementations">Specifications, algorithms and implementations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#specifications">Specifications</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithms">Algorithms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementations">Implementations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#our-approach">Our approach</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
+  <div class="footer-item">
+    
+<p class="component-author">
+By Srikumar K. S.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021, Srikumar K. S..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

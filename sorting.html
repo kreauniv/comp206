@@ -1,275 +1,340 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="./" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Sorting - an information theoretic introduction &#8212; Principles of programming I: Imperative computation (forever alpha) documentation</title>
-    
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
-    
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
-
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="_static/documentation_options.js?v=f81aabf2"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sorting';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Binary search" href="binsearch.html" />
     <link rel="prev" title="Searching" href="searching.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">Principles of programming I: Imperative computation (forever alpha) documentation</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p class="caption">
- <span class="caption-text">
-  Contents:
- </span>
-</p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="welcome.html">
-   Welcome
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
-   Introduction to imperative computation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="warmup.html">
-   Warming up with the power function
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="reasoning.html">
-   Reasoning with imperative programs
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="c0.html">
-   More C0
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="arrays.html">
-   Arrays
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gcd.html">
-   Assignment 1: GCD
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="practice.html">
-   Practice problems
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="searching.html">
-   Searching
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Sorting - an information theoretic introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="binsearch.html">
-   Binary search
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="avl.html">
-   AVL trees
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="lists.html">
-   Linked lists
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="c.html">
-   Transitioning to C
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="dict.html">
-   Dictionaries and associated data structures
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bitset.html">
-   Bit sets
-  </a>
- </li>
-</ul>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
 
-    </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
-</div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
 
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
         
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/sorting.rst.txt"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.rst</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
 
-            <!-- Source interaction buttons -->
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
+  
+    
+  
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Principles of programming I: Imperative computation (forever alpha) documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
 
-            <!-- Launch buttons -->
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#shannon-s-information-theory">
-   Shannon’s information theory
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-has-all-that-got-to-do-with-sorting">
-   What has all that got to do with sorting?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#siphoning-off-1-bit-of-information">
-   Siphoning off 1 bit of information
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#sorting-considerations">
-   Sorting considerations
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pathological-cases-in-quicksort">
-   Pathological cases in quicksort
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#quicksort-partitioning-scheme">
-   Quicksort partitioning scheme
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#merge-sort">
-   Merge sort
-  </a>
- </li>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to imperative computation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="warmup.html">Warming up with the power function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning with imperative programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c0.html">More C0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arrays.html">Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gcd.html">Assignment 1: GCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">Practice problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searching.html">Searching</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Sorting - an information theoretic introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binsearch.html">Binary search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="avl.html">AVL trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lists.html">Linked lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c.html">Transitioning to C</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dict.html">Dictionaries and associated data structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bitset.html">Bit sets</a></li>
 </ul>
 
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/sorting.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Sorting - an information theoretic introduction</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shannon-s-information-theory">Shannon’s information theory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-has-all-that-got-to-do-with-sorting">What has all that got to do with sorting?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#siphoning-off-1-bit-of-information">Siphoning off 1 bit of information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-considerations">Sorting considerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pathological-cases-in-quicksort">Pathological cases in quicksort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quicksort-partitioning-scheme">Quicksort partitioning scheme</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-sort">Merge sort</a></li>
+</ul>
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
-              <div>
+
+              
                 
-  <div class="section" id="sorting-an-information-theoretic-introduction">
-<h1>Sorting - an information theoretic introduction<a class="headerlink" href="#sorting-an-information-theoretic-introduction" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="sorting-an-information-theoretic-introduction">
+<h1>Sorting - an information theoretic introduction<a class="headerlink" href="#sorting-an-information-theoretic-introduction" title="Link to this heading">#</a></h1>
 <p>We’ve seen how having an array of keys (integers in our case) in sorted order
 helps make <em>information retrieval</em> fast. So it is no surprise that algorithms
 that take an unsorted array and turn it into sorted form – ie. sorting
@@ -277,8 +342,8 @@ algorihtms – are a focus of study in computer science.</p>
 <p>Before we look at the algorithms themselves, let’s consider the nature of
 the problem. We first look at the notion of “information” introduced by
 Claude Shannon.</p>
-<div class="section" id="shannon-s-information-theory">
-<h2>Shannon’s information theory<a class="headerlink" href="#shannon-s-information-theory" title="Permalink to this headline">¶</a></h2>
+<section id="shannon-s-information-theory">
+<h2>Shannon’s information theory<a class="headerlink" href="#shannon-s-information-theory" title="Link to this heading">#</a></h2>
 <p>We won’t be dealing with this theory in any measure of completeness, but
 a gist of it that is sufficient for us to consider the sorting problem.</p>
 <p>We talk about “information” as though it were a quantity much like energy, or
@@ -303,15 +368,21 @@ I take a peek at it and so I know what turned up. But you’re watching me
 and didn’t get to peek at the coin. We can say that there is now some
 “information discrepancy” between us. I know something you don’t. For
 such a two-faced coin flip, we say that this information discrepancy is
-“1 bit” worth of information.</p>
+“1 bit” worth of information. We can fix this discrepancy if I utter
+a single syllable “head” or “tails”.</p>
 <p>Supposing I flip <span class="math notranslate nohighlight">\(N\)</span> such two-faced unbiased coins and hide the result
 from you while I peek at them, then we say that the information discrepancy
-between us is <span class="math notranslate nohighlight">\(N\)</span> bits. This way we quantify information with the most
-common unit being “bits”. We just declared this “information quantity” to be
-additive in nature. Let’s explore this a bit more (pun not intended).</p>
+between us is <span class="math notranslate nohighlight">\(N\)</span> bits, because we can fix the discrepancy by uttering a
+sequence of N syllables consisting of “head” or “tails”. This way we quantify
+information with the most common unit being “bits”. We just declared this
+“information quantity” to be additive in nature. Let’s explore this a bit more
+(pun not intended).</p>
 <p>With <span class="math notranslate nohighlight">\(N\)</span> coin flips, we see that there are <span class="math notranslate nohighlight">\(2^N\)</span> possible outcomes.
 So you could say that the information discrepancy between people who know
 the outcome and those who don’t is <span class="math notranslate nohighlight">\(\text{log}_2(\text{possible outcomes})\)</span>.
+This is because we can play a game of “which half?” to communicate which
+of the <span class="math notranslate nohighlight">\(2^N\)</span> outcomes I encountered to communicate it, and it’ll take
+<span class="math notranslate nohighlight">\(\text{log}_2(\text{possible outcomes})\)</span> syllables to communicate it.
 So if we toss a 6-faced unbiased cube instead, the information discrepancy would
 turn out to be <span class="math notranslate nohighlight">\(\text{log}_2(6)\)</span> bits.</p>
 <p>Supposing we toss such a 6-faced die and we classify the faces 1, 2 and 3 as
@@ -362,9 +433,9 @@ surprising since entropy emerged from thermodynamic considerations at first in
 physics .. and is generally considered to be a measure of “disorder” in a
 system. Squint a little bit and you may see how the “disorder in a system” can
 be viewed as “lack of information about a system”.</p>
-</div>
-<div class="section" id="what-has-all-that-got-to-do-with-sorting">
-<h2>What has all that got to do with sorting?<a class="headerlink" href="#what-has-all-that-got-to-do-with-sorting" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="what-has-all-that-got-to-do-with-sorting">
+<h2>What has all that got to do with sorting?<a class="headerlink" href="#what-has-all-that-got-to-do-with-sorting" title="Link to this heading">#</a></h2>
 <p>When we have an array of unsorted items, we consider that we wish to reduce
 any possible ordering of these items into exactly one ordering as determined
 by the comparison function of choice - i.e. “greater than” or “lesser than”.</p>
@@ -391,9 +462,9 @@ array.</p>
 array in order to get it into sorted form. This means that if we have an
 algorithm that can reduce the information discrepancy by 1 bit in each step,
 we’ll need <span class="math notranslate nohighlight">\(N\text{log}_2(N)\)</span> steps to get to our end point.</p>
-</div>
-<div class="section" id="siphoning-off-1-bit-of-information">
-<h2>Siphoning off 1 bit of information<a class="headerlink" href="#siphoning-off-1-bit-of-information" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="siphoning-off-1-bit-of-information">
+<h2>Siphoning off 1 bit of information<a class="headerlink" href="#siphoning-off-1-bit-of-information" title="Link to this heading">#</a></h2>
 <p>So what does reducing the uncertainty in ordering by 1 bit mean? You could, for
 example, take one of the <span class="math notranslate nohighlight">\(N\)</span> elements and determine whether it will
 feature in the left-half of the sorted array or in the right-half.  It is easy
@@ -427,9 +498,9 @@ except that the left part and the right part remain unsorted.</p>
 and right-half separately and recursively until we end up with all elements
 in their rightful places.</p>
 <p>This is the “quicksort” procedure.</p>
-</div>
-<div class="section" id="sorting-considerations">
-<h2>Sorting considerations<a class="headerlink" href="#sorting-considerations" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="sorting-considerations">
+<h2>Sorting considerations<a class="headerlink" href="#sorting-considerations" title="Link to this heading">#</a></h2>
 <p>Before we dive deeper, it is good to understand some common considerations
 for sorting algorithms.</p>
 <ol class="arabic simple">
@@ -460,9 +531,9 @@ memory usage. Sorting algorithms that can sort an array of records in-place
 instead of requiring additional memory are desirable since they can be used
 in resource constrained environments.</p></li>
 </ol>
-</div>
-<div class="section" id="pathological-cases-in-quicksort">
-<h2>Pathological cases in quicksort<a class="headerlink" href="#pathological-cases-in-quicksort" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="pathological-cases-in-quicksort">
+<h2>Pathological cases in quicksort<a class="headerlink" href="#pathological-cases-in-quicksort" title="Link to this heading">#</a></h2>
 <p>The quicksort algorithm described above is alright in the average case, where
 we get a sorted result in <span class="math notranslate nohighlight">\(N\text{log}_2(N)\)</span> steps. However, depending on
 how we choose the “pivot”, the complexity can vary.  Supposing we always pick
@@ -486,9 +557,9 @@ median.</p></li>
 sequence. This is arguably a better approximation to the median than
 picking just the middle.</p></li>
 </ol>
-</div>
-<div class="section" id="quicksort-partitioning-scheme">
-<h2>Quicksort partitioning scheme<a class="headerlink" href="#quicksort-partitioning-scheme" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="quicksort-partitioning-scheme">
+<h2>Quicksort partitioning scheme<a class="headerlink" href="#quicksort-partitioning-scheme" title="Link to this heading">#</a></h2>
 <p>The step of bucketing the elements of the array to “left” or “right” buckets
 based on a pivot is referred to as the “partitioning” step of the quicksort
 algorithm. It is clear that if the partitioning can be done in-place,
@@ -508,63 +579,63 @@ and continue as with step 3 again.</p></li>
 <li><p>We repeat this procedure until i and j cross at which point we’re done.</p></li>
 </ol>
 <div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="c1">// Note that here the [i,j] forms an inclusive interval.</span>
-<span class="kt">int</span> <span class="nf">partition</span><span class="p">(</span><span class="kt">int</span> <span class="p">[]</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pivot</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">j</span><span class="p">)</span>
-     <span class="c1">//@requires i &gt;= 0 &amp;&amp; i &lt; \length(a)</span>
-     <span class="c1">//@requires j+1 &gt;= i &amp;&amp; j &lt; \length(a)</span>
-     <span class="c1">//@ensures leq(a, from, \result, pivot)</span>
-     <span class="c1">//@ensures geq(a, \result, to, pivot)</span>
- <span class="p">{</span>
-     <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">partition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span> <span class="p">}</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">pivot</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">)</span>
+<span class="w">     </span><span class="c1">//@requires i &gt;= 0 &amp;&amp; i &lt; \length(a)</span>
+<span class="w">     </span><span class="c1">//@requires j+1 &gt;= i &amp;&amp; j &lt; \length(a)</span>
+<span class="w">     </span><span class="c1">//@ensures leq(a, from, \result, pivot)</span>
+<span class="w">     </span><span class="c1">//@ensures geq(a, \result, to, pivot)</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">pivot</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">partition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">pivot</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
 
-     <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">partition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="mi">-1</span><span class="p">);</span> <span class="p">}</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">pivot</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">partition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">pivot</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="mi">-1</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
 
-     <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">j</span><span class="p">;</span> <span class="p">}</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 
-     <span class="c1">//@assert i &lt; j &amp;&amp; a[i] &gt;= pivot &amp;&amp; a[j] &lt;= pivot</span>
-     <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
-     <span class="c1">//@assert i &lt; j &amp;&amp; a[i] &lt;= pivot &amp;&amp; a[j] &gt;= pivot</span>
-     <span class="k">return</span> <span class="n">partition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">pivot</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="mi">-1</span><span class="p">);</span>
- <span class="p">}</span>
+<span class="w">     </span><span class="c1">//@assert i &lt; j &amp;&amp; a[i] &gt;= pivot &amp;&amp; a[j] &lt;= pivot</span>
+<span class="w">     </span><span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">);</span>
+<span class="w">     </span><span class="c1">//@assert i &lt; j &amp;&amp; a[i] &lt;= pivot &amp;&amp; a[j] &gt;= pivot</span>
+<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="n">partition</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">pivot</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="mi">-1</span><span class="p">);</span>
+<span class="w"> </span><span class="p">}</span>
 
- <span class="c1">// Since all the recursive calls to partition there are in</span>
- <span class="c1">// the &quot;tail position&quot; - i.e. are the final calls, we can</span>
- <span class="c1">// translate that into a loop as ..</span>
- <span class="kt">int</span> <span class="nf">partition</span><span class="p">(</span><span class="kt">int</span> <span class="p">[]</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pivot</span><span class="p">,</span> <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">j</span><span class="p">)</span>
- <span class="p">{</span>
-     <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
-         <span class="k">while</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+<span class="w"> </span><span class="c1">// Since all the recursive calls to partition there are in</span>
+<span class="w"> </span><span class="c1">// the &quot;tail position&quot; - i.e. are the final calls, we can</span>
+<span class="w"> </span><span class="c1">// translate that into a loop as ..</span>
+<span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">pivot</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="p">)</span>
+<span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">pivot</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 
-         <span class="k">while</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">pivot</span><span class="p">)</span> <span class="p">{</span> <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+<span class="w">         </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">pivot</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 
-         <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">j</span><span class="p">;</span> <span class="p">}</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 
-         <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
-         <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-         <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-     <span class="p">}</span>
- <span class="p">}</span>
+<span class="w">         </span><span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">);</span>
+<span class="w">         </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">         </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w"> </span><span class="p">}</span>
 
- <span class="c1">// The above is often expressed in C as shown below</span>
- <span class="c1">// where the initial i,j to be passed in are not</span>
- <span class="c1">// the indices of the first and last elements,  but</span>
- <span class="c1">// one before and one after.</span>
- <span class="kt">int</span> <span class="nf">partition</span><span class="p">(</span><span class="kt">int</span> <span class="p">[]</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">pivot</span><span class="p">,</span> <span class="kt">int</span> <span class="n">from</span><span class="p">,</span> <span class="kt">int</span> <span class="n">to</span><span class="p">)</span> <span class="p">{</span>
-     <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">from</span><span class="mi">-1</span><span class="p">;</span>
-     <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">to</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-     <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
-         <span class="k">do</span> <span class="p">{</span>
-             <span class="n">i</span><span class="o">++</span><span class="p">;</span>
-         <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">pivot</span><span class="p">);</span>
+<span class="w"> </span><span class="c1">// The above is often expressed in C as shown below</span>
+<span class="w"> </span><span class="c1">// where the initial i,j to be passed in are not</span>
+<span class="w"> </span><span class="c1">// the indices of the first and last elements,  but</span>
+<span class="w"> </span><span class="c1">// one before and one after.</span>
+<span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="p">[]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">pivot</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">from</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">to</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">from</span><span class="mi">-1</span><span class="p">;</span>
+<span class="w">     </span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">to</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+<span class="w">     </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nb">true</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">             </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="w">         </span><span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">pivot</span><span class="p">);</span>
 
-         <span class="k">do</span> <span class="p">{</span>
-             <span class="n">j</span><span class="o">--</span><span class="p">;</span>
-         <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">pivot</span><span class="p">);</span>
+<span class="w">         </span><span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">             </span><span class="n">j</span><span class="o">--</span><span class="p">;</span>
+<span class="w">         </span><span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">pivot</span><span class="p">);</span>
 
-         <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">j</span><span class="p">;</span> <span class="p">}</span>
+<span class="w">         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">j</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 
-         <span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">);</span>
-     <span class="p">}</span>
- <span class="p">}</span>
+<span class="w">         </span><span class="n">swap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">j</span><span class="p">);</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w"> </span><span class="p">}</span>
 </pre></div>
 </div>
 <p>The return value <code class="docutils literal notranslate"><span class="pre">k</span></code> of the above partition function is used to
@@ -581,9 +652,9 @@ so we need to include it in the recursive step.</p>
 <p>Complete the in-place quicksort using the above discussed Hoare
 partitioning scheme.</p>
 </div>
-</div>
-<div class="section" id="merge-sort">
-<h2>Merge sort<a class="headerlink" href="#merge-sort" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="merge-sort">
+<h2>Merge sort<a class="headerlink" href="#merge-sort" title="Link to this heading">#</a></h2>
 <p>Consider the problem of combining two sorted arrays of (roughly) equal length
 into one sorted array that contains all the elements. It is easy to see how
 this operation can be done in <span class="math notranslate nohighlight">\(\mathcal{O}(N)\)</span> where <span class="math notranslate nohighlight">\(N\)</span> is the
@@ -659,60 +730,113 @@ on disk storage.</p></li>
 <p>Can you think of how the merge step can be implemented without requiring
 additional memory?</p>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
-              </div>
+                </article>
               
-        
-            
 
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="searching.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Searching</p>
-            </div>
-        </a>
-    </div>
-     <div id="next">
-        <a class="right-next" href="binsearch.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Binary search</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
-</div>
-        
-        </div>
-    </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Srikumar K. S.<br/>
-        
-            &copy; Copyright 2021, Srikumar K. S..<br/>
-      </p>
-    </div>
-  </footer>
-</main>
-
-
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="searching.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Searching</p>
       </div>
-    </div>
-  
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+    </a>
+    <a class="right-next"
+       href="binsearch.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Binary search</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shannon-s-information-theory">Shannon’s information theory</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-has-all-that-got-to-do-with-sorting">What has all that got to do with sorting?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#siphoning-off-1-bit-of-information">Siphoning off 1 bit of information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sorting-considerations">Sorting considerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pathological-cases-in-quicksort">Pathological cases in quicksort</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quicksort-partitioning-scheme">Quicksort partitioning scheme</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#merge-sort">Merge sort</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
+  <div class="footer-item">
+    
+<p class="component-author">
+By Srikumar K. S.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021, Srikumar K. S..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

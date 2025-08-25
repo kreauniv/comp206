@@ -1,269 +1,342 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="./" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>Dictionaries and associated data structures &#8212; Principles of programming I: Imperative computation (forever alpha) documentation</title>
-    
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
-    
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
-
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="_static/documentation_options.js?v=f81aabf2"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'dict';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Bit sets" href="bitset.html" />
     <link rel="prev" title="Transitioning to C" href="c.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">Principles of programming I: Imperative computation (forever alpha) documentation</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p class="caption">
- <span class="caption-text">
-  Contents:
- </span>
-</p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="welcome.html">
-   Welcome
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
-   Introduction to imperative computation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="warmup.html">
-   Warming up with the power function
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="reasoning.html">
-   Reasoning with imperative programs
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="c0.html">
-   More C0
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="arrays.html">
-   Arrays
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gcd.html">
-   Assignment 1: GCD
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="practice.html">
-   Practice problems
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="searching.html">
-   Searching
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="sorting.html">
-   Sorting - an information theoretic introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="binsearch.html">
-   Binary search
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="avl.html">
-   AVL trees
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="lists.html">
-   Linked lists
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="c.html">
-   Transitioning to C
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Dictionaries and associated data structures
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bitset.html">
-   Bit sets
-  </a>
- </li>
-</ul>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
 
-    </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
-</div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
 
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
         
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/dict.rst.txt"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.rst</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
 
-            <!-- Source interaction buttons -->
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
+  
+    
+  
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Principles of programming I: Imperative computation (forever alpha) documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
 
-            <!-- Launch buttons -->
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#arrays">
-   Arrays
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-trie">
-   The “trie”
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#c-strings">
-     C strings
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#the-hash-table">
-   The hash table
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hash-functions">
-     Hash functions
-    </a>
-   </li>
-  </ul>
- </li>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to imperative computation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="warmup.html">Warming up with the power function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning with imperative programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c0.html">More C0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arrays.html">Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gcd.html">Assignment 1: GCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">Practice problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searching.html">Searching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sorting.html">Sorting - an information theoretic introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binsearch.html">Binary search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="avl.html">AVL trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lists.html">Linked lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c.html">Transitioning to C</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Dictionaries and associated data structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bitset.html">Bit sets</a></li>
 </ul>
 
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/dict.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Dictionaries and associated data structures</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-trie">The “trie”</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-strings">C strings</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hash-table">The hash table</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hash-functions">Hash functions</a></li>
+</ul>
+</li>
+</ul>
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
-              <div>
+
+              
                 
-  <div class="section" id="dictionaries-and-associated-data-structures">
-<h1>Dictionaries and associated data structures<a class="headerlink" href="#dictionaries-and-associated-data-structures" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="dictionaries-and-associated-data-structures">
+<h1>Dictionaries and associated data structures<a class="headerlink" href="#dictionaries-and-associated-data-structures" title="Link to this heading">#</a></h1>
 <p>Many programming languages today provide a utility data structure
 usually called a “dictionary” (python, julia, ruby) or a “table”
 (lua) that is used to associate orderable “keys” with “values”.
@@ -274,10 +347,10 @@ production grade data systems such as <a class="reference external" href="https:
 not surprising that a number of data structures fall in that
 category. All of them may be summarized by the following
 interface (in C) -</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">dict_t</span> <span class="nf">make_dict</span><span class="p">();</span>
-<span class="kt">bool</span> <span class="nf">dict_haskey</span><span class="p">(</span><span class="n">dict_t</span> <span class="n">d</span><span class="p">,</span> <span class="kt">key_t</span> <span class="n">k</span><span class="p">);</span>
-<span class="n">value_t</span> <span class="nf">dict_get</span><span class="p">(</span><span class="n">dict_t</span> <span class="n">d</span><span class="p">,</span> <span class="kt">key_t</span> <span class="n">k</span><span class="p">);</span>
-<span class="kt">void</span> <span class="nf">dict_set</span><span class="p">(</span><span class="n">dict_t</span> <span class="n">d</span><span class="p">,</span> <span class="kt">key_t</span> <span class="n">k</span><span class="p">,</span> <span class="n">value_t</span> <span class="n">v</span><span class="p">);</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">dict_t</span><span class="w"> </span><span class="nf">make_dict</span><span class="p">();</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">dict_haskey</span><span class="p">(</span><span class="n">dict_t</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="kt">key_t</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+<span class="n">value_t</span><span class="w"> </span><span class="nf">dict_get</span><span class="p">(</span><span class="n">dict_t</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="kt">key_t</span><span class="w"> </span><span class="n">k</span><span class="p">);</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">dict_set</span><span class="p">(</span><span class="n">dict_t</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="kt">key_t</span><span class="w"> </span><span class="n">k</span><span class="p">,</span><span class="w"> </span><span class="n">value_t</span><span class="w"> </span><span class="n">v</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>where <code class="docutils literal notranslate"><span class="pre">dict_t</span></code>, <code class="docutils literal notranslate"><span class="pre">key_t</span></code> and <code class="docutils literal notranslate"><span class="pre">value_t</span></code> are appropriately
@@ -293,29 +366,29 @@ comparison as shown below -</p>
 <span class="c1">// The comparator must also be transitive - i.e. k1 &lt; k2 and k2 &lt; k3</span>
 <span class="c1">// must imply k1 &lt; k3 as well as k1 == k2 and k2 == k3 should imply</span>
 <span class="c1">// k1 == k3. Also, k1 &lt; k2 must imply k2 &gt; k1 and vice versa.</span>
-<span class="k">typedef</span> <span class="nf">int</span> <span class="p">(</span><span class="o">*</span><span class="n">key_comparator_t</span><span class="p">)(</span><span class="kt">key_t</span> <span class="n">k1</span><span class="p">,</span> <span class="kt">key_t</span> <span class="n">k2</span><span class="p">);</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">key_comparator_t</span><span class="p">)(</span><span class="kt">key_t</span><span class="w"> </span><span class="n">k1</span><span class="p">,</span><span class="w"> </span><span class="kt">key_t</span><span class="w"> </span><span class="n">k2</span><span class="p">);</span>
 
-<span class="n">dict_t</span> <span class="nf">make_dict</span><span class="p">(</span><span class="n">key_comparator_t</span> <span class="n">comp</span><span class="p">);</span>
+<span class="n">dict_t</span><span class="w"> </span><span class="nf">make_dict</span><span class="p">(</span><span class="n">key_comparator_t</span><span class="w"> </span><span class="n">comp</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>The dictionary implementation can then use the given comparison function
 to order the structure. For example -</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="kt">int</span> <span class="kt">key_t</span><span class="p">;</span>
-<span class="kt">int</span> <span class="nf">greater_than</span><span class="p">(</span><span class="kt">key_t</span> <span class="n">k1</span><span class="p">,</span> <span class="kt">key_t</span> <span class="n">k2</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">k1</span> <span class="o">&gt;</span> <span class="n">k2</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">-1</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">k1</span> <span class="o">==</span> <span class="n">k2</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="kt">key_t</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">greater_than</span><span class="p">(</span><span class="kt">key_t</span><span class="w"> </span><span class="n">k1</span><span class="p">,</span><span class="w"> </span><span class="kt">key_t</span><span class="w"> </span><span class="n">k2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">k2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">k1</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">k2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// ....</span>
-<span class="n">dict_t</span> <span class="n">d</span> <span class="o">=</span> <span class="n">make_dict</span><span class="p">(</span><span class="o">&amp;</span><span class="n">greater_than</span><span class="p">);</span> <span class="c1">// Notice the &#39;&amp;&#39; in front of the function name.</span>
+<span class="n">dict_t</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">make_dict</span><span class="p">(</span><span class="o">&amp;</span><span class="n">greater_than</span><span class="p">);</span><span class="w"> </span><span class="c1">// Notice the &#39;&amp;&#39; in front of the function name.</span>
 </pre></div>
 </div>
 <p>The dictionary interface specification above make no guarantees about
 how efficiently the mapping is performed, and we have scope for various kinds
 of trade offs which we’ll look at now.</p>
-<div class="section" id="arrays">
-<h2>Arrays<a class="headerlink" href="#arrays" title="Permalink to this headline">¶</a></h2>
+<section id="arrays">
+<h2>Arrays<a class="headerlink" href="#arrays" title="Link to this heading">#</a></h2>
 <p>An array can also be seen as a key-value mapping dictionary whose key type
 is an integer index and whose value can be anything. The main characteristic
 of an array is that you will need to allocate space to store values corresponding
@@ -323,11 +396,11 @@ to all keys. This is called a “dense” data structure for that reason, as opp
 to a “sparse” data structure where the actual keys used will be a small subset of
 the possible set of keys.</p>
 <p>Suppose we have a 256 element array (of anything).</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">value_t</span> <span class="n">array</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="n">value_t</span><span class="w"> </span><span class="n">array</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
 </pre></div>
 </div>
 <p>Given an index <code class="docutils literal notranslate"><span class="pre">i</span></code> in binary form such as <code class="docutils literal notranslate"><span class="pre">01001010</span></code>, we can squint and
-look at the array as a tree traversal to locate this index as follows <a class="footnote-reference brackets" href="#bindex" id="id1">1</a> -</p>
+look at the array as a tree traversal to locate this index as follows <a class="footnote-reference brackets" href="#bindex" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> -</p>
 <ol class="arabic simple" start="0">
 <li><p>Start with the full span of the array - <span class="math notranslate nohighlight">\([0,256)\)</span>.</p></li>
 <li><p>Bit7 is 0, so reduce the span to the left half - <span class="math notranslate nohighlight">\([0,128)\)</span>.</p></li>
@@ -339,11 +412,12 @@ look at the array as a tree traversal to locate this index as follows <a class="
 <li><p>Bit1 is 1, so reduce the span to the right half - <span class="math notranslate nohighlight">\([74,76)\)</span>.</p></li>
 <li><p>Bit0 is 0, so reduce the span to the left half - <span class="math notranslate nohighlight">\([74,75)\)</span>.</p></li>
 </ol>
-<dl class="footnote brackets">
-<dt class="label" id="bindex"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>We number the bits from right (least significant) to left (most significant).</p>
-</dd>
-</dl>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="bindex" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>We number the bits from right (least significant) to left (most significant).</p>
+</aside>
+</aside>
 <p>So we get the same answer as when we convert <code class="docutils literal notranslate"><span class="pre">01001010</span></code> from binary into
 decimal - i.e. <code class="docutils literal notranslate"><span class="pre">64</span> <span class="pre">+</span> <span class="pre">8</span> <span class="pre">+</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">74</span></code>. So we can look at the binary digits as a
 sequence of instructions to traverse a binary tree to the leaf nodes -
@@ -357,9 +431,9 @@ integer keys to values, you can use an incomplete binary tree where you locate
 a leaf by using the bit sequence as traversal instruction. For example, the
 branch corresponding to <code class="docutils literal notranslate"><span class="pre">Bit6</span> <span class="pre">==</span> <span class="pre">0</span></code> can be entirely absent from the tree
 and that would be ok, unlike with an array.</p>
-</div>
-<div class="section" id="the-trie">
-<h2>The “trie”<a class="headerlink" href="#the-trie" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="the-trie">
+<h2>The “trie”<a class="headerlink" href="#the-trie" title="Link to this heading">#</a></h2>
 <p>The above way of looking at arrays also permits us to ask the next question -
 why should we only look at this as binary choice at each level? After all, we
 can club the bits together like this - <code class="docutils literal notranslate"><span class="pre">01</span> <span class="pre">00</span> <span class="pre">10</span> <span class="pre">10</span></code> and consider it as a
@@ -379,18 +453,18 @@ enumerating words that have a given prefix as with autocomplete features in
 devices.</p>
 <p>How would you code up a node of such a 26-way trie? It is pretty much the
 same as for a binary search tree where we do 26 instead of 2!</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">TrieNode</span> <span class="o">*</span><span class="n">trie_t</span><span class="p">;</span>
-<span class="k">struct</span> <span class="nc">TrieNode</span> <span class="p">{</span>
-    <span class="kt">char</span> <span class="n">ch</span><span class="p">;</span> <span class="c1">// The character of this node.</span>
-    <span class="kt">void</span> <span class="o">*</span><span class="n">value</span><span class="p">;</span>
-    <span class="n">trie_t</span> <span class="n">children</span><span class="p">[</span><span class="mi">26</span><span class="p">];</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">TrieNode</span><span class="w"> </span><span class="o">*</span><span class="n">trie_t</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">TrieNode</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ch</span><span class="p">;</span><span class="w"> </span><span class="c1">// The character of this node.</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="n">trie_t</span><span class="w"> </span><span class="n">children</span><span class="p">[</span><span class="mi">26</span><span class="p">];</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <p>If a node is a “leaf node”, then none of its children will be non-NULL pointers
 and the <code class="docutils literal notranslate"><span class="pre">value</span></code> field will give the associated value.</p>
-<div class="section" id="c-strings">
-<h3>C strings<a class="headerlink" href="#c-strings" title="Permalink to this headline">¶</a></h3>
+<section id="c-strings">
+<h3>C strings<a class="headerlink" href="#c-strings" title="Link to this heading">#</a></h3>
 <p>Strings in C are not special objects. They are simply an array of ASCII
 characters whose last character is the “null character” - i.e. one which has
 ASCII value 0 and is notated <code class="docutils literal notranslate"><span class="pre">'\0'</span></code>. So the string “hello” in C is actually a
@@ -401,19 +475,19 @@ strings … which, though not ideal, is usually not a problem in much practice.<
 a pointer to <code class="docutils literal notranslate"><span class="pre">char</span></code> type values which are signed 8-bit numbers. So, we we’re
 to write a “find value for given key in given trie”, we can do it recursively
 like this -</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="o">*</span><span class="nf">trie_get</span><span class="p">(</span><span class="n">trie_t</span> <span class="n">t</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">word</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">assert</span><span class="p">(</span><span class="n">t</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">);</span>
-    <span class="c1">// &quot;word[0]&quot; can also be written as &quot;*word&quot;</span>
-    <span class="c1">// since word[0] == *(word+0) = *word</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// The next character is not the null character</span>
-        <span class="n">trie_t</span> <span class="n">next</span> <span class="o">=</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]];</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// Not found.</span>
-        <span class="n">assert</span><span class="p">(</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">ch</span> <span class="o">==</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-        <span class="k">return</span> <span class="n">trie_get</span><span class="p">(</span><span class="n">next</span><span class="p">,</span> <span class="n">word</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Step to the next character.</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
-    <span class="p">}</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="nf">trie_get</span><span class="p">(</span><span class="n">trie_t</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">word</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// &quot;word[0]&quot; can also be written as &quot;*word&quot;</span>
+<span class="w">    </span><span class="c1">// since word[0] == *(word+0) = *word</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// The next character is not the null character</span>
+<span class="w">        </span><span class="n">trie_t</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]];</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">next</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Not found.</span>
+<span class="w">        </span><span class="n">assert</span><span class="p">(</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">ch</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">trie_get</span><span class="p">(</span><span class="n">next</span><span class="p">,</span><span class="w"> </span><span class="n">word</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// Step to the next character.</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -421,43 +495,43 @@ like this -</p>
 will not modify the characters of the given <code class="docutils literal notranslate"><span class="pre">word</span></code> string.</p>
 <p>If you notice, the <code class="docutils literal notranslate"><span class="pre">trie_get</span></code> call is in the “tail position” and so we
 can turn it into a loop easily like this -</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="o">*</span><span class="nf">trie_get</span><span class="p">(</span><span class="n">trie_t</span> <span class="n">t</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">word</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nl">START</span><span class="p">:</span>
-    <span class="n">assert</span><span class="p">(</span><span class="n">t</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">);</span>
-    <span class="c1">// &quot;word[0]&quot; can also be written as &quot;*word&quot;</span>
-    <span class="c1">// since word[0] == *(word+0) = *word</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// The next character is not the null character</span>
-        <span class="n">trie_t</span> <span class="n">next</span> <span class="o">=</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]];</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// Not found.</span>
-        <span class="n">assert</span><span class="p">(</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">ch</span> <span class="o">==</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
-        <span class="n">word</span> <span class="o">=</span> <span class="n">word</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Step to the next character.</span>
-        <span class="k">goto</span> <span class="n">START</span><span class="p">;</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
-    <span class="p">}</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="nf">trie_get</span><span class="p">(</span><span class="n">trie_t</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">word</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nl">START</span><span class="p">:</span>
+<span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// &quot;word[0]&quot; can also be written as &quot;*word&quot;</span>
+<span class="w">    </span><span class="c1">// since word[0] == *(word+0) = *word</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// The next character is not the null character</span>
+<span class="w">        </span><span class="n">trie_t</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]];</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">next</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Not found.</span>
+<span class="w">        </span><span class="n">assert</span><span class="p">(</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">ch</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">        </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next</span><span class="p">;</span>
+<span class="w">        </span><span class="n">word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">word</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// Step to the next character.</span>
+<span class="w">        </span><span class="k">goto</span><span class="w"> </span><span class="n">START</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>… which then becomes -</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="o">*</span><span class="nf">trie_get</span><span class="p">(</span><span class="n">trie_t</span> <span class="n">t</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">word</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// A non-zero integer is treated as &quot;true&quot; in C.</span>
-        <span class="n">assert</span><span class="p">(</span><span class="n">t</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">);</span>
-        <span class="c1">// &quot;word[0]&quot; can also be written as &quot;*word&quot;</span>
-        <span class="c1">// since word[0] == *(word+0) = *word</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;\0&#39;</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// The next character is not the null character</span>
-            <span class="n">trie_t</span> <span class="n">next</span> <span class="o">=</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]];</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">next</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// Not found.</span>
-            <span class="n">assert</span><span class="p">(</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">ch</span> <span class="o">==</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
-            <span class="n">t</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
-            <span class="n">word</span> <span class="o">=</span> <span class="n">word</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Step to the next character.</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="nf">trie_get</span><span class="p">(</span><span class="n">trie_t</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">word</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="c1">// A non-zero integer is treated as &quot;true&quot; in C.</span>
+<span class="w">        </span><span class="n">assert</span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">// &quot;word[0]&quot; can also be written as &quot;*word&quot;</span>
+<span class="w">        </span><span class="c1">// since word[0] == *(word+0) = *word</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// The next character is not the null character</span>
+<span class="w">            </span><span class="n">trie_t</span><span class="w"> </span><span class="n">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]];</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">next</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="c1">// Not found.</span>
+<span class="w">            </span><span class="n">assert</span><span class="p">(</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">ch</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">            </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">next</span><span class="p">;</span>
+<span class="w">            </span><span class="n">word</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">word</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="c1">// Step to the next character.</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -467,26 +541,27 @@ to the next element treating <code class="docutils literal notranslate"><span cl
 which is therefore equivalent to <code class="docutils literal notranslate"><span class="pre">&amp;*(p+1)</span></code> and since <code class="docutils literal notranslate"><span class="pre">&amp;*</span></code> can
 be deleted anywhere, that just become <code class="docutils literal notranslate"><span class="pre">p+1</span></code>. Therefore we step to
 the next character of the string using <code class="docutils literal notranslate"><span class="pre">word</span> <span class="pre">=</span> <span class="pre">word</span> <span class="pre">+</span> <span class="pre">1;</span></code>.</p>
-</div>
-</div>
-<div class="section" id="the-hash-table">
-<h2>The hash table<a class="headerlink" href="#the-hash-table" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="the-hash-table">
+<h2>The hash table<a class="headerlink" href="#the-hash-table" title="Link to this heading">#</a></h2>
 <p>We saw how we can use 26-way branching “trie” to look up some value associated
 with ASCII “words”. Our original intention is to map a subset of keys from
 a large key space to corresponding values. So if we’re dealing with <code class="docutils literal notranslate"><span class="pre">N</span></code> keys,
 why don’t we just use N-way branching so that we’ll be done in a single step?</p>
-<p>That may appear to be a silly question to ask, but it really isn’t. <a class="footnote-reference brackets" href="#sillyq" id="id2">2</a>
+<p>That may appear to be a silly question to ask, but it really isn’t. <a class="footnote-reference brackets" href="#sillyq" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>
 If we can somehow map a key in the larger key space to the set of integers
 <span class="math notranslate nohighlight">\([0,N)\)</span>, in a sufficiently “spread out” way – i.e. each of our keys is
 equally likely to be mapped to one of the <code class="docutils literal notranslate"><span class="pre">N</span></code> indices – then we may actually
 be able to use such a branching strategy!! Such a mapping function is called a
 “hash function”.</p>
-<dl class="footnote brackets">
-<dt class="label" id="sillyq"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
-<dd><p>Therefore never stop yourself from asking what you’ve judged to be
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="sillyq" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Therefore never stop yourself from asking what you’ve judged to be
 a “silly question”!</p>
-</dd>
-</dl>
+</aside>
+</aside>
 <p id="index-0">We do have to deal with one problem though … one known as “collision”.
 Where two keys from our original key space get mapped to the same index.
 Then we have to decide how to store the two keys. Several strategies are
@@ -495,35 +570,35 @@ each of these <code class="docutils literal notranslate"><span class="pre">N</sp
 of key-value associations at each of the <code class="docutils literal notranslate"><span class="pre">N</span></code> positions. Since we’re storing
 many keys in the same index, these are also known as “buckets”.</p>
 <p>So this is where we are at now -</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">LLNode</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">key</span><span class="p">;</span>
-    <span class="kt">void</span> <span class="o">*</span><span class="n">value</span><span class="p">;</span>
-    <span class="k">struct</span> <span class="nc">LLNode</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span><span class="w"> </span><span class="nc">LLNode</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">LLNode</span><span class="w"> </span><span class="o">*</span><span class="n">next</span><span class="p">;</span>
 <span class="p">};</span>
 
-<span class="k">struct</span> <span class="nc">HashTable</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">N</span><span class="p">;</span>
-    <span class="k">struct</span> <span class="nc">LLNode</span> <span class="o">**</span><span class="n">buckets</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">HashTable</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="p">;</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">LLNode</span><span class="w"> </span><span class="o">**</span><span class="n">buckets</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal notranslate"><span class="pre">buckets</span></code> field is now an array of <code class="docutils literal notranslate"><span class="pre">N</span></code> pointers to <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">LLNode</span></code>.
 So if our hash function is called <code class="docutils literal notranslate"><span class="pre">hash(key,</span> <span class="pre">N)</span></code>, then we can do a lookup like this -</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="o">*</span><span class="nf">hashtable_get</span><span class="p">(</span><span class="k">struct</span> <span class="nc">HashTable</span> <span class="o">*</span><span class="n">ht</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">assert</span><span class="p">(</span><span class="n">ht</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">);</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="nf">hashtable_get</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">HashTable</span><span class="w"> </span><span class="o">*</span><span class="n">ht</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">assert</span><span class="p">(</span><span class="n">ht</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">);</span>
 
-    <span class="kt">int</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">hash</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span> <span class="c1">// We let the hash function sort out</span>
-                               <span class="c1">// how to limit to the range [0,N).</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">bucket</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hash</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="p">);</span><span class="w"> </span><span class="c1">// We let the hash function sort out</span>
+<span class="w">                               </span><span class="c1">// how to limit to the range [0,N).</span>
 
-    <span class="k">struct</span> <span class="nc">LLNode</span> <span class="o">*</span><span class="n">items</span> <span class="o">=</span> <span class="n">ht</span><span class="o">-&gt;</span><span class="n">buckets</span><span class="p">[</span><span class="n">bucket</span><span class="p">];</span>
-    <span class="k">while</span> <span class="p">(</span><span class="n">items</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">items</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="n">items</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
-        <span class="p">}</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="n">items</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">LLNode</span><span class="w"> </span><span class="o">*</span><span class="n">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ht</span><span class="o">-&gt;</span><span class="n">buckets</span><span class="p">[</span><span class="n">bucket</span><span class="p">];</span>
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">items</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">items</span><span class="o">-&gt;</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">items</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">items</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -542,12 +617,12 @@ buckets. As with unbounded arrays, the cost of doubling the buckets is incurred
 once in a while compared to many operations where we use existing buckets, and
 therefore we get an amortized cost of <code class="docutils literal notranslate"><span class="pre">O(1)</span></code> for hashtable get and set
 operations.</p>
-<div class="section" id="hash-functions">
-<h3>Hash functions<a class="headerlink" href="#hash-functions" title="Permalink to this headline">¶</a></h3>
+<section id="hash-functions">
+<h3>Hash functions<a class="headerlink" href="#hash-functions" title="Link to this heading">#</a></h3>
 <p>So how do we actually construct these magical hash functions?</p>
 <p>Consider this one -</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">simple_hash</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">int</span> <span class="n">N</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">key</span> <span class="o">%</span> <span class="n">N</span><span class="p">;</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">simple_hash</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">N</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -559,16 +634,16 @@ situations where we end up with <code class="docutils literal notranslate"><span
 <p id="index-2">To get a more random looking – i.e. pattern-less – spread, we can use
 a pseudo random sequence function such as the family of “linear congruential
 generators” - which are integer functions of the form -</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">lcgen</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">,</span> <span class="kt">int</span> <span class="n">N</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="n">key</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span><span class="p">;</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">lcgen</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">N</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>Let’s look at what <code class="docutils literal notranslate"><span class="pre">lcgen</span></code> produces for some values of a, b and N.
 Consider <span class="math notranslate nohighlight">\(f(x) = 2*x+3 \mod 9\)</span>, <span class="math notranslate nohighlight">\(g(x) = 3*x+2 \mod 9\)</span> and
 <span class="math notranslate nohighlight">\(h(x) = 5*x+3 \mod 9\)</span>.</p>
-<table class="colwidths-auto table" id="id3">
-<caption><span class="caption-number">Table 7 </span><span class="caption-text">Linear congruential function examples</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id3">
+<caption><span class="caption-number">Table 7 </span><span class="caption-text">Linear congruential function examples</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>x</p></th>
 <th class="head"><p>f(x)</p></th>
@@ -624,6 +699,7 @@ Consider <span class="math notranslate nohighlight">\(f(x) = 2*x+3 \mod 9\)</spa
 </tr>
 </tbody>
 </table>
+</div>
 <p>All three functions have a period of 9. Recall that the “period of f” is a
 value p such that <span class="math notranslate nohighlight">\(f(x+p) = f(x)\)</span>. But we see that <span class="math notranslate nohighlight">\(g(x)\)</span> has a
 period of 3 as well. In fact, we’re asking “when does a*x become divisible by
@@ -691,61 +767,116 @@ area is fascinating for study and underpins much of statistical calculations
 on computers such as Monte Carlo simulations, and we already mentioned
 cryptography.</p>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
-              </div>
+                </article>
               
-        
-            
 
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="c.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Transitioning to C</p>
-            </div>
-        </a>
-    </div>
-     <div id="next">
-        <a class="right-next" href="bitset.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Bit sets</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
-</div>
-        
-        </div>
-    </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Srikumar K. S.<br/>
-        
-            &copy; Copyright 2021, Srikumar K. S..<br/>
-      </p>
-    </div>
-  </footer>
-</main>
-
-
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="c.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Transitioning to C</p>
       </div>
-    </div>
-  
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+    </a>
+    <a class="right-next"
+       href="bitset.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Bit sets</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-trie">The “trie”</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-strings">C strings</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-hash-table">The hash table</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hash-functions">Hash functions</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
+  <div class="footer-item">
+    
+<p class="component-author">
+By Srikumar K. S.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021, Srikumar K. S..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

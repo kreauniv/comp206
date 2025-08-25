@@ -1,255 +1,336 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="./" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>AVL trees &#8212; Principles of programming I: Imperative computation (forever alpha) documentation</title>
-    
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
-    
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
-
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="_static/documentation_options.js?v=f81aabf2"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'avl';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Linked lists" href="lists.html" />
     <link rel="prev" title="Binary search" href="binsearch.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">Principles of programming I: Imperative computation (forever alpha) documentation</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p class="caption">
- <span class="caption-text">
-  Contents:
- </span>
-</p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="welcome.html">
-   Welcome
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
-   Introduction to imperative computation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="warmup.html">
-   Warming up with the power function
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="reasoning.html">
-   Reasoning with imperative programs
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="c0.html">
-   More C0
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="arrays.html">
-   Arrays
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gcd.html">
-   Assignment 1: GCD
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="practice.html">
-   Practice problems
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="searching.html">
-   Searching
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="sorting.html">
-   Sorting - an information theoretic introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="binsearch.html">
-   Binary search
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   AVL trees
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="lists.html">
-   Linked lists
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="c.html">
-   Transitioning to C
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="dict.html">
-   Dictionaries and associated data structures
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bitset.html">
-   Bit sets
-  </a>
- </li>
-</ul>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
 
-    </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
-</div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
 
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
         
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/avl.rst.txt"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.rst</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
 
-            <!-- Source interaction buttons -->
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
+  
+    
+  
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Principles of programming I: Imperative computation (forever alpha) documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
 
-            <!-- Launch buttons -->
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#rebalancing-operations">
-   Rebalancing operations
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#recurse-back-to-the-root">
-   Recurse back to the root
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#code">
-   Code
-  </a>
- </li>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to imperative computation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="warmup.html">Warming up with the power function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning with imperative programs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c0.html">More C0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arrays.html">Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gcd.html">Assignment 1: GCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">Practice problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searching.html">Searching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sorting.html">Sorting - an information theoretic introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binsearch.html">Binary search</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">AVL trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lists.html">Linked lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c.html">Transitioning to C</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dict.html">Dictionaries and associated data structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bitset.html">Bit sets</a></li>
 </ul>
 
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/avl.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>AVL trees</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rebalancing-operations">Rebalancing operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recurse-back-to-the-root">Recurse back to the root</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code">Code</a></li>
+</ul>
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
-              <div>
+
+              
                 
-  <div class="section" id="avl-trees">
-<h1>AVL trees<a class="headerlink" href="#avl-trees" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="avl-trees">
+<h1>AVL trees<a class="headerlink" href="#avl-trees" title="Link to this heading">#</a></h1>
 <p>In the earlier section on binary search trees, we saw how the naive insert
 mechanism can produce an unbalanced tree that effectively has the same lookup
 complexity as that of a linked list - i.e. <span class="math notranslate nohighlight">\(\mathcal{O}(N)\)</span>. The advantage of a binary
@@ -311,8 +392,8 @@ binary search trees are.</p></li>
 </ol>
 <p>So - a tree is said to be an “AVL tree” if <strong>both</strong> the above conditions  –
 i.e. the ordering constraint and the balance constraint – hold at every node.</p>
-<div class="section" id="rebalancing-operations">
-<h2>Rebalancing operations<a class="headerlink" href="#rebalancing-operations" title="Permalink to this headline">¶</a></h2>
+<section id="rebalancing-operations">
+<h2>Rebalancing operations<a class="headerlink" href="#rebalancing-operations" title="Link to this heading">#</a></h2>
 <p>So the question now is – how do we maintain those data structure invariants as
 we do insertions and deletions?</p>
 <p>The answer lies in a couple of types of rebalancing operations that have to applied
@@ -329,7 +410,7 @@ the former cases it is the other way around. So any procedure we apply to
 correct the latter case can be mirrored for the other case.</p>
 <div class="figure" id="id1" style="text-align: center">
 <span id="ubnode"></span><p><img  src="_images/tikz-cc060f8ddd440450c058f79432f988ab16e3d38e.png" alt="Figure made with TikZ" /></p>
-<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">An unbalanced node</span></p>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">An unbalanced node</span></p>
 </div><p>In the above figure, we consider an unbalanced node <span class="math notranslate nohighlight">\(\mathcal{U}\)</span> that has a
 balance factor of 2, and has its two balanced subtrees <span class="math notranslate nohighlight">\(\mathcal{U}^-\)</span> and
 <span class="math notranslate nohighlight">\(\mathcal{U}^+\)</span> of heights <span class="math notranslate nohighlight">\(h\)</span> and <span class="math notranslate nohighlight">\(h+2\)</span> respectively.</p>
@@ -337,7 +418,7 @@ balance factor of 2, and has its two balanced subtrees <span class="math notrans
 as shown in <a class="reference internal" href="#rubnode"><span class="std std-numref">Fig. 2</span></a>.</p>
 <div class="figure" id="id2" style="text-align: center">
 <span id="rubnode"></span><p><img  src="_images/tikz-e816a9712407025f8eac112739b909dccb3ac052.png" alt="Figure made with TikZ" /></p>
-<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">A right-unbalanced node</span></p>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">A right-unbalanced node</span></p>
 </div><p>Since our inductive assumption is that the node <span class="math notranslate nohighlight">\(\mathcal{W}\)</span> is balanced
 (as are all node descendants of <span class="math notranslate nohighlight">\(\mathcal{U}\)</span>), the heights of
 <span class="math notranslate nohighlight">\(w^+\)</span> and <span class="math notranslate nohighlight">\(w^-\)</span> can at most differ by 1 and the max of the two must
@@ -351,7 +432,7 @@ be <span class="math notranslate nohighlight">\(h+1\)</span>. This gives us thre
 in <a class="reference internal" href="#lrot"><span class="std std-numref">Fig. 3</span></a>.</p>
 <div class="figure" id="id3" style="text-align: center">
 <span id="lrot"></span><p><img  src="_images/tikz-14e8a75d82e59a5ac20269b4026b20512ba7b468.png" alt="Figure made with TikZ" /></p>
-<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Left rotation applied</span></p>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Left rotation applied</span></p>
 </div><p>Now to deal with third case of <span class="math notranslate nohighlight">\(\text{height}(w^-) = h+1 \text{ , }
 \text{height}(w^+) = h\)</span>, where the left subtree of the right child of the
 unbalanced node is the one that’ deeper. In this case, we have to apply a
@@ -361,7 +442,7 @@ unbalanced structure by exploding one more level of the <span class="math notran
 since we know it has a height of <span class="math notranslate nohighlight">\(h+1\)</span> for this case.</p>
 <div class="figure" id="id4" style="text-align: center">
 <span id="rlubnode"></span><p><img  src="_images/tikz-e45ec6a207f129d3e4fe61a560cd9c175f09cffc.png" alt="Figure made with TikZ" /></p>
-<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Right-left unbalanced node</span></p>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">Right-left unbalanced node</span></p>
 </div><p>The nodes <span class="math notranslate nohighlight">\(v^-\)</span> and <span class="math notranslate nohighlight">\(v^+\)</span>, shown in <a class="reference internal" href="#rlubnode"><span class="std std-numref">Fig. 4</span></a>, can have
 height combinations from <span class="math notranslate nohighlight">\({(h-1,h),(h,h-1),(h,h)}\)</span>. This is because at
 least one of the two nodes must be of height <span class="math notranslate nohighlight">\(h\)</span> in order that the parent
@@ -371,10 +452,10 @@ the top and brings the <span class="math notranslate nohighlight">\(\mathcal{U}\
 <span class="math notranslate nohighlight">\(\mathcal{W}\)</span>.</p>
 <div class="figure" id="id5" style="text-align: center">
 <span id="dblrot"></span><p><img  src="_images/tikz-333021e02359e965da75e6d9202035ea96fc8b95.png" alt="Figure made with TikZ" /></p>
-<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Right-left rebalancing using double rotation</span></p>
-</div></div>
-<div class="section" id="recurse-back-to-the-root">
-<h2>Recurse back to the root<a class="headerlink" href="#recurse-back-to-the-root" title="Permalink to this headline">¶</a></h2>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Right-left rebalancing using double rotation</span></p>
+</div></section>
+<section id="recurse-back-to-the-root">
+<h2>Recurse back to the root<a class="headerlink" href="#recurse-back-to-the-root" title="Link to this heading">#</a></h2>
 <p>Having fixed the imbalance at the node where we found it (again, assuming that
 no other descendant of the node is imbalanced), we now need to update its
 height, recurse back up to its parent, and check it for imbalance, repair if
@@ -384,42 +465,42 @@ criterion when we can assume that all nodes below the unbalanced node already
 meet the criterion, we can be assured that by induction we will be able to
 apply the same procedure to the parent node in case it is subsequently found
 to be unbalanced.</p>
-</div>
-<div class="section" id="code">
-<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="code">
+<h2>Code<a class="headerlink" href="#code" title="Link to this heading">#</a></h2>
 <p>Let’s start with the basic structures –</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">Node</span> <span class="o">*</span><span class="n">avltree</span><span class="p">;</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Node</span><span class="w"> </span><span class="o">*</span><span class="n">avltree</span><span class="p">;</span>
 
-<span class="k">struct</span> <span class="nc">Node</span> <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">key</span><span class="p">;</span>
-    <span class="kt">void</span> <span class="o">*</span><span class="n">value</span><span class="p">;</span>
-    <span class="kt">int</span> <span class="n">height</span><span class="p">;</span> <span class="c1">// This is new!</span>
-    <span class="n">avltree</span> <span class="n">left</span><span class="p">;</span>
-    <span class="n">avltree</span> <span class="n">right</span><span class="p">;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">Node</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">height</span><span class="p">;</span><span class="w"> </span><span class="c1">// This is new!</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">left</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">right</span><span class="p">;</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 <p>In the above structure, we’ve added a new field named <code class="docutils literal notranslate"><span class="pre">height</span></code> which stores the
 height of the node once the structure is stable.</p>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">height</span><span class="p">(</span><span class="n">avltree</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">return</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">;</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">height</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">height</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// The recursive definition of &quot;height&quot; of a tree.</span>
-<span class="kt">int</span> <span class="nf">calc_height</span><span class="p">(</span><span class="n">avltree</span> <span class="n">t</span><span class="p">)</span>
-    <span class="c1">//@requires t != NULL</span>
-    <span class="c1">//@ensures \result &gt;= height(t-&gt;left) &amp;&amp; \result &gt;= height(t-&gt;right)</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">calc_height</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">//@requires t != NULL</span>
+<span class="w">    </span><span class="c1">//@ensures \result &gt;= height(t-&gt;left) &amp;&amp; \result &gt;= height(t-&gt;right)</span>
 <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
-    <span class="kt">int</span> <span class="n">h1</span> <span class="o">=</span> <span class="n">calc_height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
-    <span class="kt">int</span> <span class="n">h2</span> <span class="o">=</span> <span class="n">calc_height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
-    <span class="kt">int</span> <span class="n">h</span> <span class="o">=</span> <span class="n">h1</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">h2</span> <span class="o">&gt;</span> <span class="n">h1</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">h</span> <span class="o">=</span> <span class="n">h2</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="n">t</span><span class="o">-&gt;</span><span class="n">height</span> <span class="o">=</span> <span class="n">h</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">h</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">h1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calc_height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">h2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calc_height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">h2</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">h1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">h</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h2</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">h</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -433,94 +514,94 @@ are not terminated with a “;”. This is a temporary hack to make the code sho
 coloured for easy reading. If you’re copying the code to try it, please do add the
 missing “;” for the contract lines.</p>
 </div>
-<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="nf">maxint</span><span class="p">(</span><span class="kt">int</span> <span class="n">m1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m2</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">m1</span> <span class="o">&gt;</span> <span class="n">m2</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m1</span><span class="p">;</span> <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m2</span><span class="p">;</span> <span class="p">}</span>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">maxint</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">m1</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">m2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">m1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">m2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m1</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">m2</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 <span class="p">}</span>
 
 <span class="c1">// Computes the largest value of the key in the given tree or subtree.</span>
-<span class="kt">int</span> <span class="nf">maxkey</span><span class="p">(</span><span class="n">avltree</span> <span class="n">t</span><span class="p">)</span>
-    <span class="c1">//@requires t != NULL</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">maxkey</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">//@requires t != NULL</span>
 <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="n">maxkey</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="o">&gt;</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span> <span class="n">key</span> <span class="o">=</span> <span class="n">left</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">maxkey</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">right</span> <span class="o">&gt;</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span> <span class="n">key</span> <span class="o">=</span> <span class="n">right</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">key</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maxkey</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">left</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maxkey</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">right</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">right</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// The counterpart of maxkey, minkey computes the minimum key.</span>
-<span class="kt">int</span> <span class="nf">minkey</span><span class="p">(</span><span class="n">avltree</span> <span class="n">t</span><span class="p">)</span>
-    <span class="c1">//@requires t != NULL</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">minkey</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">//@requires t != NULL</span>
 <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="n">minkey</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">left</span> <span class="o">&lt;</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span> <span class="n">key</span> <span class="o">=</span> <span class="n">left</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">minkey</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">right</span> <span class="o">&lt;</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span> <span class="n">key</span> <span class="o">=</span> <span class="n">right</span><span class="p">;</span> <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">key</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">minkey</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">left</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">left</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">minkey</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">right</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">right</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// Returns true if this node meets the ordering criterion.</span>
 <span class="c1">// It does not make any statement about its children ... only</span>
 <span class="c1">// that the particular given node (argument) meets the ordering</span>
 <span class="c1">// criterion.</span>
-<span class="kt">bool</span> <span class="nf">is_ordered</span><span class="p">(</span><span class="n">avltree</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">maxkey</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">minkey</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">is_ordered</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">maxkey</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">minkey</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="kt">int</span> <span class="nf">balance_factor</span><span class="p">(</span><span class="n">avltree</span> <span class="n">t</span><span class="p">)</span>
-    <span class="c1">//@requires t != NULL</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">balance_factor</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">//@requires t != NULL</span>
 <span class="p">{</span>
-    <span class="k">return</span> <span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span> <span class="o">-</span> <span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="c1">// Checks that a given tree node meets the balancing</span>
 <span class="c1">// criterion, assuming that the height of all the children</span>
 <span class="c1">// are already calculated.</span>
-<span class="kt">bool</span> <span class="nf">is_balanced</span><span class="p">(</span><span class="n">avltree</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
-    <span class="kt">int</span> <span class="n">bfactor</span> <span class="o">=</span> <span class="n">balance_factor</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
-    <span class="k">return</span> <span class="n">bfactor</span> <span class="o">&gt;=</span> <span class="mi">-1</span> <span class="o">&amp;&amp;</span> <span class="n">bfactor</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">is_balanced</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">bfactor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance_factor</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">bfactor</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">bfactor</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// Checks that all nodes in the tree meet the balancing and</span>
 <span class="c1">// ordering criteria for the tree to be ab AVL tree.</span>
-<span class="kt">bool</span> <span class="nf">is_avltree</span><span class="p">(</span><span class="n">avltree</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">return</span> <span class="n">is_balanced</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">is_ordered</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">is_avltree</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">is_avltree</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+<span class="kt">bool</span><span class="w"> </span><span class="nf">is_avltree</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">is_balanced</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">is_ordered</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">is_avltree</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">is_avltree</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="c1">// Computes the height of this node from the already computed heights</span>
 <span class="c1">// of its children.</span>
-<span class="n">avltree</span> <span class="nf">fix_height</span><span class="p">(</span><span class="n">avltree</span> <span class="n">t</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}</span>
-    <span class="kt">int</span> <span class="n">h1</span> <span class="o">=</span> <span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
-    <span class="kt">int</span> <span class="n">h2</span> <span class="o">=</span> <span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">h2</span> <span class="o">&lt;</span> <span class="n">h1</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">h2</span> <span class="o">=</span> <span class="n">h1</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="n">t</span><span class="o">-&gt;</span><span class="n">height</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">h2</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="n">avltree</span><span class="w"> </span><span class="nf">fix_height</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">h1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">h2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">h2</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">h1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">h2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h1</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h2</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// Performs a &quot;left rotation&quot; operation on the given</span>
@@ -528,107 +609,107 @@ missing “;” for the contract lines.</p>
 <span class="c1">// all have the same shape - they perform a manipulation on the</span>
 <span class="c1">// tree, fix the height of the nodes after the manipulation,</span>
 <span class="c1">// and return the new root.</span>
-<span class="n">avltree</span> <span class="nf">rotate_left</span><span class="p">(</span><span class="n">avltree</span> <span class="n">u</span><span class="p">)</span>
-    <span class="c1">//@requires u != NULL</span>
+<span class="n">avltree</span><span class="w"> </span><span class="nf">rotate_left</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">u</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">//@requires u != NULL</span>
 <span class="p">{</span>
-    <span class="n">avltree</span> <span class="n">w</span> <span class="o">=</span> <span class="n">u</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
-    <span class="n">avltree</span> <span class="n">wminus</span> <span class="o">=</span> <span class="n">w</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
-    <span class="n">u</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="n">wminus</span><span class="p">;</span>
-    <span class="n">w</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">u</span><span class="p">;</span>
-    <span class="n">fix_height</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
-    <span class="k">return</span> <span class="n">fix_height</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">wminus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wminus</span><span class="p">;</span>
+<span class="w">    </span><span class="n">w</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">;</span>
+<span class="w">    </span><span class="n">fix_height</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">fix_height</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">avltree</span> <span class="nf">rotate_right</span><span class="p">(</span><span class="n">avltree</span> <span class="n">u</span><span class="p">)</span>
-    <span class="c1">//@requires u != NULL</span>
+<span class="n">avltree</span><span class="w"> </span><span class="nf">rotate_right</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">u</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">//@requires u != NULL</span>
 <span class="p">{</span>
-    <span class="n">avltree</span> <span class="n">w</span> <span class="o">=</span> <span class="n">u</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
-    <span class="n">avltree</span> <span class="n">wplus</span> <span class="o">=</span> <span class="n">w</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
-    <span class="n">u</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">wplus</span><span class="p">;</span>
-    <span class="n">w</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="n">u</span><span class="p">;</span>
-    <span class="n">fix_height</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
-    <span class="k">return</span> <span class="n">fix_height</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">wplus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wplus</span><span class="p">;</span>
+<span class="w">    </span><span class="n">w</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">;</span>
+<span class="w">    </span><span class="n">fix_height</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">fix_height</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">avltree</span> <span class="nf">rotate_right_left</span><span class="p">(</span><span class="n">avltree</span> <span class="n">u</span><span class="p">)</span>
-    <span class="c1">//@requires u != NULL</span>
+<span class="n">avltree</span><span class="w"> </span><span class="nf">rotate_right_left</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">u</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">//@requires u != NULL</span>
 <span class="p">{</span>
-    <span class="n">avltree</span> <span class="n">w</span> <span class="o">=</span> <span class="n">u</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
-    <span class="n">avltree</span> <span class="n">v</span> <span class="o">=</span> <span class="n">w</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
-    <span class="n">avltree</span> <span class="n">vminus</span> <span class="o">=</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
-    <span class="n">avltree</span> <span class="n">vplus</span> <span class="o">=</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
-    <span class="n">v</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">u</span><span class="p">;</span>
-    <span class="n">v</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="n">w</span><span class="p">;</span>
-    <span class="n">u</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="n">vminus</span><span class="p">;</span>
-    <span class="n">w</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">vplus</span><span class="p">;</span>
-    <span class="n">fix_height</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
-    <span class="n">fix_height</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
-    <span class="k">return</span> <span class="n">fix_height</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">vminus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">vplus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vminus</span><span class="p">;</span>
+<span class="w">    </span><span class="n">w</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vplus</span><span class="p">;</span>
+<span class="w">    </span><span class="n">fix_height</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+<span class="w">    </span><span class="n">fix_height</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">fix_height</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
 <span class="p">}</span>
 
-<span class="n">avltree</span> <span class="nf">rotate_left_right</span><span class="p">(</span><span class="n">avltree</span> <span class="n">u</span><span class="p">)</span>
-    <span class="c1">//@requires u != NULL</span>
+<span class="n">avltree</span><span class="w"> </span><span class="nf">rotate_left_right</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">u</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">//@requires u != NULL</span>
 <span class="p">{</span>
-    <span class="n">avltree</span> <span class="n">w</span> <span class="o">=</span> <span class="n">u</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
-    <span class="n">avltree</span> <span class="n">v</span> <span class="o">=</span> <span class="n">w</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
-    <span class="n">avltree</span> <span class="n">vplus</span> <span class="o">=</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
-    <span class="n">avltree</span> <span class="n">vminus</span> <span class="o">=</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
-    <span class="n">v</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="n">u</span><span class="p">;</span>
-    <span class="n">v</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">w</span><span class="p">;</span>
-    <span class="n">u</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">vplus</span><span class="p">;</span>
-    <span class="n">w</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="n">vminus</span><span class="p">;</span>
-    <span class="n">fix_height</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
-    <span class="n">fix_height</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
-    <span class="k">return</span> <span class="n">fix_height</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">vplus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">;</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">vminus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">u</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">w</span><span class="p">;</span>
+<span class="w">    </span><span class="n">u</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vplus</span><span class="p">;</span>
+<span class="w">    </span><span class="n">w</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vminus</span><span class="p">;</span>
+<span class="w">    </span><span class="n">fix_height</span><span class="p">(</span><span class="n">u</span><span class="p">);</span>
+<span class="w">    </span><span class="n">fix_height</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">fix_height</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="c1">// Applies the discussed rotation manipulations to</span>
 <span class="c1">// ensure that the given node ends up balanced.</span>
 <span class="c1">// Assumes that its children are balanced already.</span>
-<span class="n">avltree</span> <span class="nf">balance_node</span><span class="p">(</span><span class="n">avltree</span> <span class="n">t</span><span class="p">)</span>
-    <span class="c1">//@requires t != NULL</span>
+<span class="n">avltree</span><span class="w"> </span><span class="nf">balance_node</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
+<span class="w">    </span><span class="c1">//@requires t != NULL</span>
 <span class="p">{</span>
-    <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">balance_factor</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
-    <span class="c1">//@assert b &gt;= -2 &amp;&amp; b &lt;= 2;</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">))</span> <span class="p">{</span>
-                <span class="n">t</span> <span class="o">=</span> <span class="n">rotate_left</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="n">t</span> <span class="o">=</span> <span class="n">rotate_right_left</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="mi">-2</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">))</span> <span class="p">{</span>
-                <span class="n">t</span> <span class="o">=</span> <span class="n">rotate_right</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="n">t</span> <span class="o">=</span> <span class="n">rotate_left_right</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">balance_factor</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">//@assert b &gt;= -2 &amp;&amp; b &lt;= 2;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rotate_left</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rotate_right_left</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">-2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">height</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rotate_right</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rotate_left_right</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// Make a node that associates the given key with the given value.</span>
-<span class="n">avltree</span> <span class="nf">mk_avlnode</span><span class="p">(</span><span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">avltree</span> <span class="n">n</span>       <span class="o">=</span> <span class="p">(</span><span class="n">avltree</span><span class="p">)</span><span class="n">alloc</span><span class="p">(</span><span class="k">struct</span> <span class="nc">Node</span><span class="p">);</span>
-    <span class="n">n</span><span class="o">-&gt;</span><span class="n">key</span>          <span class="o">=</span> <span class="n">key</span><span class="p">;</span>
-    <span class="n">n</span><span class="o">-&gt;</span><span class="n">value</span>        <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
-    <span class="n">n</span><span class="o">-&gt;</span><span class="n">height</span>       <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="n">n</span><span class="o">-&gt;</span><span class="n">left</span>         <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-    <span class="n">n</span><span class="o">-&gt;</span><span class="n">right</span>        <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
+<span class="n">avltree</span><span class="w"> </span><span class="nf">mk_avlnode</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">avltree</span><span class="w"> </span><span class="n">n</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">avltree</span><span class="p">)</span><span class="n">alloc</span><span class="p">(</span><span class="k">struct</span><span class="w"> </span><span class="nc">Node</span><span class="p">);</span>
+<span class="w">    </span><span class="n">n</span><span class="o">-&gt;</span><span class="n">key</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="n">key</span><span class="p">;</span>
+<span class="w">    </span><span class="n">n</span><span class="o">-&gt;</span><span class="n">value</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="w">    </span><span class="n">n</span><span class="o">-&gt;</span><span class="n">height</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="n">n</span><span class="o">-&gt;</span><span class="n">left</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="n">n</span><span class="o">-&gt;</span><span class="n">right</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="c1">// Lookup the node in the tree with the key, or return</span>
 <span class="c1">// NULL if no such node exists.</span>
-<span class="n">avltree</span> <span class="nf">avltree_get</span><span class="p">(</span><span class="n">avltree</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">t</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">&lt;</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">avltree_get</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span> <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">avltree_get</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span> <span class="p">}</span>
-    <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="c1">// Unreachable.</span>
+<span class="n">avltree</span><span class="w"> </span><span class="nf">avltree_get</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">avltree_get</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">avltree_get</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="c1">// Unreachable.</span>
 <span class="p">}</span>
 
 <span class="c1">// Sets a value to be associated with the given key.</span>
@@ -636,87 +717,136 @@ missing “;” for the contract lines.</p>
 <span class="c1">// the value stored in the node. If it doesn&#39;t, it&#39;ll</span>
 <span class="c1">// add a new node at an appropriate point and ensure that</span>
 <span class="c1">// the tree remains balanced.</span>
-<span class="n">avltree</span> <span class="nf">avltree_set</span><span class="p">(</span><span class="n">avltree</span> <span class="n">t</span><span class="p">,</span> <span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">NULL</span><span class="p">;</span> <span class="p">}</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">t</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span>
-        <span class="k">return</span> <span class="n">t</span><span class="p">;</span>
-    <span class="p">}</span>
+<span class="n">avltree</span><span class="w"> </span><span class="nf">avltree_set</span><span class="p">(</span><span class="n">avltree</span><span class="w"> </span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">value</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">&lt;</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">avltree_set</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span> <span class="o">=</span> <span class="n">mk_avlnode</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">avltree_set</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mk_avlnode</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="o">&gt;</span> <span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="n">avltree_set</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span> <span class="o">=</span> <span class="n">mk_avlnode</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">key</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">key</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">avltree_set</span><span class="p">(</span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">t</span><span class="o">-&gt;</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mk_avlnode</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
 
-    <span class="k">return</span> <span class="n">balance_node</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">balance_node</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
-              </div>
+                </article>
               
-        
-            
 
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="binsearch.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Binary search</p>
-            </div>
-        </a>
-    </div>
-     <div id="next">
-        <a class="right-next" href="lists.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Linked lists</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
-</div>
-        
-        </div>
-    </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Srikumar K. S.<br/>
-        
-            &copy; Copyright 2021, Srikumar K. S..<br/>
-      </p>
-    </div>
-  </footer>
-</main>
-
-
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="binsearch.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Binary search</p>
       </div>
-    </div>
-  
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+    </a>
+    <a class="right-next"
+       href="lists.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Linked lists</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rebalancing-operations">Rebalancing operations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recurse-back-to-the-root">Recurse back to the root</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code">Code</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
+  <div class="footer-item">
+    
+<p class="component-author">
+By Srikumar K. S.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021, Srikumar K. S..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>

@@ -1,284 +1,349 @@
 
 <!DOCTYPE html>
 
-<html>
+
+<html lang="en" data-content_root="./" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>More C0 &#8212; Principles of programming I: Imperative computation (forever alpha) documentation</title>
-    
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    
-  <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    
-      
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
-    
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
-
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script src="_static/documentation_options.js?v=f81aabf2"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'c0';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Arrays" href="arrays.html" />
     <link rel="prev" title="Reasoning with imperative programs" href="reasoning.html" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
-    
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
-    
-    <div class="container-fluid" id="banner"></div>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-    <div class="container-xl">
-      <div class="row">
-          
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
-    <a class="navbar-brand text-wrap" href="index.html">
-      
-      
-      
-      <h1 class="site-logo" id="site-title">Principles of programming I: Imperative computation (forever alpha) documentation</h1>
-      
-    </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
-  <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item active">
-        <p class="caption">
- <span class="caption-text">
-  Contents:
- </span>
-</p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="welcome.html">
-   Welcome
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
-   Introduction to imperative computation
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="warmup.html">
-   Warming up with the power function
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="reasoning.html">
-   Reasoning with imperative programs
-  </a>
- </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   More C0
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="arrays.html">
-   Arrays
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="gcd.html">
-   Assignment 1: GCD
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="practice.html">
-   Practice problems
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="searching.html">
-   Searching
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="sorting.html">
-   Sorting - an information theoretic introduction
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="binsearch.html">
-   Binary search
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="avl.html">
-   AVL trees
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="lists.html">
-   Linked lists
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="c.html">
-   Transitioning to C
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="dict.html">
-   Dictionaries and associated data structures
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="bitset.html">
-   Bit sets
-  </a>
- </li>
-</ul>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
 
-    </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
 
-</div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
 
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
-            
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
         
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/c0.rst.txt"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.rst</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
 
-            <!-- Source interaction buttons -->
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
 
-            <!-- Full screen (wrap in <a> to have style consistency -->
+  
+    
+  
 
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Principles of programming I: Imperative computation (forever alpha) documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
 
-            <!-- Launch buttons -->
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#structures">
-   Structures
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#indirection">
-   Indirection
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#pointers-to-structures">
-   Pointers to structures
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#arrays">
-   Arrays
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#arrays-of-structs">
-   Arrays of structs
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#combining-these-concepts">
-   Combining these concepts
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#typedefs">
-   Typedefs
-  </a>
- </li>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="welcome.html">Welcome</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction to imperative computation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="warmup.html">Warming up with the power function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reasoning.html">Reasoning with imperative programs</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">More C0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arrays.html">Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gcd.html">Assignment 1: GCD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practice.html">Practice problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="searching.html">Searching</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sorting.html">Sorting - an information theoretic introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="binsearch.html">Binary search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="avl.html">AVL trees</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lists.html">Linked lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="c.html">Transitioning to C</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dict.html">Dictionaries and associated data structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bitset.html">Bit sets</a></li>
 </ul>
 
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/c0.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>More C0</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structures">Structures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indirection">Indirection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pointers-to-structures">Pointers to structures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays-of-structs">Arrays of structs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-these-concepts">Combining these concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#typedefs">Typedefs</a></li>
+</ul>
             </nav>
         </div>
     </div>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
-              <div>
+
+              
                 
-  <div class="section" id="more-c0">
-<h1>More C0<a class="headerlink" href="#more-c0" title="Permalink to this headline">¶</a></h1>
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="more-c0">
+<h1>More C0<a class="headerlink" href="#more-c0" title="Link to this heading">#</a></h1>
 <p>So far, we’ve only seen the <code class="docutils literal notranslate"><span class="pre">int</span></code> type in C0 and that it has a range of
 <span class="math notranslate nohighlight">\([-2^{31},2^{31} - 1]\)</span>. There are few other basic data types that are
 useful when writing programs. They are -</p>
-<table class="colwidths-given table" id="id3">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Basic data types</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Basic data types</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <colgroup>
-<col style="width: 13%" />
-<col style="width: 63%" />
-<col style="width: 25%" />
+<col style="width: 12.5%" />
+<col style="width: 62.5%" />
+<col style="width: 25.0%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p><strong>Type</strong></p></th>
@@ -305,11 +370,12 @@ type in C0 (warning: not in C though).</p></td>
 </tr>
 </tbody>
 </table>
-<div class="section" id="structures">
-<h2>Structures<a class="headerlink" href="#structures" title="Permalink to this headline">¶</a></h2>
+</div>
+<section id="structures">
+<h2>Structures<a class="headerlink" href="#structures" title="Link to this heading">#</a></h2>
 <p>When we wrote the <code class="docutils literal notranslate"><span class="pre">pow_iter</span></code> function in python, we made an ad hoc
 collection of three values into a “tuple” as shown below:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pow_iter</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">r1</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">pow_iter</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="n">r1</span><span class="p">):</span>
     <span class="p">(</span><span class="n">x2</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="n">r2</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span><span class="o">*</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">r1</span> <span class="o">*</span> <span class="n">x1</span> <span class="k">if</span> <span class="n">y1</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">r1</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">x2</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="n">r2</span>
 </pre></div>
@@ -331,16 +397,7 @@ values. To understand this better, let’s go back to our spreadsheet interpreta
 where each column is given to a specific variable and each row to its value at
 a given “time step” in the function’s execution. This gets interesting if we now
 number the columns of our sheet like shown below –</p>
-<table class="table">
-<colgroup>
-<col style="width: 19%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 19%" />
-</colgroup>
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>…</p></th>
 <th class="head"><p>23</p></th>
@@ -371,22 +428,14 @@ number the columns of our sheet like shown below –</p>
 </tbody>
 </table>
 </div>
-<div class="section" id="indirection">
-<h2>Indirection<a class="headerlink" href="#indirection" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="indirection">
+<h2>Indirection<a class="headerlink" href="#indirection" title="Link to this heading">#</a></h2>
 <p>We can do something interesting once we have numbered columns. We can store the
 number of a column in one of the variables and introduce a new operation –
 <code class="docutils literal notranslate"><span class="pre">fetch</span> <span class="pre">the</span> <span class="pre">value</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">column</span> <span class="pre">whose</span> <span class="pre">number</span> <span class="pre">is</span> <span class="pre">given</span> <span class="pre">by</span> <span class="pre">the</span> <span class="pre">value</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">given</span>
 <span class="pre">variable</span></code>. We use the words “indirection” or “lookup” for this operation.</p>
-<table class="table">
-<colgroup>
-<col style="width: 19%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 19%" />
-</colgroup>
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>…</p></th>
 <th class="head"><p>23</p></th>
@@ -424,16 +473,18 @@ number of a column in one of the variables and introduce a new operation –
 </tr>
 </tbody>
 </table>
+</div>
 <p>If we’re given the above table where the variable <code class="docutils literal notranslate"><span class="pre">v</span></code> has been given the
-column numbered <code class="docutils literal notranslate"><span class="pre">23</span></code>, then <code class="docutils literal notranslate"><span class="pre">lookup(v)</span></code> <a class="footnote-reference brackets" href="#notc0" id="id1">1</a> is intended to give the
+column numbered <code class="docutils literal notranslate"><span class="pre">23</span></code>, then <code class="docutils literal notranslate"><span class="pre">lookup(v)</span></code> <a class="footnote-reference brackets" href="#notc0" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> is intended to give the
 value <code class="docutils literal notranslate"><span class="pre">42</span></code>. In C0, such a <code class="docutils literal notranslate"><span class="pre">lookup(v)</span></code> operation is written simply <code class="docutils literal notranslate"><span class="pre">*v</span></code>
 and the type of <code class="docutils literal notranslate"><span class="pre">v</span></code> is said to be a <code class="docutils literal notranslate"><span class="pre">pointer</span> <span class="pre">to</span> <span class="pre">an</span> <span class="pre">int</span></code> which is notated
 as <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">*v</span></code> when declaring <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p>
-<dl class="footnote brackets">
-<dt class="label" id="notc0"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p>This is not valid C0 syntax.</p>
-</dd>
-</dl>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="notc0" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>This is not valid C0 syntax.</p>
+</aside>
+</aside>
 <p>… but how do we cause the number <code class="docutils literal notranslate"><span class="pre">25</span></code> to be placed in the column for <code class="docutils literal notranslate"><span class="pre">v</span></code>
 in the first place? To do that, we have to see that somehow the system needs
 to keep track of free columns and must have the ability to give us the number
@@ -453,22 +504,13 @@ of an assignment, as well as the left hand side. When used on the RHS, <code cla
 simply fetches the current value in the column pointed to by <code class="docutils literal notranslate"><span class="pre">v</span></code> for use
 in any calculation. When used on the LHS, it permits us to modify the value
 of the column pointed to by <code class="docutils literal notranslate"><span class="pre">v</span></code>.</p>
-</div>
-<div class="section" id="pointers-to-structures">
-<h2>Pointers to structures<a class="headerlink" href="#pointers-to-structures" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="pointers-to-structures">
+<h2>Pointers to structures<a class="headerlink" href="#pointers-to-structures" title="Link to this heading">#</a></h2>
 <p>Since we know structures can be used to group variables (“fields”), we can
 imagine a structure to be represented by a group of columns that are intended
 to be considered together.</p>
-<table class="table">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 15%" />
-<col style="width: 17%" />
-<col style="width: 15%" />
-<col style="width: 15%" />
-<col style="width: 15%" />
-<col style="width: 15%" />
-</colgroup>
+<div class="pst-scrollable-table-container"><table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>…</p></th>
 <th class="head"><p>23</p></th>
@@ -504,6 +546,7 @@ to be considered together.</p>
 </tr>
 </tbody>
 </table>
+</div>
 <p>In the above table, we’ve used the variable <code class="docutils literal notranslate"><span class="pre">s</span></code> to “point to” a structure.
 We can declare that as follows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">PowState</span> <span class="o">*</span><span class="n">s</span><span class="p">;</span>
@@ -554,9 +597,9 @@ as follows</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="arrays">
-<h2>Arrays<a class="headerlink" href="#arrays" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="arrays">
+<h2>Arrays<a class="headerlink" href="#arrays" title="Link to this heading">#</a></h2>
 <p>While <code class="docutils literal notranslate"><span class="pre">struct``s</span> <span class="pre">let</span> <span class="pre">us</span> <span class="pre">bunch</span> <span class="pre">together</span> <span class="pre">a</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">variables,</span> <span class="pre">we</span> <span class="pre">can</span> <span class="pre">only</span>
 <span class="pre">collect</span> <span class="pre">together</span> <span class="pre">a</span> <span class="pre">know</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">variables.</span> <span class="pre">What</span> <span class="pre">if</span> <span class="pre">we</span> <span class="pre">want</span> <span class="pre">to</span> <span class="pre">collectively</span>
 <span class="pre">refer</span> <span class="pre">to</span> <span class="pre">a</span> <span class="pre">collection</span> <span class="pre">of</span> <span class="pre">``N</span></code> integers – called an “array”?</p>
@@ -576,9 +619,9 @@ This is such a common operation that it is simply notated as <code class="docuti
 read as “pointer to <code class="docutils literal notranslate"><span class="pre">int</span></code>”.</p>
 <p>So each element of this “array” is retrieved using <code class="docutils literal notranslate"><span class="pre">a[i]</span></code>. We can also
 use <code class="docutils literal notranslate"><span class="pre">a[i]</span></code> on the LHS to place values into the array columns.</p>
-</div>
-<div class="section" id="arrays-of-structs">
-<h2>Arrays of structs<a class="headerlink" href="#arrays-of-structs" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="arrays-of-structs">
+<h2>Arrays of structs<a class="headerlink" href="#arrays-of-structs" title="Link to this heading">#</a></h2>
 <p>How do we interpret the code below?</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">struct</span> <span class="n">Point</span> <span class="p">{</span>
     <span class="nb">int</span> <span class="n">x</span><span class="p">;</span>
@@ -590,17 +633,18 @@ use <code class="docutils literal notranslate"><span class="pre">a[i]</span></co
 </pre></div>
 </div>
 <p>We can then refer to the “y” field of, say, the 6th array item
-as – <code class="docutils literal notranslate"><span class="pre">points[5].y</span></code>. <a class="footnote-reference brackets" href="#zeroix" id="id2">2</a></p>
-<dl class="footnote brackets">
-<dt class="label" id="zeroix"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
-<dd><p>Arrays are “zero based” – meaning, <code class="docutils literal notranslate"><span class="pre">a[0]</span></code> is the
+as – <code class="docutils literal notranslate"><span class="pre">points[5].y</span></code>. <a class="footnote-reference brackets" href="#zeroix" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="zeroix" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Arrays are “zero based” – meaning, <code class="docutils literal notranslate"><span class="pre">a[0]</span></code> is the
 first element of the array <code class="docutils literal notranslate"><span class="pre">a</span></code>. That makes the index <code class="docutils literal notranslate"><span class="pre">5</span></code>
 the 6th element.</p>
-</dd>
-</dl>
-</div>
-<div class="section" id="combining-these-concepts">
-<h2>Combining these concepts<a class="headerlink" href="#combining-these-concepts" title="Permalink to this headline">¶</a></h2>
+</aside>
+</aside>
+</section>
+<section id="combining-these-concepts">
+<h2>Combining these concepts<a class="headerlink" href="#combining-these-concepts" title="Link to this heading">#</a></h2>
 <p>We now have <code class="docutils literal notranslate"><span class="pre">int</span></code>, <code class="docutils literal notranslate"><span class="pre">bool</span></code>, <code class="docutils literal notranslate"><span class="pre">char</span></code>, <code class="docutils literal notranslate"><span class="pre">string</span></code>,
 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">XYZ</span></code>, pointer to <code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> and array of <code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code>.
 These are all independent concepts, so we can combine them to create
@@ -627,9 +671,9 @@ code declares and initializes such a structure:</p>
 <p>This ability to combine these is crucial to allow us to define
 complex data structures with various properties .. which we’ll
 see later on in this course.</p>
-</div>
-<div class="section" id="typedefs">
-<h2>Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="typedefs">
+<h2>Typedefs<a class="headerlink" href="#typedefs" title="Link to this heading">#</a></h2>
 <p>It can get pretty tedious to keep writing <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">Point</span></code> everywhere.
 Why can’t we just say <code class="docutils literal notranslate"><span class="pre">Point</span></code> instead? While saying <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">Point</span></code>
 does make explicit what <code class="docutils literal notranslate"><span class="pre">Point</span></code> is, we can give <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">Point</span></code>
@@ -655,60 +699,113 @@ and write:</p>
 <p>Thereafter, we won’t have to keep saying <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">Point</span></code> when
 <code class="docutils literal notranslate"><span class="pre">Point</span></code> will do. In fact, after the above declaration,
 <code class="docutils literal notranslate"><span class="pre">struct</span> <span class="pre">Point</span></code> will cause a compilation error!</p>
-</div>
-</div>
+</section>
+</section>
 
 
-              </div>
+                </article>
               
-        
-            
 
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="reasoning.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Reasoning with imperative programs</p>
-            </div>
-        </a>
-    </div>
-     <div id="next">
-        <a class="right-next" href="arrays.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Arrays</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
-</div>
-        
-        </div>
-    </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Srikumar K. S.<br/>
-        
-            &copy; Copyright 2021, Srikumar K. S..<br/>
-      </p>
-    </div>
-  </footer>
-</main>
-
-
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="reasoning.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Reasoning with imperative programs</p>
       </div>
-    </div>
-  
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+    </a>
+    <a class="right-next"
+       href="arrays.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Arrays</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#structures">Structures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indirection">Indirection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pointers-to-structures">Pointers to structures</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays">Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arrays-of-structs">Arrays of structs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-these-concepts">Combining these concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#typedefs">Typedefs</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
   
+  <div class="footer-item">
+    
+<p class="component-author">
+By Srikumar K. S.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2021, Srikumar K. S..
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>
